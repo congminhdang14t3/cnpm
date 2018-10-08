@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">CNPM</string>
+    <string-array name="listBoomMenu">
+        <item>Home</item>
+        <item>Drug</item>
+        <item>Cart</item>
+        <item>Notification</item>
+        <item>Account</item>
+        <item>Information</item>
+        <item>About us</item>
+    </string-array>
+
+    <string name="app_name">DRUG STORE ONLINE</string>
+    <string name="loading">Loading...</string>
+    <string name="no_connection">No connection</string>
+    <string name="ok">Ok</string>
+
 </resources>
