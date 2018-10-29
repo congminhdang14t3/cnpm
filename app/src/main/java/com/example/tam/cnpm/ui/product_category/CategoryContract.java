@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public interface CategoryContract {
     interface CategoryView extends BaseView {
-        void getListCategory(ArrayList<String> responses);
+        void getListCategory(ArrayList<CategoryResponse> responses);
     }
 
     interface CategoryPresenter{

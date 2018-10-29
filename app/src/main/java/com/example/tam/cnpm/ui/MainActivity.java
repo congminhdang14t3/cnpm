@@ -13,12 +13,15 @@ import android.widget.Toast;
 
 import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BaseActivity;
+import com.example.tam.cnpm.ui.list_product.ProductActivity;
+import com.example.tam.cnpm.ui.list_product.ProductActivity_;
 import com.example.tam.cnpm.ui.product_category.CategoryActivity;
 import com.example.tam.cnpm.ui.product_category.CategoryActivity_;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomButtons.TextOutsideCircleButton;
 import com.nightonke.boommenu.BoomMenuButton;
 
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
@@ -43,8 +46,6 @@ public class MainActivity extends BaseActivity {
                     .listener(new OnBMClickListener() {
                         @Override
                         public void onBoomButtonClick(int index) {
-                            // When the boom-button corresponding this builder is clicked.
-                            Toast.makeText(MainActivity.this, "Clicked: " + index, Toast.LENGTH_SHORT).show();
                             switch (index){
                                 case 1:
                                     CategoryActivity_.intent(MainActivity.this)
@@ -60,5 +61,18 @@ public class MainActivity extends BaseActivity {
             mBoomMenuButton.setNormalColor(Color.WHITE);
             mBoomMenuButton.addBuilder(builder);
         }
+    }
+
+    @Click
+    void text_not_remember_drug(){
+        CategoryActivity_.intent(MainActivity.this)
+                .start();
+    }
+
+    @Click
+    void text_want_to_buy(){
+        ProductActivity_.intent(MainActivity.this)
+                    .categoryId(0)
+                .start();
     }
 }

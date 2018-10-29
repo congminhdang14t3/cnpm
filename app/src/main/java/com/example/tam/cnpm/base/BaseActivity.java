@@ -7,12 +7,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Toast;
 
 import com.example.tam.cnpm.R;
@@ -20,7 +18,6 @@ import com.example.tam.cnpm.ui.MainActivity_;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.WindowFeature;
 
 @EActivity
 //@WindowFeature(Window.FEATURE_NO_TITLE)
@@ -30,6 +27,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     private ProgressDialog mProgressDialog;
     protected T mPresenter;
     protected ActionBar mActionBar;
+
+
     protected abstract void initPresenter();
 
     protected abstract void afterView();
@@ -143,6 +142,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
                 MainActivity_.intent(this)
                         .start();
                 finish();
+                return true;
+            case R.id.menu_cart:
+                showToast("Cart");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
