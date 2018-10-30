@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BaseActivity;
 import com.example.tam.cnpm.service.response.Product;
+import com.example.tam.cnpm.ui.cart.CartActivity_;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
 
@@ -48,7 +49,6 @@ public class DetailProductActivity extends BaseActivity {
 
     @Override
     protected void afterView() {
-        mActionBar.setDisplayHomeAsUpEnabled(true);
         mTextDrugName.setText(getString(R.string.name)+": "+mProduct.getName());
         mTextExpireDate.setText(getString(R.string.expire_date)+": "+mProduct.getExpireDate());
         Picasso.get()
@@ -71,6 +71,19 @@ public class DetailProductActivity extends BaseActivity {
                 break;
             case R.id.button_add:
                 mEditCountProduct.setText((count+1)+"");break;
+            default:break;
+        }
+    }
+
+    public void handling(View view) {
+        switch (view.getId()){
+            case R.id.text_buy_now:
+
+                break;
+            case R.id.text_add_to_cart:
+                CartActivity_.intent(this)
+                        .start();
+                break;
             default:break;
         }
     }

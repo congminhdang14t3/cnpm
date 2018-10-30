@@ -41,7 +41,6 @@ public class ProductActivity extends BaseActivity<ProductPresenterImpl> implemen
 
     @Override
     protected void afterView() {
-        mActionBar.setDisplayHomeAsUpEnabled(true);
         mList = new ArrayList<>();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);

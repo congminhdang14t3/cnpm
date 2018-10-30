@@ -15,7 +15,7 @@ public class Product implements Parcelable{
     private Integer id;
     @SerializedName("picture")
     @Expose
-    private List<Picture> picture = null;
+    private List<Picture> picture;
     @SerializedName("expire_date")
     @Expose
     private String expireDate;
@@ -56,7 +56,10 @@ public class Product implements Parcelable{
     @Expose
     private List<Integer> category = null;
 
-    protected Product(Parcel in) {
+    public Product(){
+
+    }
+    public Product(Parcel in) {
         if (in.readByte() == 0) {
             id = null;
         } else {

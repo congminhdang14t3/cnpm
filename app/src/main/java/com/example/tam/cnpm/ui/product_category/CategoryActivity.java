@@ -35,7 +35,6 @@ ListView.OnItemClickListener{
 
     @Override
     protected void afterView() {
-        mActionBar.setDisplayHomeAsUpEnabled(true);
         mListCategoryName = new ArrayList<>();
         mListCategory = new ArrayList<>();
         mAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,mListCategoryName);

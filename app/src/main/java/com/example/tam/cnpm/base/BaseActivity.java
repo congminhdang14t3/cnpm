@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.ui.MainActivity_;
+import com.example.tam.cnpm.ui.cart.CartActivity_;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -27,7 +28,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     private ProgressDialog mProgressDialog;
     protected T mPresenter;
     protected ActionBar mActionBar;
-
 
     protected abstract void initPresenter();
 
@@ -52,6 +52,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @AfterViews
     protected void initView(){
         mActionBar = getSupportActionBar();
+        mActionBar.setDisplayHomeAsUpEnabled(true);
         mActionBar.show();
         this.afterView();
     }
@@ -144,7 +145,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
                 finish();
                 return true;
             case R.id.menu_cart:
-                showToast("Cart");
+                CartActivity_.intent(this)
+                        .start();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
