@@ -23,8 +23,10 @@ public class Picture implements Parcelable{
     @SerializedName("product")
     @Expose
     private Integer product;
+    public Picture(){
 
-    protected Picture(Parcel in) {
+    }
+    public Picture(Parcel in) {
         if (in.readByte() == 0) {
             id = null;
         } else {

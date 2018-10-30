@@ -4,10 +4,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BaseActivity;
+import com.example.tam.cnpm.service.response.Cart;
+import com.example.tam.cnpm.service.response.Picture;
 import com.example.tam.cnpm.service.response.Product;
+import com.example.tam.cnpm.ui.cart.CartActivity;
 import com.example.tam.cnpm.ui.cart.CartActivity_;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
@@ -15,6 +19,9 @@ import com.squareup.picasso.Picasso;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @EActivity(R.layout.activity_detail_product)
 public class DetailProductActivity extends BaseActivity {
@@ -81,10 +88,35 @@ public class DetailProductActivity extends BaseActivity {
 
                 break;
             case R.id.text_add_to_cart:
-                CartActivity_.intent(this)
-                        .start();
+                int quantity = Integer.parseInt(mEditCountProduct.getText().toString());
+                Picture picture = new Picture();
+                picture.setImage(mImageProduct);
+                List<Picture> list = new ArrayList<>();
+                list.add(picture);
+                mProduct.setPicture(list);
+                boolean isHasCart=false;
+                for(int i=0;i<CartActivity.mList.size() ; i++){
+                    Cart cart = CartActivity.mList.get(i);
+                    if(cart.getProduct().getId() == mProduct.getId()){
+                        isHasCart=true;
+                        cart.setQuantity(cart.getQuantity()+quantity);
+                        cart.setTotalPrice(cart.getQuantity()*
+                        mProduct.getPrice());
+                        break;
+                    }
+                }
+                if(!isHasCart){
+                    Cart cart = new Cart();
+                    cart.setProduct(mProduct);
+                    cart.setQuantity(quantity);
+                    cart.setTotalPrice(quantity*mProduct.getPrice());
+                    CartActivity.mList.add(cart);
+                }
+                Toast.makeText(this, "Added to cart!", Toast.LENGTH_SHORT).show();
                 break;
+
             default:break;
+
         }
     }
 }

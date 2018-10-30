@@ -24,7 +24,7 @@ public class CartActivity extends BaseActivity {
     @ViewById(R.id.recycler_view_cart)
     RecyclerView mRecyclerView;
     CartAdapter mAdapter;
-    ArrayList<Cart> mList;
+    public static ArrayList<Cart> mList = new ArrayList<>();
     @Override
     protected void initPresenter() {
         mPresenter = new CartPresenterImpl(this);
@@ -32,14 +32,6 @@ public class CartActivity extends BaseActivity {
 
     @Override
     protected void afterView() {
-        Product product = new Product();
-        product.setPrice(10000);
-        product.setName("ABC");
-        Cart cart = new Cart();
-        cart.setProduct(product);
-        cart.setQuantity(2);
-        mList = new ArrayList<>();
-        mList.add(cart);
         mAdapter = new CartAdapter(this,mList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
