@@ -1,21 +1,12 @@
 package com.example.tam.cnpm.ui;
 
 import android.graphics.Color;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.widget.Toast;
 
 import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BaseActivity;
-import com.example.tam.cnpm.ui.list_product.ProductActivity;
 import com.example.tam.cnpm.ui.list_product.ProductActivity_;
-import com.example.tam.cnpm.ui.product_category.CategoryActivity;
+import com.example.tam.cnpm.ui.news.NewsActivity_;
 import com.example.tam.cnpm.ui.product_category.CategoryActivity_;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomButtons.TextOutsideCircleButton;
@@ -29,7 +20,7 @@ import org.androidannotations.annotations.ViewById;
 public class MainActivity extends BaseActivity {
     @ViewById(R.id.boom_menu)
     BoomMenuButton mBoomMenuButton;
-    int[]listImage = {R.drawable.home,R.drawable.drug,R.drawable.cart,R.drawable.notification,R.drawable.account
+    int[]listImage = {R.drawable.home,R.drawable.drug,R.drawable.cart,R.drawable.ic_news,R.drawable.account
             ,R.drawable.information,R.drawable.store};
     String[]listText;
     @Override
@@ -50,6 +41,10 @@ public class MainActivity extends BaseActivity {
                                 case 1:
                                     CategoryActivity_.intent(MainActivity.this)
                                             .start();break;
+                                case 3:
+                                    NewsActivity_.intent(MainActivity.this)
+                                            .start();break;
+
                             }
                         }
                     })

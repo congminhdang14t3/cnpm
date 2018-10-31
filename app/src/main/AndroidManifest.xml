@@ -31,8 +31,11 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".ui.cart.CartActivity_"
-            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".ui.cart.CartActivity_"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".ui.news.NewsActivity_" />
+        <activity android:name=".ui.news.WebActivity_"></activity>
     </application>
 
 </manifest>
