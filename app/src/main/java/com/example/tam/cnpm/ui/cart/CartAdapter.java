@@ -45,12 +45,10 @@ public class CartAdapter extends BaseAdapter {
 
     private void onBindItemViewHolder(final ContentViewHolder holder, final int position) {
         final Cart response = mList.get(position);
-        final int count = response.getQuantity();
         final Product product = response.getProduct();
         holder.mTextName.setText("Name: " + product.getName());
-        holder.mTextPrice.setText("Price: " + product.getPrice() + "");
-        holder.mTextTotalPrice.setText("Total Price: " + response.getTotalPrice() + "");
-        holder.mTextCountCart.setText(count + "");
+        holder.mTextCountCart.setText("Quantity: "+response.getQuantity());
+        holder.mTextPrice.setText("Price: " + product.getPrice());
         holder.mLinearDeleteCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,6 +59,7 @@ public class CartAdapter extends BaseAdapter {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mList.remove(response);
                                 notifyDataSetChanged();
+                                CartActivity.changeTotal();
                             }
                         })
                         .setNegativeButton("No", null)
@@ -72,26 +71,6 @@ public class CartAdapter extends BaseAdapter {
                 .placeholder(R.drawable.noimage)
                 .error(R.drawable.errorimage)
                 .into(holder.mImageView);
-        holder.mSubCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (count > 1) {
-                    response.setQuantity(response.getQuantity() - 1);
-                    holder.mTextCountCart.setText(response.getQuantity() + "");
-                    response.setTotalPrice(response.getQuantity() * product.getPrice());
-                    holder.mTextTotalPrice.setText("Total Price: " + response.getTotalPrice() + "");
-                }
-            }
-        });
-        holder.mAddCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                response.setQuantity(response.getQuantity() + 1);
-                holder.mTextCountCart.setText(response.getQuantity() + "");
-                response.setTotalPrice(response.getQuantity() * product.getPrice());
-                holder.mTextTotalPrice.setText("Total Price: " + response.getTotalPrice() + "");
-            }
-        });
     }
 
     @Override
@@ -103,21 +82,16 @@ public class CartAdapter extends BaseAdapter {
         private ImageView mImageView;
         private TextView mTextName,
                 mTextPrice,
-                mTextCountCart,
-                mTextTotalPrice;
+                mTextCountCart;
         LinearLayout mLinearDeleteCart;
-        ImageButton mSubCart, mAddCart;
 
         public ContentViewHolder(View v) {
             super(v);
             mImageView = v.findViewById(R.id.image_cart);
             mTextName = v.findViewById(R.id.text_cart_name);
             mTextPrice = v.findViewById(R.id.text_cart_price);
-            mTextTotalPrice = v.findViewById(R.id.text_cart_total_price);
             mLinearDeleteCart = v.findViewById(R.id.linear_delete_cart);
             mTextCountCart = v.findViewById(R.id.text_count_cart);
-            mSubCart = v.findViewById(R.id.button_sub_cart);
-            mAddCart = v.findViewById(R.id.button_add_cart);
             v.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.scale_list));
         }
     }

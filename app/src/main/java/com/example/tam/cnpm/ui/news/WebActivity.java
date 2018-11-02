@@ -35,8 +35,8 @@ public class WebActivity extends BaseActivity {
         WebSettings webSettings = webView.getSettings();
         webSettings.setBuiltInZoomControls(true);
         webSettings.setDisplayZoomControls(false);
-       // webSettings.setDomStorageEnabled(true);
-        //webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setJavaScriptEnabled(true);
     }
 
     @Override

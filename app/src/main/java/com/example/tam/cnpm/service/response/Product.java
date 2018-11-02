@@ -274,4 +274,25 @@ public class Product implements Parcelable{
         parcel.writeByte((byte) (isActive == null ? 0 : isActive ? 1 : 2));
         parcel.writeString(status);
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", picture=" + picture +
+                ", expireDate='" + expireDate + '\'' +
+                ", stores=" + stores +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", name='" + name + '\'' +
+                ", detail='" + detail + '\'' +
+                ", price=" + price +
+                ", tax=" + tax +
+                ", hitCount=" + hitCount +
+                ", isActive=" + isActive +
+                ", status='" + status + '\'' +
+                ", supplier=" + supplier +
+                ", category=" + category +
+                '}';
+    }
 }

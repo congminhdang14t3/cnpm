@@ -39,4 +39,12 @@ public void setTotalPrice(Integer totalPrice) {
 this.totalPrice = totalPrice;
 }
 
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "product=" + product.toString() +
+                ", quantity=" + quantity +
+                ", totalPrice=" + totalPrice +
+                '}';
+    }
 }
