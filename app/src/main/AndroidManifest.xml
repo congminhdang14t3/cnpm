@@ -11,13 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.MainActivity_">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".ui.MainActivity_"></activity>
         <activity android:name=".ui.product_category.CategoryActivity_" />
         <activity android:name=".ui.list_product.ProductActivity_" />
         <activity
@@ -35,7 +29,15 @@
             android:name=".ui.cart.CartActivity_"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".ui.news.NewsActivity_" />
-        <activity android:name=".ui.news.WebActivity_"></activity>
+        <activity android:name=".ui.news.WebActivity_" />
+        <activity android:name=".ui.login.LoginActivity_">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.profile.ProfileActivity_"></activity>
     </application>
 
 </manifest>

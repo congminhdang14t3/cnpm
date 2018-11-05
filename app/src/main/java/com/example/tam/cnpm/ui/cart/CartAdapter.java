@@ -2,6 +2,7 @@ package com.example.tam.cnpm.ui.cart;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,14 +13,25 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.tam.cnpm.Constant;
 import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BaseAdapter;
+import com.example.tam.cnpm.base.BaseView;
 import com.example.tam.cnpm.service.response.Cart;
+import com.example.tam.cnpm.service.response.MessageResponse;
 import com.example.tam.cnpm.service.response.Product;
+import com.example.tam.cnpm.service.retrofit2.APIUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.example.tam.cnpm.Constant.SHARED_PREFERENCES_NAME;
 
 public class CartAdapter extends BaseAdapter {
 
@@ -57,9 +69,27 @@ public class CartAdapter extends BaseAdapter {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                mList.remove(response);
-                                notifyDataSetChanged();
-                                CartActivity.changeTotal();
+                                SharedPreferences sharedPreferences =  getContext().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+                                String token = sharedPreferences.getString(Constant.TOKEN,"");
+                                if(!token.equals("")){
+                                    Call<MessageResponse> call = APIUtils.getData().modifyCart(token,
+                                            response.getProduct().getId(),0);
+                                    call.enqueue(new Callback<MessageResponse>() {
+                                        @Override
+                                        public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response1) {
+                                            if(response1.isSuccessful()){
+                                                mList.remove(response);
+                                                notifyDataSetChanged();
+                                                CartActivity.changeTotal();
+                                                Toast.makeText(mContext, "Delete Success!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                        @Override
+                                        public void onFailure(Call<MessageResponse> call, Throwable t) {
+
+                                        }
+                                    });
+                                }
                             }
                         })
                         .setNegativeButton("No", null)

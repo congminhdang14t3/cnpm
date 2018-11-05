@@ -11,9 +11,6 @@ private Product product;
 @SerializedName("quantity")
 @Expose
 private Integer quantity;
-@SerializedName("total_price")
-@Expose
-private Integer totalPrice;
 
 public Product getProduct() {
 return product;
@@ -31,20 +28,12 @@ public void setQuantity(Integer quantity) {
 this.quantity = quantity;
 }
 
-public Integer getTotalPrice() {
-return totalPrice;
-}
-
-public void setTotalPrice(Integer totalPrice) {
-this.totalPrice = totalPrice;
-}
 
     @Override
     public String toString() {
         return "Cart{" +
                 "product=" + product.toString() +
                 ", quantity=" + quantity +
-                ", totalPrice=" + totalPrice +
                 '}';
     }
 }

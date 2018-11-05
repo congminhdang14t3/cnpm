@@ -58,7 +58,7 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
     public static void changeTotal(){
         int total = 0;
         for (int i=0;i<mList.size();i++){
-            total+=mList.get(i).getTotalPrice();
+            total+=mList.get(i).getProduct().getPrice()*mList.get(i).getQuantity();
         }
         mTextTotalPriceCart.setText("Total: "+total+"đ");
     }

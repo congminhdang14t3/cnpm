@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @EActivity(R.layout.activity_detail_product)
-public class DetailProductActivity extends BaseActivity {
+public class DetailProductActivity extends BaseActivity<DetailProductPresenterImpl> implements DetailProductContract.DetailProductView {
     @Extra
     Product mProduct;
 
@@ -51,7 +51,7 @@ public class DetailProductActivity extends BaseActivity {
 
     @Override
     protected void initPresenter() {
-
+        mPresenter = new DetailProductPresenterImpl(this);
     }
 
     @Override
@@ -90,32 +90,13 @@ public class DetailProductActivity extends BaseActivity {
 
                 break;
             case R.id.text_add_to_cart:
-//                int quantity = Integer.parseInt(mEditCountProduct.getText().toString());
-//                Picture picture = new Picture();
-//                picture.setImage(mImageProduct);
-//                List<Picture> list = new ArrayList<>();
-//                list.add(picture);
-//                mProduct.setPicture(list);
-//                boolean isHasCart=false;
-//                for(int i=0;i<CartActivity.mList.size() ; i++){
-//                    Cart cart = CartActivity.mList.get(i);
-//                    if(cart.getProduct().getId() == mProduct.getId()){
-//                        isHasCart=true;
-//                        cart.setQuantity(cart.getQuantity()+quantity);
-//                        cart.setTotalPrice(cart.getQuantity()*
-//                        mProduct.getPrice());
-//                        break;
-//                    }
-//                }
-//                if(!isHasCart){
-//                    Cart cart = new Cart();
-//                    cart.setProduct(mProduct);
-//                    cart.setQuantity(quantity);
-//                    cart.setTotalPrice(quantity*mProduct.getPrice());
-//                    CartActivity.mList.add(cart);
-//                }
-//                Toast.makeText(this, "Added to cart!", Toast.LENGTH_SHORT).show();
-
+                int quantity = Integer.parseInt(mEditCountProduct.getText().toString());
+                Picture picture = new Picture();
+                picture.setImage(mImageProduct);
+                List<Picture> list = new ArrayList<>();
+                list.add(picture);
+                mProduct.setPicture(list);
+                mPresenter.addToCart(mProduct,quantity);
                 break;
 
             default:break;

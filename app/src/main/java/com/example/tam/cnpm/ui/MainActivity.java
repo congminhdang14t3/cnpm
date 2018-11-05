@@ -1,13 +1,19 @@
 package com.example.tam.cnpm.ui;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.Gravity;
 
+import com.example.tam.cnpm.Constant;
 import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BaseActivity;
+import com.example.tam.cnpm.ui.cart.CartActivity;
 import com.example.tam.cnpm.ui.list_product.ProductActivity_;
+import com.example.tam.cnpm.ui.login.LoginActivity_;
 import com.example.tam.cnpm.ui.news.NewsActivity_;
 import com.example.tam.cnpm.ui.product_category.CategoryActivity_;
+import com.example.tam.cnpm.ui.profile.ProfileActivity_;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomButtons.TextOutsideCircleButton;
 import com.nightonke.boommenu.BoomMenuButton;
@@ -44,6 +50,10 @@ public class MainActivity extends BaseActivity {
                                 case 3:
                                     NewsActivity_.intent(MainActivity.this)
                                             .start();break;
+                                case 4:
+                                    ProfileActivity_.intent(MainActivity.this)
+                                            .start();
+                                    break;
 
                             }
                         }

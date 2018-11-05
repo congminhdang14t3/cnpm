@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_margin="10dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_margin="10dp"
+        android:text="REGISTER FORM"/>
+    <EditText
+        android:id="@+id/edit_email_register"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:background="@drawable/background_login_edit"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="email"/>
+    <EditText
+        android:id="@+id/edit_pass_register"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:background="@drawable/background_login_edit"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="password"/>
+    <EditText
+        android:id="@+id/edit_pass2_register"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:background="@drawable/background_login_edit"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="password again"/>
+    <EditText
+        android:id="@+id/edit_first_name_register"
+        android:maxLines="1"
+        android:background="@drawable/background_login_edit"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="first name"/>
+    <EditText
+        android:id="@+id/edit_last_name_register"
+        android:maxLines="1"
+        android:background="@drawable/background_login_edit"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="last name"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <Button
+            android:id="@+id/button_cancel_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="cancel"/>
+        <Button
+            android:id="@+id/button_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="register"/>
+    </LinearLayout>
+</LinearLayout>
