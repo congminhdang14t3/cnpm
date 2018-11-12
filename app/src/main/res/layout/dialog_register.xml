@@ -14,6 +14,11 @@
         android:textColor="@color/colorPrimary"
         android:layout_margin="10dp"
         android:text="REGISTER FORM"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image_register"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_avatar_default"/>
     <EditText
         android:id="@+id/edit_email_register"
         android:inputType="textEmailAddress"

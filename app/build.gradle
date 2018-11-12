@@ -50,4 +50,6 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.11.3'
     //volley
     implementation 'com.android.volley:volley:1.1.1'
+    //circleimageview
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 }

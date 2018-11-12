@@ -14,6 +14,8 @@ import com.example.tam.cnpm.ui.login.LoginActivity_;
 import com.example.tam.cnpm.ui.news.NewsActivity_;
 import com.example.tam.cnpm.ui.product_category.CategoryActivity_;
 import com.example.tam.cnpm.ui.profile.ProfileActivity_;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomButtons.TextOutsideCircleButton;
 import com.nightonke.boommenu.BoomMenuButton;
@@ -21,6 +23,9 @@ import com.nightonke.boommenu.BoomMenuButton;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends BaseActivity {
@@ -43,6 +48,24 @@ public class MainActivity extends BaseActivity {
                     .listener(new OnBMClickListener() {
                         @Override
                         public void onBoomButtonClick(int index) {
+                            try {
+                                JSONObject paramObject = new JSONObject();
+                                JSONObject productObject = new JSONObject();
+                                JSONArray array = new JSONArray();
+                                JSONObject o = new JSONObject();
+                                o.put("productid",1);
+                                o.put("quantity",1);
+                                array.put(o);
+                                array.put(o);
+                                productObject.put("1", array);
+
+                                paramObject.put("product",productObject);
+                                paramObject.put("email", "sample@gmail.com");
+                                paramObject.put("pass", "4384984938943");
+                                System.out.println(paramObject.toString());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             switch (index){
                                 case 1:
                                     CategoryActivity_.intent(MainActivity.this)

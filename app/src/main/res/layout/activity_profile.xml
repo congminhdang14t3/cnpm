@@ -15,15 +15,16 @@
         android:background="#80437b50"
         android:gravity="center"
         android:orientation="vertical">
-        <ImageView
-            android:id="@+id/mImgAvata"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_profile"
             android:layout_width="100dp"
             android:layout_marginTop="35dp"
             android:layout_height="100dp"
             android:src="@drawable/ic_avatar_default"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="imageOnclick"/>
     </android.support.constraint.ConstraintLayout>
 
     <LinearLayout

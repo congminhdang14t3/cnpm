@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.example.tam.cnpm.Constant;
 import com.example.tam.cnpm.base.BasePresenter;
 import com.example.tam.cnpm.service.response.Cart;
+import com.example.tam.cnpm.service.response.FeedBack;
 import com.example.tam.cnpm.service.response.MessageResponse;
 import com.example.tam.cnpm.service.response.Picture;
 import com.example.tam.cnpm.service.response.Product;
@@ -22,21 +23,24 @@ import retrofit2.Response;
 import static com.example.tam.cnpm.Constant.SHARED_PREFERENCES_NAME;
 
 public class DetailProductPresenterImpl extends BasePresenter<DetailProductContract.DetailProductView> implements DetailProductContract.DetailProductPresenter {
+    ArrayList<FeedBack> mList;
+
     public DetailProductPresenterImpl(Context context) {
         super(context);
+        mList = new ArrayList<>();
     }
 
     @Override
     public void addToCart(Product mProduct, int quantity) {
-        SharedPreferences sharedPreferences =  getContext().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString(Constant.TOKEN,"");
-        if(!token.equals("")){
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        String token = sharedPreferences.getString(Constant.TOKEN, "");
+        if (!token.equals("")) {
             getView().showLoading();
-            Call<MessageResponse> call = APIUtils.getData().modifyCart(token,mProduct.getId(),quantity);
+            Call<MessageResponse> call = APIUtils.getData().modifyCart(token, mProduct.getId(), quantity);
             call.enqueue(new Callback<MessageResponse>() {
                 @Override
                 public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
-                    if(response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         getView().showToast("Add to cart!");
                     }
                     getView().dismissLoading();
@@ -48,18 +52,17 @@ public class DetailProductPresenterImpl extends BasePresenter<DetailProductContr
                     getView().dismissLoading();
                 }
             });
-        }
-        else{
-            boolean isHasCart=false;
-            for(int i = 0; i< CartActivity.mList.size() ; i++){
+        } else {
+            boolean isHasCart = false;
+            for (int i = 0; i < CartActivity.mList.size(); i++) {
                 Cart cart = CartActivity.mList.get(i);
-                if(cart.getProduct().getId() == mProduct.getId()){
-                    isHasCart=true;
-                    cart.setQuantity(cart.getQuantity()+quantity);
+                if (cart.getProduct().getId() == mProduct.getId()) {
+                    isHasCart = true;
+                    cart.setQuantity(cart.getQuantity() + quantity);
                     break;
                 }
             }
-            if(!isHasCart){
+            if (!isHasCart) {
                 Cart cart = new Cart();
                 cart.setProduct(mProduct);
                 cart.setQuantity(quantity);
@@ -68,5 +71,66 @@ public class DetailProductPresenterImpl extends BasePresenter<DetailProductContr
             getView().showToast("Add to cart!");
         }
 
+    }
+
+    @Override
+    public void getListFeedback(int id) {
+        getView().showLoading();
+        Call<ArrayList<FeedBack>> call = APIUtils.getData().getListFeedback(id);
+        call.enqueue(new Callback<ArrayList<FeedBack>>() {
+            @Override
+            public void onResponse(Call<ArrayList<FeedBack>> call, Response<ArrayList<FeedBack>> response) {
+                if (response.isSuccessful()) {
+                    mList.clear();
+                    mList.addAll(response.body());
+                    getView().listFeedBack(mList);
+                } else {
+                    getView().showErrorConnect();
+                }
+                getView().dismissLoading();
+
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<FeedBack>> call, Throwable t) {
+                getView().showError(t.toString());
+                getView().dismissLoading();
+            }
+        });
+    }
+
+    @Override
+    public void setLogIn() {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        String token = sharedPreferences.getString(Constant.TOKEN, "");
+        getView().logIn(!token.equals(""));
+    }
+
+    @Override
+    public void addFeedBack(Product product, String detail, int star) {
+        getView().showLoading();
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        String token = sharedPreferences.getString(Constant.TOKEN, "");
+        Call<FeedBack> call = APIUtils.getData().addFeedback(token,
+                product.getId(), product.getStores(), detail, star);
+        call.enqueue(new Callback<FeedBack>() {
+            @Override
+            public void onResponse(Call<FeedBack> call, Response<FeedBack> response) {
+                if (response.isSuccessful()) {
+                    mList.add(0,response.body());
+                    getView().listFeedBack(mList);
+                } else {
+                    getView().showErrorConnect();
+                }
+                getView().dismissLoading();
+            }
+
+            @Override
+            public void onFailure(Call<FeedBack> call, Throwable t) {
+                getView().showError(t.toString());
+                getView().dismissLoading();
+            }
+        });
     }
 }
