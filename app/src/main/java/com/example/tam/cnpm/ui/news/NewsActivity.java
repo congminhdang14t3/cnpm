@@ -12,6 +12,7 @@ import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BaseActivity;
 import com.example.tam.cnpm.service.response.DocBao;
 import com.example.tam.cnpm.ui.list_product.ListProductAdapter;
+import com.example.tam.cnpm.ui.web_view.WebViewActivity_;
 
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
@@ -46,7 +47,7 @@ ListNewsAdapter.OnItemClickListener{
 
     @Override
     public void onItemClick(int position) {
-        WebActivity_.intent(this)
+        WebViewActivity_.intent(this)
                 .link(mList.get(position).getLink())
                 .start();
     }

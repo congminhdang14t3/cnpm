@@ -9,14 +9,19 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.tam.cnpm.Constant;
 import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BaseActivity;
 import com.example.tam.cnpm.service.response.Cart;
 import com.example.tam.cnpm.service.response.Product;
 import com.example.tam.cnpm.ui.list_product.ListProductAdapter;
+import com.example.tam.cnpm.ui.payment.PaymentActivity_;
 
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -26,10 +31,13 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
     @ViewById(R.id.recycler_view_cart)
     RecyclerView mRecyclerView;
 
-    CartAdapter mAdapter;
+    static CartAdapter mAdapter;
 
     @ViewById(R.id.tvTotalPriceCart)
     static TextView mTextTotalPriceCart;
+
+    static int mTotalPrice;
+
     public static ArrayList<Cart> mList = new ArrayList<>();
     @Override
     protected void initPresenter() {
@@ -61,6 +69,8 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
             total+=mList.get(i).getProduct().getPrice()*mList.get(i).getQuantity();
         }
         mTextTotalPriceCart.setText("Total: "+total+"đ");
+        mTotalPrice = total;
+
     }
 
     @Override
@@ -69,5 +79,19 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
         mList.addAll(response);
         mAdapter.notifyDataSetChanged();
         changeTotal();
+    }
+
+    @Override
+    public void finishActivity() {
+        finish();
+    }
+
+    public void goToPaymentActivity(View view) {
+     mPresenter.createPaymentJson(mList,mTotalPrice);
+    }
+
+    public static void deleteAllCart(){
+        mList.clear();
+        mAdapter.notifyDataSetChanged();
     }
 }

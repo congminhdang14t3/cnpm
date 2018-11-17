@@ -63,7 +63,7 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
     RecyclerView mRecyclerView;
 
     @ViewById(R.id.text_go_to_login_page)
-     TextView mTextGotoLoginPAge;
+    TextView mTextGotoLoginPAge;
 
     @ViewById(R.id.linear_comment)
     LinearLayout mLinearComment;
@@ -154,9 +154,9 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
 
     @Override
     public void logIn(boolean isLogIn) {
-        if(isLogIn){
+        if (isLogIn) {
             mLinearComment.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mTextGotoLoginPAge.setVisibility(View.VISIBLE);
         }
     }
@@ -167,7 +167,7 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
     }
 
     public void sendFeedbackOnlick(View view) {
-        mPresenter.addFeedBack(mProduct,mEditFeedback.getText().toString(),(int)mRatingBar.getRating());
+        mPresenter.addFeedBack(mProduct, mEditFeedback.getText().toString(), (int) mRatingBar.getRating());
         mEditFeedback.setText("");
         mRatingBar.setRating(0);
     }

@@ -8,9 +8,11 @@ import java.util.ArrayList;
 public interface CartContract {
     interface CartView extends BaseView {
         void listCart(ArrayList<Cart> response);
+        void finishActivity();
     }
 
     interface CartPresenter{
         void getListCart();
+        void createPaymentJson(ArrayList<Cart> list,int total);
     }
 }

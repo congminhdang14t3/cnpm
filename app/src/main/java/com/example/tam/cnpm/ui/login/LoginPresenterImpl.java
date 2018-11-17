@@ -125,12 +125,11 @@ public class LoginPresenterImpl extends BasePresenter<LoginContract.LoginView> i
             public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
                 if (response.isSuccessful()){
                     if(response.body().getToken() != null){
-                        System.out.println(response.body().getToken());
-                        getView().resultSignIn(1);
                         SharedPreferences sharedPreferences = getContext().getSharedPreferences(Constant.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString(Constant.TOKEN,"Token "+response.body().getToken());
                         editor.apply();
+                        getView().resultSignIn(1);
                     }else{
                         getView().resultSignIn(0);
                     }

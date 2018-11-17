@@ -2,12 +2,17 @@ package com.example.tam.cnpm.ulti;
 
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+
+import com.example.tam.cnpm.Constant;
+
+import static com.example.tam.cnpm.Constant.SHARED_PREFERENCES_NAME;
 
 public class Ulti {
     public static String getPath(final Context context, final Uri uri) {
@@ -128,5 +133,11 @@ public class Ulti {
      */
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    public static String getToken(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        String token = sharedPreferences.getString(Constant.TOKEN, "");
+        return token;
     }
 }

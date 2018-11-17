@@ -66,8 +66,6 @@ public class LoginActivity extends BaseActivity<LoginPresenterImpl> implements L
                 showToast("Login Fail!");break;
             case 1:
                 showToast("Login Success!");
-                MainActivity_.intent(this)
-                        .start();
                 finish();
                 break;
 

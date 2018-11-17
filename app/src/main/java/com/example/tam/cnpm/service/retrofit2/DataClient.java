@@ -13,10 +13,12 @@ import java.util.ArrayList;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -86,4 +88,15 @@ public interface DataClient {
                                @Field("store") int store,
                                @Field("detail") String detail,
                                @Field("star") int star);
+
+    @GET("paypal/redirect")
+    Call<String> getLink(@Query("money") String money);
+
+    @Headers("Content-Type: application/json")
+    @POST("order/create/")
+    Call<MessageResponse> orderShipCode(@Header("Authorization") String authorization,@Body String body);
+
+    @Headers("Content-Type: application/json")
+    @POST("paypal/payment/")
+    Call<MessageResponse> orderPayment(@Header("Authorization") String authorization,@Body String body);
 }

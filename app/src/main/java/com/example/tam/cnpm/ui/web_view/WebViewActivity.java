@@ -1,5 +1,6 @@
-package com.example.tam.cnpm.ui.news;
+package com.example.tam.cnpm.ui.web_view;
 
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,21 +17,31 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_web)
-public class WebActivity extends BaseActivity {
+public class WebViewActivity extends BaseActivity<WebPresenterImpl> implements WebContract.WebView {
     @ViewById(R.id.web_view)
     WebView webView;
 
     @Extra
     String link;
+    @Extra
+    String jsonLink;
     @Override
     protected void initPresenter() {
-
+        mPresenter = new WebPresenterImpl(this);
     }
 
     @Override
     protected void afterView() {
         webView.loadUrl(link);
-        webView.setWebViewClient(new WebViewClient());
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                if(url.startsWith("http://localhost:3000")){
+                    mPresenter.handleUrl(url,jsonLink);
+                }
+            }
+        });
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setBuiltInZoomControls(true);
@@ -38,7 +49,6 @@ public class WebActivity extends BaseActivity {
         webSettings.setDomStorageEnabled(true);
         webSettings.setJavaScriptEnabled(true);
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;
@@ -53,5 +63,10 @@ public class WebActivity extends BaseActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void finishActivity() {
+        finish();
     }
 }

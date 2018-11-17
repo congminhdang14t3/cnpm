@@ -12,6 +12,7 @@ import com.example.tam.cnpm.service.response.Picture;
 import com.example.tam.cnpm.service.response.Product;
 import com.example.tam.cnpm.service.retrofit2.APIUtils;
 import com.example.tam.cnpm.ui.cart.CartActivity;
+import com.example.tam.cnpm.ulti.Ulti;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,10 +110,7 @@ public class DetailProductPresenterImpl extends BasePresenter<DetailProductContr
     @Override
     public void addFeedBack(Product product, String detail, int star) {
         getView().showLoading();
-
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString(Constant.TOKEN, "");
-        Call<FeedBack> call = APIUtils.getData().addFeedback(token,
+        Call<FeedBack> call = APIUtils.getData().addFeedback(Ulti.getToken(getContext()),
                 product.getId(), product.getStores(), detail, star);
         call.enqueue(new Callback<FeedBack>() {
             @Override

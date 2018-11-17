@@ -31,7 +31,8 @@
             android:text="payment"
             android:textSize="15sp"
             android:textColor="#3e62b6"
-            android:layout_margin="5dp"/>
+            android:layout_margin="5dp"
+           android:onClick="goToPaymentActivity"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

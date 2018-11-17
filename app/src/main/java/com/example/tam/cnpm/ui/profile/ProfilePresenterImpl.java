@@ -49,9 +49,7 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
 
     @Override
     public void setLogIn() {
-        SharedPreferences sharedPreferences = getContext().
-                getSharedPreferences(Constant.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString(Constant.TOKEN,"");
+        String token = Ulti.getToken(getContext());
 
         if(token.equals("")){
             getView().changeActivity();
@@ -63,7 +61,14 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
                     if(response.isSuccessful()){
-                        getView().setProfile(response.body());
+                        User user = response.body();
+                        SharedPreferences sharedPreferences = getContext().
+                                getSharedPreferences(Constant.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(Constant.FNAME,user.getFirstName());
+                        editor.putString(Constant.LNAME,user.getLastName());
+                        editor.apply();
+                        getView().setProfile(user);
                     }else{
                         getView().showErrorConnect();
                     }
