@@ -4,6 +4,7 @@ public class Constant {
     public static final String SHARED_PREFERENCES_NAME = "shared_preferences_name";
     public static final String TOKEN = "token";
     public static final String PAYERID = "PayerID";
+    public static final String LIST_ORDER_CODE = "list_order_code";
     public static final String PRODUCT = "product";
     public static final String PRODUCT_ID = "product_id";
         public static final String QUANTITY = "quantity";

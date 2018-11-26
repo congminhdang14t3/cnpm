@@ -70,7 +70,6 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
         }
         mTextTotalPriceCart.setText("Total: "+total+"đ");
         mTotalPrice = total;
-
     }
 
     @Override
@@ -87,11 +86,12 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
     }
 
     public void goToPaymentActivity(View view) {
-     mPresenter.createPaymentJson(mList,mTotalPrice);
+     mPresenter.createPaymentJson(mList);
     }
 
     public static void deleteAllCart(){
         mList.clear();
         mAdapter.notifyDataSetChanged();
+        changeTotal();
     }
 }

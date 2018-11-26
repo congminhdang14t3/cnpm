@@ -90,7 +90,7 @@ public class LoginPresenterImpl extends BasePresenter<LoginContract.LoginView> i
                 MultipartBody.Part body =
                         MultipartBody.Part.createFormData("avatar", file.getName(), requestFile);
                 RequestBody textCustomer = RequestBody.create(MediaType.parse("text/plain"), "customer");
-                Call<User> call = APIUtils.getData().getUser1(textEmail,
+                Call<User> call = APIUtils.getData().getUser(textEmail,
                         textPass,textFirst,textLast,body,textCustomer);
                 call.enqueue(new Callback<User>() {
                     @Override

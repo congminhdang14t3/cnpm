@@ -13,6 +13,6 @@ public interface CartContract {
 
     interface CartPresenter{
         void getListCart();
-        void createPaymentJson(ArrayList<Cart> list,int total);
+        void createPaymentJson(ArrayList<Cart> list);
     }
 }

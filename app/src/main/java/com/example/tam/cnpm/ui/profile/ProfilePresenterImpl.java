@@ -12,7 +12,10 @@ import com.example.tam.cnpm.service.response.User;
 import com.example.tam.cnpm.service.retrofit2.APIUtils;
 import com.example.tam.cnpm.ui.cart.CartActivity;
 import com.example.tam.cnpm.ui.login.LoginActivity_;
+import com.example.tam.cnpm.ulti.SharedPrefs;
 import com.example.tam.cnpm.ulti.Ulti;
+
+import org.androidannotations.annotations.sharedpreferences.SharedPref;
 
 import java.io.File;
 
@@ -93,25 +96,26 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         getView().showLoading();
-                        SharedPreferences sharedPreferences = getContext().
-                                getSharedPreferences(Constant.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-                        String token = sharedPreferences.getString(Constant.TOKEN,"");
+                        String token = SharedPrefs.getInstance().get(Constant.TOKEN,String.class);
                         RequestBody first = RequestBody.create(MediaType.parse("text/plain"),fname);
                         RequestBody last = RequestBody.create(MediaType.parse("text/plain"), lname);
-                        //multipart/form-data
-                        File file =  new File(Ulti.getPath(getContext(),uri));
-                        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                        MultipartBody.Part body =
-                                MultipartBody.Part.createFormData("avatar", file.getName(), requestFile);
-                        Call<User> call = APIUtils.getData().editProfile(token,first,last,body);
+                        Call<User> call;
+                        if(uri == null){
+                            call = APIUtils.getData().editProfileNotAvatar(token,first,last);
+                        }else {
+                            //multipart/form-data
+                            File file =  new File(Ulti.getPath(getContext(),uri));
+                            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                            MultipartBody.Part body =
+                                    MultipartBody.Part.createFormData("avatar", file.getName(), requestFile);
+                            call = APIUtils.getData().editProfile(token,first,last,body);
+                        }
                         call.enqueue(new Callback<User>() {
                             @Override
                             public void onResponse(Call<User> call, Response<User> response) {
                                 if(response.isSuccessful()){
-                                    System.out.println("isSuccessful");
                                     getView().setProfile(response.body());
                                 }else{
-                                    System.out.println("not isSuccessful");
                                     System.out.println(response.message());
                                     getView().showErrorConnect();
                                 }
@@ -120,7 +124,6 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
 
                             @Override
                             public void onFailure(Call<User> call, Throwable t) {
-                                System.out.println("onFailure");
                                 getView().showError(t.toString());
                                 getView().dismissLoading();
                             }

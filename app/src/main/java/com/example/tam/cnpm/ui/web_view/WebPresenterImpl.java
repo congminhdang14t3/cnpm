@@ -9,6 +9,7 @@ import com.example.tam.cnpm.service.retrofit2.APIUtils;
 import com.example.tam.cnpm.service.retrofit2.DataClient;
 import com.example.tam.cnpm.service.retrofit2.RetroClient;
 import com.example.tam.cnpm.ui.cart.CartActivity;
+import com.example.tam.cnpm.ulti.SharedPrefs;
 import com.example.tam.cnpm.ulti.Ulti;
 
 import org.json.JSONException;
@@ -18,28 +19,31 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.tam.cnpm.Constant.TOKEN;
+
 public class WebPresenterImpl extends BasePresenter<WebContract.WebView> implements WebContract.WebPresenter {
     public WebPresenterImpl(Context context) {
         super(context);
     }
 
     @Override
-    public void handleUrl(String link, String json) {
+    public void handleUrl(String link) {
         System.out.println(link);
         String[] arr = link.split("=");
-        String token = arr[1].split("&")[0];
-        String id = arr[2];
-        System.out.println("token: " + token);
-        System.out.println("id: " + id);
+        String list = arr[1].split("&")[0].replaceAll("%27", "\"");
+        String token = arr[2].split("&")[0];
+        String id = arr[3];
         try {
-            JSONObject obj = new JSONObject(json);
-            obj.put(Constant.TOKEN, token);
+            JSONObject obj = new JSONObject();
+            obj.put(TOKEN, token);
             obj.put(Constant.PAYERID, id);
+            obj.put(Constant.LIST_ORDER_CODE, list);
             String send = obj.toString();
             System.out.println(send);
             getView().showLoading();
             Call<MessageResponse> call =
-                    RetroClient.getClient("http://52.14.71.211/api/").create(DataClient.class).orderPayment(Ulti.getToken(getContext()),
+                    RetroClient.getClient("http://52.14.71.211/api/").create(DataClient.class).orderPayment(
+                            SharedPrefs.getInstance().get(TOKEN,String.class),
                             send);
             call.enqueue(new Callback<MessageResponse>() {
                 @Override

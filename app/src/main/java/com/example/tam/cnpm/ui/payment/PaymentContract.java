@@ -9,11 +9,13 @@ import java.util.ArrayList;
 public interface PaymentContract {
     interface PaymentView extends BaseView {
         void finishActivity();
+
         void initPayment(User user);
     }
 
     interface PaymentPresenter {
-        void handlePayment(String json, String money, String fname, String lname, String phone, String address, int id);
+        void handlePayment(String json, String fname, String lname, String phone, String address, int id);
+
         void initPayment();
     }
 }

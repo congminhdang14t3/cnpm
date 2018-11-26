@@ -1,10 +1,9 @@
 package com.example.tam.cnpm.ui.web_view;
 
 import android.graphics.Bitmap;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -23,8 +22,6 @@ public class WebViewActivity extends BaseActivity<WebPresenterImpl> implements W
 
     @Extra
     String link;
-    @Extra
-    String jsonLink;
     @Override
     protected void initPresenter() {
         mPresenter = new WebPresenterImpl(this);
@@ -38,7 +35,8 @@ public class WebViewActivity extends BaseActivity<WebPresenterImpl> implements W
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
                 if(url.startsWith("http://localhost:3000")){
-                    mPresenter.handleUrl(url,jsonLink);
+                    webView.setVisibility(View.GONE);
+                    mPresenter.handleUrl(url);
                 }
             }
         });

@@ -63,7 +63,7 @@ public class CartPresenterImpl extends BasePresenter<CartContract.CartView> impl
     }
 
     @Override
-    public void createPaymentJson(ArrayList<Cart> list, int total) {
+    public void createPaymentJson(ArrayList<Cart> list) {
         if (list.isEmpty()) {
             getView().showToast("List Cart empty!");
             return;
@@ -101,12 +101,9 @@ public class CartPresenterImpl extends BasePresenter<CartContract.CartView> impl
                 }
                 productObject.put(storeId.get(i) + "", array);
             }
-
             paramObject.put(Constant.PRODUCT, productObject);
-            paramObject.put(Constant.MONEY, total / Constant.ONE_USD);
             PaymentActivity_.intent(getContext())
                     .extra(Constant.JSON_PAYMENT, paramObject.toString())
-                    .extra(MONEY, total / ONE_USD)
                     .start();
         } catch (JSONException e) {
             e.printStackTrace();

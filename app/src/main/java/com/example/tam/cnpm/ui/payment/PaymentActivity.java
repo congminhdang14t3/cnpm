@@ -1,4 +1,5 @@
 package com.example.tam.cnpm.ui.payment;
+
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -34,9 +35,6 @@ public class PaymentActivity extends BaseActivity<PaymentPresenterImpl> implemen
     @Extra(JSON_PAYMENT)
     String jsonPayment;
 
-    @Extra(MONEY)
-    int money;
-
     @Override
     protected void initPresenter() {
         mPresenter = new PaymentPresenterImpl(this);
@@ -53,9 +51,9 @@ public class PaymentActivity extends BaseActivity<PaymentPresenterImpl> implemen
                 finish();
                 break;
             case R.id.button_ok_payment:
-                mPresenter.handlePayment(jsonPayment, money + "", editFirstName.getText().toString(),
+                mPresenter.handlePayment(jsonPayment, editFirstName.getText().toString(),
                         editLastName.getText().toString(), editPhone.getText().toString(),
-                        editAddress.getText().toString(),group.getCheckedRadioButtonId());
+                        editAddress.getText().toString(), group.getCheckedRadioButtonId());
                 break;
             default:
                 break;

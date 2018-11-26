@@ -42,18 +42,9 @@ public interface DataClient {
     @GET("profile/")
     Call<User> getProfile(@Header("Authorization") String authorization);
 
-    @FormUrlEncoded
-    @POST("register/")
-    Call<User> getUser(@Field("email") String email,
-                       @Field("password") String password,
-                       @Field("first_name") String firstName,
-                       @Field("last_name") String lastName,
-                       @Field("avatar") String avatar,
-                       @Field("roll") String role);
-
     @Multipart
     @POST("register/")
-    Call<User> getUser1(@Part("email") RequestBody email,
+    Call<User> getUser(@Part("email") RequestBody email,
                         @Part("password") RequestBody password,
                         @Part("first_name") RequestBody firstName,
                         @Part("last_name") RequestBody lastName,
@@ -77,6 +68,11 @@ public interface DataClient {
                            @Part("first_name") RequestBody firstName,
                            @Part("last_name") RequestBody lastName,
                            @Part MultipartBody.Part avatar);
+    @Multipart
+    @PUT("profile/")
+    Call<User> editProfileNotAvatar(@Header("Authorization") String authorization,
+                           @Part("first_name") RequestBody firstName,
+                           @Part("last_name") RequestBody lastName);
 
     @GET("feedback/")
     Call<ArrayList<FeedBack>> getListFeedback(@Query("product") int product);
@@ -89,8 +85,9 @@ public interface DataClient {
                                @Field("detail") String detail,
                                @Field("star") int star);
 
-    @GET("paypal/redirect")
-    Call<String> getLink(@Query("money") String money);
+    @Headers("Content-Type: application/json")
+    @POST("paypal/redirect/")
+    Call<String> redirect(@Header("Authorization") String authorization,@Body String body);
 
     @Headers("Content-Type: application/json")
     @POST("order/create/")

@@ -14,6 +14,7 @@ import com.example.tam.cnpm.service.retrofit2.DataClient;
 import com.example.tam.cnpm.service.retrofit2.RetroClient;
 import com.example.tam.cnpm.ui.cart.CartActivity;
 import com.example.tam.cnpm.ui.web_view.WebViewActivity_;
+import com.example.tam.cnpm.ulti.SharedPrefs;
 import com.example.tam.cnpm.ulti.Ulti;
 
 import org.json.JSONException;
@@ -29,7 +30,7 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
     }
 
     @Override
-    public void handlePayment(String json, String money, String fname, String lname, String phone, String address, int id) {
+    public void handlePayment(String json, String fname, String lname, String phone, String address, int id) {
         if (fname.trim().equals("") ||
                 lname.trim().equals("") ||
                 phone.trim().equals("") ||
@@ -41,21 +42,20 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
         SharedPreferences sharedPreferences = getContext().
                 getSharedPreferences(Constant.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(Constant.FNAME,fname);
-        editor.putString(Constant.LNAME,lname);
-        editor.putString(Constant.PHONE,phone);
-        editor.putString(Constant.ADDRESS,address);
+        editor.putString(Constant.FNAME, fname);
+        editor.putString(Constant.LNAME, lname);
+        editor.putString(Constant.ADDRESS, address);
+        editor.putString(Constant.PHONE, phone);
         editor.apply();
-
         String jsonLink = "";
         try {
             JSONObject obj = new JSONObject(json);
-            obj.put(Constant.PHONE, phone);
             obj.put(Constant.FNAME, fname);
             obj.put(Constant.LNAME, lname);
             obj.put(Constant.ADDRESS, address);
-            System.out.println(obj.toString());
+            obj.put(Constant.PHONE, phone);
             jsonLink = obj.toString();
+            System.out.println("Json: " + jsonLink);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -86,16 +86,20 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
                 break;
             case R.id.radio_paypal:
                 getView().showLoading();
-                Call<String> stringCall = APIUtils.getData().getLink(money);
-                final String finalJsonLink = jsonLink;
+                String token = SharedPrefs.getInstance().get(Constant.TOKEN, String.class);
+                Call<String> stringCall =
+                        RetroClient.getClient("http://52.14.71.211/api/")
+                                .create(DataClient.class)
+                                .redirect(token, jsonLink);
+
                 stringCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (response.isSuccessful()) {
-                            String link = response.body();
+                            String link = response.body().replaceAll("\"","");
+                            System.out.println("link: "+link);
                             WebViewActivity_.intent(getContext())
                                     .link(link)
-                                    .jsonLink(finalJsonLink)
                                     .start();
                             getView().finishActivity();
                         } else {
@@ -120,10 +124,10 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
         SharedPreferences sharedPreferences = getContext().
                 getSharedPreferences(Constant.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         User user = new User();
-        user.setFirstName(sharedPreferences.getString(Constant.FNAME,""));
-        user.setLastName(sharedPreferences.getString(Constant.LNAME,""));
-        user.setPhone(sharedPreferences.getString(Constant.PHONE,""));
-        user.setAddress(sharedPreferences.getString(Constant.ADDRESS,""));
+        user.setFirstName(sharedPreferences.getString(Constant.FNAME, ""));
+        user.setLastName(sharedPreferences.getString(Constant.LNAME, ""));
+        user.setPhone(sharedPreferences.getString(Constant.PHONE, ""));
+        user.setAddress(sharedPreferences.getString(Constant.ADDRESS, ""));
 
         getView().initPayment(user);
     }

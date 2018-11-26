@@ -8,6 +8,6 @@ public interface WebContract {
     }
 
     interface WebPresenter {
-        void handleUrl(String link,String json);
+        void handleUrl(String link);
     }
 }

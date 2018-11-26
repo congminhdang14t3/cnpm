@@ -41,7 +41,7 @@ public class ProfileActivity extends BaseActivity<ProfilePresenterImpl> implemen
     CircleImageView image;
 
     Uri mUri;
-
+    boolean isChangeAvatar;
     @Override
     protected void initPresenter() {
         mPresenter = new ProfilePresenterImpl(this);
@@ -53,7 +53,7 @@ public class ProfileActivity extends BaseActivity<ProfilePresenterImpl> implemen
     }
 
     public void editProfileOnClick(View view) {
-        mPresenter.editProfile(mEditFirstName.getText().toString(), mEditLastName.getText().toString(), mUri);
+        mPresenter.editProfile(mEditFirstName.getText().toString(), mEditLastName.getText().toString(), isChangeAvatar?mUri:null);
     }
 
     public void logOutProfileOnClick(View view) {
@@ -90,6 +90,7 @@ public class ProfileActivity extends BaseActivity<ProfilePresenterImpl> implemen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_LIBRARY && resultCode == RESULT_OK && data != null) {
+            isChangeAvatar = true;
             mUri = data.getData();
             try {
                 InputStream inputStream = getContentResolver().openInputStream(mUri);
