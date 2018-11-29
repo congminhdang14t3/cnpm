@@ -52,11 +52,26 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
 
     @Override
     public void setLogIn() {
-        String token = Ulti.getToken(getContext());
+        String token = SharedPrefs.getInstance().get(Constant.TOKEN,String.class);
 
         if(token.equals("")){
-            getView().changeActivity();
-            getView().showToast("You need to log in!");
+            new AlertDialog.Builder(getContext())
+                    .setMessage("You dont have account,do you want to login?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            getView().changeActivity();
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            getView().finishActivity();
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .create().show();
         }else{
             getView().showLoading();
             Call<User> call = APIUtils.getData().getProfile(token);

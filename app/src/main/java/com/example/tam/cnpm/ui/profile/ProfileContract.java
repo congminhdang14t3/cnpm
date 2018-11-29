@@ -9,6 +9,7 @@ public interface ProfileContract {
     interface ProfileView extends BaseView {
         void setProfile(User user);
         void changeActivity();
+        void finishActivity();
     }
 
     interface ProfilePresenter{

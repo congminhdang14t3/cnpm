@@ -33,12 +33,15 @@ public class WebPresenterImpl extends BasePresenter<WebContract.WebView> impleme
         String list = arr[1].split("&")[0].replaceAll("%27", "\"");
         String token = arr[2].split("&")[0];
         String id = arr[3];
+        System.out.println(list);
+        System.out.println(token);
+        System.out.println(id);
         try {
             JSONObject obj = new JSONObject();
             obj.put(TOKEN, token);
             obj.put(Constant.PAYERID, id);
-            obj.put(Constant.LIST_ORDER_CODE, list);
-            String send = obj.toString();
+            obj.put(Constant.LIST_ORDER_CODE, "AAAA");
+            String send = obj.toString().replace("\"AAAA\"",list);
             System.out.println(send);
             getView().showLoading();
             Call<MessageResponse> call =

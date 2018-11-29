@@ -78,6 +78,11 @@ public class ProfileActivity extends BaseActivity<ProfilePresenterImpl> implemen
         finish();
     }
 
+    @Override
+    public void finishActivity() {
+        finish();
+    }
+
     public void imageOnclick(View view) {
 
         Intent intent = new Intent(Intent.ACTION_PICK);

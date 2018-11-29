@@ -70,6 +70,7 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
                     public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                         if (response.isSuccessful()) {
                             CartActivity.deleteAllCart();
+                            getView().showToast("Payment success!");
                             getView().finishActivity();
                         } else {
                             getView().showErrorConnect();

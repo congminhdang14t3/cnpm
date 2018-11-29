@@ -12,6 +12,7 @@ import com.example.tam.cnpm.service.response.Picture;
 import com.example.tam.cnpm.service.response.Product;
 import com.example.tam.cnpm.service.retrofit2.APIUtils;
 import com.example.tam.cnpm.ui.cart.CartActivity;
+import com.example.tam.cnpm.ulti.SharedPrefs;
 import com.example.tam.cnpm.ulti.Ulti;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.tam.cnpm.Constant.SHARED_PREFERENCES_NAME;
+import static com.example.tam.cnpm.Constant.TOKEN;
 
 public class DetailProductPresenterImpl extends BasePresenter<DetailProductContract.DetailProductView> implements DetailProductContract.DetailProductPresenter {
     ArrayList<FeedBack> mList;
@@ -33,8 +35,7 @@ public class DetailProductPresenterImpl extends BasePresenter<DetailProductContr
 
     @Override
     public void addToCart(Product mProduct, int quantity) {
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString(Constant.TOKEN, "");
+        String token = SharedPrefs.getInstance().get(TOKEN,String.class);
         if (!token.equals("")) {
             getView().showLoading();
             Call<MessageResponse> call = APIUtils.getData().modifyCart(token, mProduct.getId(), quantity);

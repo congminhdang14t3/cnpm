@@ -140,9 +140,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         switch (item.getItemId()) {
             case android.R.id.home:
                 //do whatever
-                MainActivity_.intent(this)
-                        .start();
-                finish();
+                onBackPressed();
                 return true;
             case R.id.menu_cart:
                 CartActivity_.intent(this)

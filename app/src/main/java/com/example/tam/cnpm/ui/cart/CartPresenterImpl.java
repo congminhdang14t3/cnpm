@@ -68,21 +68,6 @@ public class CartPresenterImpl extends BasePresenter<CartContract.CartView> impl
             getView().showToast("List Cart empty!");
             return;
         }
-        String token = Ulti.getToken(getContext());
-        if (token.equals("")) {
-            new AlertDialog.Builder(getContext())
-                    .setMessage("Login before payment")
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            getView().finishActivity();
-                            LoginActivity_.intent(getContext()).start();
-                        }
-                    })
-                    .setNegativeButton("No", null)
-                    .create().show();
-            return;
-        }
         ArrayList<Integer> storeId = getListStoreId(list);
 
         try {
@@ -105,6 +90,7 @@ public class CartPresenterImpl extends BasePresenter<CartContract.CartView> impl
             PaymentActivity_.intent(getContext())
                     .extra(Constant.JSON_PAYMENT, paramObject.toString())
                     .start();
+            getView().finishActivity();
         } catch (JSONException e) {
             e.printStackTrace();
         }

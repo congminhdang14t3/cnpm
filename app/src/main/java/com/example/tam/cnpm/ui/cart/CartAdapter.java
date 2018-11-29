@@ -23,6 +23,7 @@ import com.example.tam.cnpm.service.response.Cart;
 import com.example.tam.cnpm.service.response.MessageResponse;
 import com.example.tam.cnpm.service.response.Product;
 import com.example.tam.cnpm.service.retrofit2.APIUtils;
+import com.example.tam.cnpm.ulti.SharedPrefs;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.tam.cnpm.Constant.SHARED_PREFERENCES_NAME;
+import static com.example.tam.cnpm.Constant.TOKEN;
 
 public class CartAdapter extends BaseAdapter {
 
@@ -59,7 +61,7 @@ public class CartAdapter extends BaseAdapter {
         final Cart response = mList.get(position);
         final Product product = response.getProduct();
         holder.mTextName.setText("Name: " + product.getName());
-        holder.mTextCountCart.setText("Quantity: "+response.getQuantity());
+        holder.mTextCountCart.setText("Quantity: " + response.getQuantity());
         holder.mTextPrice.setText("Price: " + product.getPrice());
         holder.mLinearDeleteCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,26 +71,31 @@ public class CartAdapter extends BaseAdapter {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                SharedPreferences sharedPreferences =  getContext().getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-                                String token = sharedPreferences.getString(Constant.TOKEN,"");
-                                if(!token.equals("")){
+                                String token = SharedPrefs.getInstance().get(TOKEN, String.class);
+                                if (!token.equals("")) {
                                     Call<MessageResponse> call = APIUtils.getData().modifyCart(token,
-                                            response.getProduct().getId(),0);
+                                            response.getProduct().getId(), 0);
                                     call.enqueue(new Callback<MessageResponse>() {
                                         @Override
                                         public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response1) {
-                                            if(response1.isSuccessful()){
+                                            if (response1.isSuccessful()) {
                                                 mList.remove(response);
                                                 notifyDataSetChanged();
                                                 CartActivity.changeTotal();
                                                 Toast.makeText(mContext, "Delete Success!", Toast.LENGTH_SHORT).show();
                                             }
                                         }
+
                                         @Override
                                         public void onFailure(Call<MessageResponse> call, Throwable t) {
 
                                         }
                                     });
+                                } else {
+                                    mList.remove(response);
+                                    notifyDataSetChanged();
+                                    CartActivity.changeTotal();
+                                    Toast.makeText(mContext, "Delete Success!", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         })

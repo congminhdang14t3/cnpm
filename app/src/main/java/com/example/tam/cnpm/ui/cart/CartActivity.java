@@ -53,6 +53,7 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
         mRecyclerView.setAdapter(mAdapter);
 
         mPresenter.getListCart();
+        changeTotal();
     }
 
     @Override
