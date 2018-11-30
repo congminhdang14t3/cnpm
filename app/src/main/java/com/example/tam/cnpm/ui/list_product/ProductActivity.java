@@ -100,9 +100,10 @@ public class ProductActivity extends BaseActivity<ProductPresenterImpl> implemen
 
     @Override
     public void onItemClick(int position) {
+        String image = mList.get(position).getPicture().isEmpty()? "" : mList.get(position).getPicture().get(0).getImage();
         DetailProductActivity_.intent(ProductActivity.this)
                 .mProduct(mList.get(position))
-                .mImageProduct(mList.get(position).getPicture().get(0).getImage())
+                .mImageProduct(image)
                 .start();
     }
     @Override

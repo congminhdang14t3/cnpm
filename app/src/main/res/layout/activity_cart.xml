@@ -33,13 +33,5 @@
             android:textColor="#3e62b6"
             android:layout_margin="5dp"
            android:onClick="goToPaymentActivity"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Countinue buy"
-            android:textSize="15sp"
-            android:textColor="#3e62b6"
-            android:layout_margin="5dp"
-            android:onClick="btnCountinueBuy_onclick"/>
     </LinearLayout>
 </LinearLayout>

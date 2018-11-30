@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.tam.cnpm.R;
-import com.example.tam.cnpm.ui.MainActivity_;
 import com.example.tam.cnpm.ui.cart.CartActivity_;
 
 import org.androidannotations.annotations.AfterViews;

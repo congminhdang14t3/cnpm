@@ -41,13 +41,12 @@ public class WebPresenterImpl extends BasePresenter<WebContract.WebView> impleme
             obj.put(TOKEN, token);
             obj.put(Constant.PAYERID, id);
             obj.put(Constant.LIST_ORDER_CODE, "AAAA");
-            String send = obj.toString().replace("\"AAAA\"",list);
+            String send = obj.toString().replace("\"AAAA\"", list);
             System.out.println(send);
             getView().showLoading();
             Call<MessageResponse> call =
-                    RetroClient.getClient("http://52.14.71.211/api/").create(DataClient.class).orderPayment(
-                            SharedPrefs.getInstance().get(TOKEN,String.class),
-                            send);
+                    RetroClient.getClient("http://52.14.71.211/api/")
+                            .create(DataClient.class).orderPayment(send);
             call.enqueue(new Callback<MessageResponse>() {
                 @Override
                 public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {

@@ -87,11 +87,13 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
     protected void afterView() {
         mTextDrugName.setText(getString(R.string.name) + ": " + mProduct.getName());
         mTextExpireDate.setText(getString(R.string.expire_date) + ": " + mProduct.getExpireDate());
-        Picasso.get()
-                .load(mImageProduct)
-                .placeholder(R.drawable.noimage)
-                .error(R.drawable.errorimage)
-                .into(mImageDetailProduct);
+        if (!mImageProduct.equals("") && mImageProduct != null) {
+            Picasso.get()
+                    .load(mImageProduct)
+                    .placeholder(R.drawable.noimage)
+                    .error(R.drawable.errorimage)
+                    .into(mImageDetailProduct);
+        }
         mExpandableTextView.setText(mProduct.getDetail());
         mTextPriceProduct.setText(mProduct.getPrice() + "đ");
         //set up recyclerview

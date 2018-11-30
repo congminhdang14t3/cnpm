@@ -4,7 +4,9 @@ import com.example.tam.cnpm.service.a.response.CategoryResponse;
 import com.example.tam.cnpm.service.response.Cart;
 import com.example.tam.cnpm.service.response.FeedBack;
 import com.example.tam.cnpm.service.response.MessageResponse;
+import com.example.tam.cnpm.service.response.Order;
 import com.example.tam.cnpm.service.response.Product;
+import com.example.tam.cnpm.service.response.Store;
 import com.example.tam.cnpm.service.response.TokenResponse;
 import com.example.tam.cnpm.service.response.User;
 
@@ -23,6 +25,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface DataClient {
@@ -88,12 +91,25 @@ public interface DataClient {
     @Headers("Content-Type: application/json")
     @POST("paypal/redirect/")
     Call<String> redirect(@Header("Authorization") String authorization,@Body String body);
+    @Headers("Content-Type: application/json")
+    @POST("paypal/redirect/")
+    Call<String> redirectNotToken(@Body String body);
 
     @Headers("Content-Type: application/json")
     @POST("order/create/")
     Call<MessageResponse> orderShipCode(@Header("Authorization") String authorization,@Body String body);
+    @Headers("Content-Type: application/json")
+    @POST("order/create/")
+    Call<MessageResponse> orderShipCodeNotToken(@Body String body);
 
     @Headers("Content-Type: application/json")
     @POST("paypal/payment/")
-    Call<MessageResponse> orderPayment(@Header("Authorization") String authorization,@Body String body);
+    Call<MessageResponse> orderPayment(@Body String body);
+
+    @GET("order/list/")
+    Call<ArrayList<Order>> listOrders(@Header("Authorization") String authorization);
+
+
+    @GET("store/info/{id}/")
+    Call<Store> getStore(@Path("id") int id);
 }

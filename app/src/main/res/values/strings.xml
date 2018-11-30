@@ -18,5 +18,6 @@
     <string name="search_hint">search...</string>
     <string name="name">Name</string>
     <string name="expire_date">Expire Date</string>
+    <string name="map_api_key">AIzaSyA7Ze1-tsSi1lBgGoUPMnvATyllLExXbMI</string>
 
 </resources>

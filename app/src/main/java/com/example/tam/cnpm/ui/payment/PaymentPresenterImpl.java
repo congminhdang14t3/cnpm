@@ -1,6 +1,8 @@
 package com.example.tam.cnpm.ui.payment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -13,6 +15,7 @@ import com.example.tam.cnpm.service.retrofit2.APIUtils;
 import com.example.tam.cnpm.service.retrofit2.DataClient;
 import com.example.tam.cnpm.service.retrofit2.RetroClient;
 import com.example.tam.cnpm.ui.cart.CartActivity;
+import com.example.tam.cnpm.ui.login.LoginActivity_;
 import com.example.tam.cnpm.ui.web_view.WebViewActivity_;
 import com.example.tam.cnpm.ulti.SharedPrefs;
 import com.example.tam.cnpm.ulti.Ulti;
@@ -24,13 +27,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.tam.cnpm.Constant.TOKEN;
+
 public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentView> implements PaymentContract.PaymentPresenter {
     public PaymentPresenterImpl(Context context) {
         super(context);
     }
 
     @Override
-    public void handlePayment(String json, String fname, String lname, String phone, String address, int id) {
+    public void handlePayment(final String json, final String fname, final String lname, final String phone, final String address, final int id) {
+        String token = SharedPrefs.getInstance().get(TOKEN, String.class);
         if (fname.trim().equals("") ||
                 lname.trim().equals("") ||
                 phone.trim().equals("") ||
@@ -38,7 +44,42 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
             getView().showToast("Please fill full imformation!!");
             return;
         }
+        if (token.equals("")) {
+            new AlertDialog.Builder(getContext())
+                    .setMessage("Do you want to login to payment?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            LoginActivity_.intent(getContext()).start();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            payment(json, fname, lname, phone, address, id);
+                        }
+                    })
+                    .create().show();
+        } else {
+            payment(json, fname, lname, phone, address, id);
+        }
 
+    }
+
+    @Override
+    public void initPayment() {
+        SharedPreferences sharedPreferences = getContext().
+                getSharedPreferences(Constant.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        User user = new User();
+        user.setFirstName(sharedPreferences.getString(Constant.FNAME, ""));
+        user.setLastName(sharedPreferences.getString(Constant.LNAME, ""));
+        user.setPhone(sharedPreferences.getString(Constant.PHONE, ""));
+        user.setAddress(sharedPreferences.getString(Constant.ADDRESS, ""));
+
+        getView().initPayment(user);
+    }
+
+    private void payment(String json, String fname, String lname, String phone, String address, int id) {
         SharedPreferences sharedPreferences = getContext().
                 getSharedPreferences(Constant.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -58,13 +99,21 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
             System.out.println("Json: " + jsonLink);
         } catch (JSONException e) {
             e.printStackTrace();
+            return;
         }
+        String token = SharedPrefs.getInstance().get(TOKEN, String.class);
         switch (id) {
             case R.id.radio_ship_code:
                 getView().showLoading();
-                Call<MessageResponse> call =
-                        RetroClient.getClient("http://52.14.71.211/api/").create(DataClient.class).orderShipCode(Ulti.getToken(getContext()),
-                                jsonLink);
+                Call<MessageResponse> call;
+
+                if (token.equals("")) {
+                    call = RetroClient.getClient("http://52.14.71.211/api/")
+                            .create(DataClient.class).orderShipCodeNotToken(jsonLink);
+                } else {
+                    call = RetroClient.getClient("http://52.14.71.211/api/")
+                            .create(DataClient.class).orderShipCode(token, jsonLink);
+                }
                 call.enqueue(new Callback<MessageResponse>() {
                     @Override
                     public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
@@ -87,18 +136,22 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
                 break;
             case R.id.radio_paypal:
                 getView().showLoading();
-                String token = SharedPrefs.getInstance().get(Constant.TOKEN, String.class);
-                Call<String> stringCall =
-                        RetroClient.getClient("http://52.14.71.211/api/")
-                                .create(DataClient.class)
-                                .redirect(token, jsonLink);
+                Call<String> stringCall;
+                if (token.equals("")){
+                    stringCall = RetroClient.getClient("http://52.14.71.211/api/")
+                            .create(DataClient.class)
+                            .redirectNotToken(jsonLink);
+                }else{
+                    stringCall = RetroClient.getClient("http://52.14.71.211/api/")
+                            .create(DataClient.class)
+                            .redirect(token, jsonLink);
+                }
 
                 stringCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (response.isSuccessful()) {
-                            String link = response.body().replaceAll("\"","");
-                            System.out.println("link: "+link);
+                            String link = response.body().replaceAll("\"", "");
                             WebViewActivity_.intent(getContext())
                                     .link(link)
                                     .start();
@@ -118,18 +171,5 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
                 break;
             default:
         }
-    }
-
-    @Override
-    public void initPayment() {
-        SharedPreferences sharedPreferences = getContext().
-                getSharedPreferences(Constant.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        User user = new User();
-        user.setFirstName(sharedPreferences.getString(Constant.FNAME, ""));
-        user.setLastName(sharedPreferences.getString(Constant.LNAME, ""));
-        user.setPhone(sharedPreferences.getString(Constant.PHONE, ""));
-        user.setAddress(sharedPreferences.getString(Constant.ADDRESS, ""));
-
-        getView().initPayment(user);
     }
 }

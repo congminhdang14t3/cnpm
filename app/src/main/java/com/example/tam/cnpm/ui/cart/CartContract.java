@@ -14,5 +14,6 @@ public interface CartContract {
     interface CartPresenter{
         void getListCart();
         void createPaymentJson(ArrayList<Cart> list);
+        void goOrderActivity();
     }
 }

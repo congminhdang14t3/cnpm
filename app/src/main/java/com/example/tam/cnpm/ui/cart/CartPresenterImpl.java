@@ -12,6 +12,7 @@ import com.example.tam.cnpm.service.response.Product;
 import com.example.tam.cnpm.service.retrofit2.APIUtils;
 import com.example.tam.cnpm.ui.login.LoginActivity_;
 import com.example.tam.cnpm.ui.payment.PaymentActivity_;
+import com.example.tam.cnpm.ulti.SharedPrefs;
 import com.example.tam.cnpm.ulti.Ulti;
 
 import org.json.JSONArray;
@@ -28,7 +29,9 @@ import retrofit2.Response;
 import static com.example.tam.cnpm.Constant.MONEY;
 import static com.example.tam.cnpm.Constant.ONE_USD;
 import static com.example.tam.cnpm.Constant.SHARED_PREFERENCES_NAME;
+import static com.example.tam.cnpm.Constant.TOKEN;
 
+import com.example.tam.cnpm.ui.order.OrderActivity_;
 public class CartPresenterImpl extends BasePresenter<CartContract.CartView> implements CartContract.CartPresenter {
     public CartPresenterImpl(Context context) {
         super(context);
@@ -90,9 +93,20 @@ public class CartPresenterImpl extends BasePresenter<CartContract.CartView> impl
             PaymentActivity_.intent(getContext())
                     .extra(Constant.JSON_PAYMENT, paramObject.toString())
                     .start();
-            getView().finishActivity();
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void goOrderActivity() {
+        String token = SharedPrefs.getInstance().get(TOKEN,String.class);
+        if(token.equals("")){
+            getView().showToast("You don't have orders");
+        }
+        else{
+            OrderActivity_.intent(getContext())
+                    .start();
         }
     }
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <Spinner
+        android:id="@+id/spinner_order"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    <TextView
+        android:id="@+id/text_create_order"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="05:13:37 - 02/11/2018"
+        android:gravity="right"/>
+    <TextView
+        android:id="@+id/text_store_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="store: Cửa hàng kinh doanh Đại Lợi"/>
+    <TextView
+        android:id="@+id/text_code_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="code: c617d497-6ce4-4ada-ac49-61285ed25157"/>
+    <TextView
+        android:id="@+id/text_money_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="money: 330000"/>
+    <TextView
+        android:id="@+id/text_status_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="status_order: pending"/>
+
+</LinearLayout>

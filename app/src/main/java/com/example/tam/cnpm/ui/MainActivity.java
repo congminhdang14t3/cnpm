@@ -1,8 +1,10 @@
 package com.example.tam.cnpm.ui;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -30,13 +32,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static com.example.tam.cnpm.Constant.TOKEN;
+
 @EActivity(R.layout.activity_main)
 public class MainActivity extends BaseActivity {
     @ViewById(R.id.boom_menu)
     BoomMenuButton mBoomMenuButton;
-    int[]listImage = {R.drawable.home,R.drawable.drug,R.drawable.cart,R.drawable.ic_news,R.drawable.account
-            ,R.drawable.information,R.drawable.store};
-    String[]listText;
+    int[] listImage = {R.drawable.home, R.drawable.drug, R.drawable.cart, R.drawable.ic_news, R.drawable.account
+            , R.drawable.information, R.drawable.store};
+    String[] listText;
+
     @Override
     protected void initPresenter() {
 
@@ -53,16 +58,17 @@ public class MainActivity extends BaseActivity {
                     .listener(new OnBMClickListener() {
                         @Override
                         public void onBoomButtonClick(int index) {
-                            switch (index){
+                            switch (index) {
                                 case 1:
                                     CategoryActivity_.intent(MainActivity.this)
-                                            .start();break;
+                                            .start();
+                                    break;
                                 case 3:
                                     NewsActivity_.intent(MainActivity.this)
-                                            .start();break;
-                                case 4:
-                                    ProfileActivity_.intent(MainActivity.this)
                                             .start();
+                                    break;
+                                case 4:
+                                    setGotoProfile();
                                     break;
 
                             }
@@ -79,15 +85,35 @@ public class MainActivity extends BaseActivity {
     }
 
     @Click
-    void text_not_remember_drug(){
+    void text_not_remember_drug() {
         CategoryActivity_.intent(MainActivity.this)
                 .start();
     }
 
     @Click
-    void text_want_to_buy(){
+    void text_want_to_buy() {
         ProductActivity_.intent(MainActivity.this)
-                    .categoryId(0)
+                .categoryId(0)
                 .start();
+    }
+
+    void setGotoProfile() {
+        String token = SharedPrefs.getInstance().get(TOKEN, String.class);
+        if (token.equals("")) {
+            new AlertDialog.Builder(this)
+                    .setMessage("You dont have account,do you want to login?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            LoginActivity_.intent(MainActivity.this).start();
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .setNegativeButton("No", null)
+                    .create().show();
+        }
+        else{
+            ProfileActivity_.intent(MainActivity.this).start();
+        }
     }
 }

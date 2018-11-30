@@ -46,9 +46,9 @@ public class Product implements Parcelable{
     @SerializedName("is_active")
     @Expose
     private Boolean isActive;
-    @SerializedName("status")
+    @SerializedName("count_in_stock")
     @Expose
-    private String status;
+    private Integer countInStock;
     @SerializedName("supplier")
     @Expose
     private Object supplier;
@@ -93,7 +93,11 @@ public class Product implements Parcelable{
         }
         byte tmpIsActive = in.readByte();
         isActive = tmpIsActive == 0 ? null : tmpIsActive == 1;
-        status = in.readString();
+        if (in.readByte() == 0) {
+            countInStock = null;
+        } else {
+            countInStock = in.readInt();
+        }
     }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
@@ -204,12 +208,12 @@ public class Product implements Parcelable{
         this.isActive = isActive;
     }
 
-    public String getStatus() {
-        return status;
+    public int getCountInStock() {
+        return countInStock;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCountInStock(int countInStock) {
+        this.countInStock = countInStock;
     }
 
     public Object getSupplier() {
@@ -272,7 +276,12 @@ public class Product implements Parcelable{
             parcel.writeInt(hitCount);
         }
         parcel.writeByte((byte) (isActive == null ? 0 : isActive ? 1 : 2));
-        parcel.writeString(status);
+        if (countInStock == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(countInStock);
+        }
     }
 
     @Override
@@ -290,7 +299,7 @@ public class Product implements Parcelable{
                 ", tax=" + tax +
                 ", hitCount=" + hitCount +
                 ", isActive=" + isActive +
-                ", status='" + status + '\'' +
+                ", countInStock='" + countInStock + '\'' +
                 ", supplier=" + supplier +
                 ", category=" + category +
                 '}';

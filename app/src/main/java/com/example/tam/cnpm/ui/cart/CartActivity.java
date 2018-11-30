@@ -6,6 +6,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,9 +14,6 @@ import com.example.tam.cnpm.Constant;
 import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BaseActivity;
 import com.example.tam.cnpm.service.response.Cart;
-import com.example.tam.cnpm.service.response.Product;
-import com.example.tam.cnpm.ui.list_product.ListProductAdapter;
-import com.example.tam.cnpm.ui.payment.PaymentActivity_;
 
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
@@ -58,12 +56,20 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return false;
+        getMenuInflater().inflate(R.menu.menu_order,menu);
+        return true;
     }
 
-    public void btnCountinueBuy_onclick(View view) {
-        finish();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_order:
+                mPresenter.goOrderActivity();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
+
     public static void changeTotal(){
         int total = 0;
         for (int i=0;i<mList.size();i++){

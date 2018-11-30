@@ -17,11 +17,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ListProductAdapter extends BaseAdapter{
+public class ListProductAdapter extends BaseAdapter {
 
     Context mContext;
     private OnItemClickListener listener;
     private ArrayList<Product> mList;
+
     protected ListProductAdapter(Context mContext, ArrayList<Product> list, OnItemClickListener listener) {
         super(mContext);
         this.mContext = mContext;
@@ -31,7 +32,7 @@ public class ListProductAdapter extends BaseAdapter{
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.list_product,parent,false);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.list_product, parent, false);
         return new ContentViewHolder(view);
     }
 
@@ -40,12 +41,11 @@ public class ListProductAdapter extends BaseAdapter{
         onBindItemViewHolder((ContentViewHolder) holder, position);
     }
 
-    @SuppressLint("ResourceType")
     private void onBindItemViewHolder(ContentViewHolder holder, int position) {
         Product response = mList.get(position);
-        holder.mTextName.setText("Name Product: "+response.getName());
-        holder.mTextPrice.setText("Price: "+response.getPrice()+"");
-        holder.mTextStatus.setText("Status: "+response.getStatus());
+        holder.mTextName.setText("Name Product: " + response.getName());
+        holder.mTextPrice.setText("Price: " + response.getPrice() + "");
+        holder.mTextStatus.setText("Count in stock: " + response.getCountInStock());
         Picasso.get()
                 .load(response.getPicture().isEmpty() ? "null"
                         : response.getPicture().get(0).getImage())
@@ -62,12 +62,12 @@ public class ListProductAdapter extends BaseAdapter{
     public class ContentViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImageView;
         private TextView mTextName,
-        mTextPrice,
-        mTextStatus;
+                mTextPrice,
+                mTextStatus;
 
         public ContentViewHolder(View v) {
             super(v);
-            mImageView =  v.findViewById(R.id.image_product);
+            mImageView = v.findViewById(R.id.image_product);
             mTextName = v.findViewById(R.id.text_product_name);
             mTextPrice = v.findViewById(R.id.text_product_price);
             mTextStatus = v.findViewById(R.id.text_product_status);
@@ -79,7 +79,7 @@ public class ListProductAdapter extends BaseAdapter{
                     }
                 }
             });
-            v.startAnimation(AnimationUtils.loadAnimation(mContext,R.anim.scale_list));
+            v.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.scale_list));
         }
     }
 }

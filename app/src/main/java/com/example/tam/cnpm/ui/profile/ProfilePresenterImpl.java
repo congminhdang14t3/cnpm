@@ -46,61 +46,39 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
                         getView().changeActivity();
                     }
                 })
-                .setNegativeButton("No",null)
+                .setNegativeButton("No", null)
                 .create().show();
     }
 
     @Override
     public void setLogIn() {
-        String token = SharedPrefs.getInstance().get(Constant.TOKEN,String.class);
-
-        if(token.equals("")){
-            new AlertDialog.Builder(getContext())
-                    .setMessage("You dont have account,do you want to login?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            getView().changeActivity();
-                            dialogInterface.dismiss();
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            getView().finishActivity();
-                            dialogInterface.dismiss();
-                        }
-                    })
-                    .create().show();
-        }else{
-            getView().showLoading();
-            Call<User> call = APIUtils.getData().getProfile(token);
-            call.enqueue(new Callback<User>() {
-                @Override
-                public void onResponse(Call<User> call, Response<User> response) {
-                    if(response.isSuccessful()){
-                        User user = response.body();
-                        SharedPreferences sharedPreferences = getContext().
-                                getSharedPreferences(Constant.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(Constant.FNAME,user.getFirstName());
-                        editor.putString(Constant.LNAME,user.getLastName());
-                        editor.apply();
-                        getView().setProfile(user);
-                    }else{
-                        getView().showErrorConnect();
-                    }
-                    getView().dismissLoading();
+        String token = SharedPrefs.getInstance().get(Constant.TOKEN, String.class);
+        getView().showLoading();
+        Call<User> call = APIUtils.getData().getProfile(token);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    User user = response.body();
+                    SharedPreferences sharedPreferences = getContext().
+                            getSharedPreferences(Constant.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(Constant.FNAME, user.getFirstName());
+                    editor.putString(Constant.LNAME, user.getLastName());
+                    editor.apply();
+                    getView().setProfile(user);
+                } else {
+                    getView().showErrorConnect();
                 }
+                getView().dismissLoading();
+            }
 
-                @Override
-                public void onFailure(Call<User> call, Throwable t) {
-                    getView().showError(t.toString());
-                    getView().dismissLoading();
-                }
-            });
-        }
-
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                getView().showError(t.toString());
+                getView().dismissLoading();
+            }
+        });
     }
 
     @Override
@@ -111,26 +89,26 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         getView().showLoading();
-                        String token = SharedPrefs.getInstance().get(Constant.TOKEN,String.class);
-                        RequestBody first = RequestBody.create(MediaType.parse("text/plain"),fname);
+                        String token = SharedPrefs.getInstance().get(Constant.TOKEN, String.class);
+                        RequestBody first = RequestBody.create(MediaType.parse("text/plain"), fname);
                         RequestBody last = RequestBody.create(MediaType.parse("text/plain"), lname);
                         Call<User> call;
-                        if(uri == null){
-                            call = APIUtils.getData().editProfileNotAvatar(token,first,last);
-                        }else {
+                        if (uri == null) {
+                            call = APIUtils.getData().editProfileNotAvatar(token, first, last);
+                        } else {
                             //multipart/form-data
-                            File file =  new File(Ulti.getPath(getContext(),uri));
+                            File file = new File(Ulti.getPath(getContext(), uri));
                             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                             MultipartBody.Part body =
                                     MultipartBody.Part.createFormData("avatar", file.getName(), requestFile);
-                            call = APIUtils.getData().editProfile(token,first,last,body);
+                            call = APIUtils.getData().editProfile(token, first, last, body);
                         }
                         call.enqueue(new Callback<User>() {
                             @Override
                             public void onResponse(Call<User> call, Response<User> response) {
-                                if(response.isSuccessful()){
+                                if (response.isSuccessful()) {
                                     getView().setProfile(response.body());
-                                }else{
+                                } else {
                                     System.out.println(response.message());
                                     getView().showErrorConnect();
                                 }
@@ -145,7 +123,7 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
                         });
                     }
                 })
-                .setNegativeButton("No",null)
+                .setNegativeButton("No", null)
                 .create().show();
     }
 }

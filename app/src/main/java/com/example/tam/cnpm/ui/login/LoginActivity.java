@@ -44,8 +44,6 @@ public class LoginActivity extends BaseActivity<LoginPresenterImpl> implements L
     }
 
     public void skipOnclick(View view) {
-        MainActivity_.intent(this)
-                .start();
         finish();
 
     }
