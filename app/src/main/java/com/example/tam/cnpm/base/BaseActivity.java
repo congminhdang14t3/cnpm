@@ -19,6 +19,8 @@ import com.example.tam.cnpm.ui.cart.CartActivity_;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 @EActivity
 //@WindowFeature(Window.FEATURE_NO_TITLE)
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView {
@@ -49,7 +51,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
     @AfterViews
-    protected void initView(){
+    protected void initView() {
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
         mActionBar.show();
@@ -59,13 +61,13 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             View decor = getWindow().getDecorView();
             decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
         initPresenter();
 
-        if(mPresenter!= null){
+        if (mPresenter != null) {
             mPresenter.attachView(this);
         }
         initProgressDialog();
@@ -76,21 +78,23 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         mProgressDialog.setMessage(getStringResource(R.string.loading));
         mProgressDialog.setCancelable(false);
     }
-    private void showProgressDialog(){
-        if(!mProgressDialog.isShowing() && mProgressDialog!=null && !isFinishing()){
+
+    private void showProgressDialog() {
+        if (!mProgressDialog.isShowing() && mProgressDialog != null && !isFinishing()) {
             mProgressDialog.show();
         }
     }
 
-    private void dismissProgressDialog(){
-        if(mProgressDialog.isShowing() && mProgressDialog!=null && !isFinishing()){
+    private void dismissProgressDialog() {
+        if (mProgressDialog.isShowing() && mProgressDialog != null && !isFinishing()) {
             mProgressDialog.dismiss();
         }
     }
-    protected void showAlertDialog(String message){
+
+    protected void showAlertDialog(String message) {
         new AlertDialog.Builder(this)
                 .setMessage(message)
-                .setPositiveButton(getStringResource(R.string.ok),null)
+                .setPositiveButton(getStringResource(R.string.ok), null)
                 .create().show();
     }
 
@@ -130,10 +134,18 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
     @Override
+    public void showSweetDialog(String message, int type) {
+        new SweetAlertDialog(this, type)
+                .setTitleText(message)
+                .show();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_cart,menu);
+        getMenuInflater().inflate(R.menu.menu_cart, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

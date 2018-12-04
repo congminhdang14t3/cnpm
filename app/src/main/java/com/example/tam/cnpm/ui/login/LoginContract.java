@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public interface LoginContract {
     interface LoginView extends BaseView {
-        void registerStatus(String status);
         void resultSignIn(int status);
         void showImage();
     }

@@ -47,12 +47,20 @@ public interface DataClient {
 
     @Multipart
     @POST("register/")
-    Call<User> getUser(@Part("email") RequestBody email,
+    Call<User> registerUser(@Part("email") RequestBody email,
                         @Part("password") RequestBody password,
                         @Part("first_name") RequestBody firstName,
                         @Part("last_name") RequestBody lastName,
                         @Part MultipartBody.Part image,
                         @Part("roll") RequestBody role);
+
+    @Multipart
+    @POST("register/")
+    Call<User> registerUserNotAvatar(@Part("email") RequestBody email,
+                            @Part("password") RequestBody password,
+                            @Part("first_name") RequestBody firstName,
+                            @Part("last_name") RequestBody lastName,
+                            @Part("roll") RequestBody role);
 
     @FormUrlEncoded
     @POST("login/")

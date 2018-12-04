@@ -21,6 +21,7 @@ import com.example.tam.cnpm.ui.MainActivity_;
 
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
 import static com.example.tam.cnpm.Constant.REQUEST_CODE_LIBRARY;
 
 @EActivity(R.layout.activity_login)
@@ -52,16 +53,13 @@ public class LoginActivity extends BaseActivity<LoginPresenterImpl> implements L
         mPresenter.showDialogRegister();
     }
 
-    @Override
-    public void registerStatus(String status) {
-        showToast(status);
-    }
 
     @Override
     public void resultSignIn(int status) {
-        switch (status){
+        switch (status) {
             case 0:
-                showToast("Login Fail!");break;
+                showToast("Login Fail!");
+                break;
             case 1:
                 showToast("Login Success!");
                 finish();
@@ -74,21 +72,23 @@ public class LoginActivity extends BaseActivity<LoginPresenterImpl> implements L
     public void showImage() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        startActivityForResult(intent,REQUEST_CODE_LIBRARY);
+        startActivityForResult(intent, REQUEST_CODE_LIBRARY);
     }
 
     public void signInOnlick(View view) {
-        mPresenter.signIn(mEditEmail.getText().toString(),mEditPass.getText().toString());
+        mPresenter.signIn(mEditEmail.getText().toString(), mEditPass.getText().toString());
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE_LIBRARY && resultCode == RESULT_OK && data!=null){
+        if (requestCode == REQUEST_CODE_LIBRARY && resultCode == RESULT_OK && data != null) {
             Uri uri = data.getData();
             mPresenter.setImage(uri);
         }
     }
-    public void initPermission(){
+
+    public void initPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Kiểm tra quyền đọc/ghi dữ liệu vào thiết bị lưu trữ ngoài.
             int readPermission = ActivityCompat.checkSelfPermission(this,
@@ -108,6 +108,7 @@ public class LoginActivity extends BaseActivity<LoginPresenterImpl> implements L
             }
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 1) {

@@ -13,5 +13,7 @@ public interface BaseView {
 
     void showToast(String message);
 
+    void showSweetDialog(String message, int type);
+
     String getStringResource(int resource);
 }
