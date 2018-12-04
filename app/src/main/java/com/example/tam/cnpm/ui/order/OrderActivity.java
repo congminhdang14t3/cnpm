@@ -31,6 +31,7 @@ public class OrderActivity extends BaseActivity<OrderPresenterImpl> implements O
 
     @Override
     protected void afterView() {
+        setTitle("Order");
         mList = new ArrayList<>();
         mAdapter = new OrderAdapter(this, mList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

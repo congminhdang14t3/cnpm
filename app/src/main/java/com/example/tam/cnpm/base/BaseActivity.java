@@ -73,6 +73,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         initProgressDialog();
     }
 
+    @Override
+    public void setTitle(String title) {
+        mActionBar.setTitle(title);
+    }
+
     private void initProgressDialog() {
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage(getStringResource(R.string.loading));

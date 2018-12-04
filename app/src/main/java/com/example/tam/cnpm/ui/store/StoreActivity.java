@@ -52,6 +52,7 @@ public class StoreActivity extends BaseActivity<StorePresenterImpl> implements S
 
     @Override
     protected void afterView() {
+        setTitle("Store");
         mPresenter.getStoreById(mStoreId);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.myMap);
     }

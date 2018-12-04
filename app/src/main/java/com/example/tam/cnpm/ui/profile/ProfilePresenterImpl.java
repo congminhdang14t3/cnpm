@@ -26,6 +26,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.tam.cnpm.Constant.TOKEN;
+
 public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileView> implements ProfileContract.ProfilePresenter {
     public ProfilePresenterImpl(Context context) {
         super(context);
@@ -39,10 +41,7 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         CartActivity.mList.clear();
-                        SharedPreferences sharedPreferences = getContext().getSharedPreferences(Constant.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(Constant.TOKEN, "");
-                        editor.apply();
+                        SharedPrefs.getInstance().put(TOKEN,"");
                         getView().changeActivity();
                     }
                 })
@@ -52,7 +51,7 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
 
     @Override
     public void setLogIn() {
-        String token = SharedPrefs.getInstance().get(Constant.TOKEN, String.class);
+        String token = SharedPrefs.getInstance().get(TOKEN, String.class);
         getView().showLoading();
         Call<User> call = APIUtils.getData().getProfile(token);
         call.enqueue(new Callback<User>() {
@@ -89,7 +88,7 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         getView().showLoading();
-                        String token = SharedPrefs.getInstance().get(Constant.TOKEN, String.class);
+                        String token = SharedPrefs.getInstance().get(TOKEN, String.class);
                         RequestBody first = RequestBody.create(MediaType.parse("text/plain"), fname);
                         RequestBody last = RequestBody.create(MediaType.parse("text/plain"), lname);
                         Call<User> call;

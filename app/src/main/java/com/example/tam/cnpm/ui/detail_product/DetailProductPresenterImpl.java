@@ -18,6 +18,7 @@ import com.example.tam.cnpm.ulti.Ulti;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,7 +36,7 @@ public class DetailProductPresenterImpl extends BasePresenter<DetailProductContr
 
     @Override
     public void addToCart(Product mProduct, int quantity) {
-        String token = SharedPrefs.getInstance().get(TOKEN,String.class);
+        String token = SharedPrefs.getInstance().get(TOKEN, String.class);
         if (!token.equals("")) {
             getView().showLoading();
             Call<MessageResponse> call = APIUtils.getData().modifyCart(token, mProduct.getId(), quantity);
@@ -44,6 +45,8 @@ public class DetailProductPresenterImpl extends BasePresenter<DetailProductContr
                 public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                     if (response.isSuccessful()) {
                         getView().showToast("Add to cart!");
+                    } else {
+                        getView().showError(response.toString());
                     }
                     getView().dismissLoading();
                 }
@@ -110,14 +113,18 @@ public class DetailProductPresenterImpl extends BasePresenter<DetailProductContr
 
     @Override
     public void addFeedBack(Product product, String detail, int star) {
+        if (detail.equals("") || star == 0) {
+            getView().showSweetDialog("You need fill full imformation", SweetAlertDialog.ERROR_TYPE);
+            return;
+        }
         getView().showLoading();
         Call<FeedBack> call = APIUtils.getData().addFeedback(Ulti.getToken(getContext()),
-                product.getId(), product.getStores(), detail, star);
+                product.getId(), product.getStores(), detail.trim(), star);
         call.enqueue(new Callback<FeedBack>() {
             @Override
             public void onResponse(Call<FeedBack> call, Response<FeedBack> response) {
                 if (response.isSuccessful()) {
-                    mList.add(0,response.body());
+                    mList.add(0, response.body());
                     getView().listFeedBack(mList);
                 } else {
                     getView().showErrorConnect();

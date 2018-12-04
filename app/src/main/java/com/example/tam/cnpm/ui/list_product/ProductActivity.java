@@ -41,6 +41,7 @@ public class ProductActivity extends BaseActivity<ProductPresenterImpl> implemen
 
     @Override
     protected void afterView() {
+        setTitle("Product");
         mList = new ArrayList<>();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);

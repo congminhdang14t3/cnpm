@@ -35,6 +35,7 @@ ListNewsAdapter.OnItemClickListener{
 
     @Override
     protected void afterView() {
+        setTitle("News");
         mList = new ArrayList<>();
         mAdapter = new ListNewsAdapter(this,mList,this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

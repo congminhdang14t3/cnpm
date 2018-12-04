@@ -35,6 +35,7 @@ ListView.OnItemClickListener{
 
     @Override
     protected void afterView() {
+        setTitle("Product's Category");
         mListCategoryName = new ArrayList<>();
         mListCategory = new ArrayList<>();
         mAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,mListCategoryName);

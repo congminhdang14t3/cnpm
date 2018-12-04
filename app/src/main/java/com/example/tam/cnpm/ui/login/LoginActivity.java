@@ -40,6 +40,7 @@ public class LoginActivity extends BaseActivity<LoginPresenterImpl> implements L
 
     @Override
     protected void afterView() {
+        setTitle("login");
         mPresenter.setSignIn();
         initPermission();
     }

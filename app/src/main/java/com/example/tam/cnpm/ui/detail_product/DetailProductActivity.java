@@ -4,6 +4,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +32,8 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.tam.cnpm.ulti.Ulti.changeMoneyIntToString;
 
 @EActivity(R.layout.activity_detail_product)
 public class DetailProductActivity extends BaseActivity<DetailProductPresenterImpl> implements DetailProductContract.DetailProductView {
@@ -74,6 +77,9 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
     @ViewById(R.id.edit_feedback)
     EditText mEditFeedback;
 
+    @ViewById(R.id.linear_comment_empty)
+    LinearLayout mLinearCommentEmpty;
+
     FeedBackAdapter mAdapter;
 
     ArrayList<FeedBack> mList = new ArrayList<>();
@@ -85,6 +91,7 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
 
     @Override
     protected void afterView() {
+        setTitle("Detail Product");
         mTextDrugName.setText(getString(R.string.name) + ": " + mProduct.getName());
         mTextExpireDate.setText(getString(R.string.expire_date) + ": " + mProduct.getExpireDate());
         if (!mImageProduct.equals("") && mImageProduct != null) {
@@ -95,7 +102,7 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
                     .into(mImageDetailProduct);
         }
         mExpandableTextView.setText(mProduct.getDetail());
-        mTextPriceProduct.setText(mProduct.getPrice() + "đ");
+        mTextPriceProduct.setText(changeMoneyIntToString(mProduct.getPrice()) + " đ");
         //set up recyclerview
         mAdapter = new FeedBackAdapter(this, mList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -149,6 +156,16 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
 
     @Override
     public void listFeedBack(ArrayList<FeedBack> response) {
+        if (response.isEmpty()) {
+            mLinearCommentEmpty.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+        } else {
+            if (mRecyclerView.getVisibility() == View.GONE) {
+                mRecyclerView.setVisibility(View.VISIBLE);
+            }
+        }
+        mEditFeedback.setText("");
+        mRatingBar.setRating(0);
         mList.clear();
         mList.addAll(response);
         mAdapter.notifyDataSetChanged();
@@ -170,7 +187,5 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
 
     public void sendFeedbackOnlick(View view) {
         mPresenter.addFeedBack(mProduct, mEditFeedback.getText().toString(), (int) mRatingBar.getRating());
-        mEditFeedback.setText("");
-        mRatingBar.setRating(0);
     }
 }

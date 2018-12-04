@@ -42,6 +42,7 @@ public class PaymentActivity extends BaseActivity<PaymentPresenterImpl> implemen
 
     @Override
     protected void afterView() {
+        setTitle("payment");
         mPresenter.initPayment();
     }
 

@@ -18,7 +18,7 @@
           android:layout_height="wrap_content"
           android:layout_margin="20dp"
           android:gravity="center"
-          android:textColor="@android:color/black"
+          android:textColor="@android:color/white"
           android:text="@string/text_ask_buy"
           android:background="@drawable/background_text_custom"/>
        <TextView
@@ -27,7 +27,7 @@
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:gravity="center"
-           android:textColor="@android:color/black"
+           android:textColor="@android:color/white"
            android:text="@string/text_not_remember_drug"
            android:background="@drawable/background_text_custom"/>
    </LinearLayout>
@@ -39,6 +39,7 @@
         android:layout_alignParentBottom="true"
         app:bmb_buttonEnum="textOutsideCircle"
         app:bmb_piecePlaceEnum="piecePlace_dot_7_3"
-        app:bmb_buttonPlaceEnum="buttonPlace_sc_7_3" />
+        app:bmb_buttonPlaceEnum="buttonPlace_sc_7_3"
+        app:bmb_normalColor="@color/colorPrimary"/>
 
 </RelativeLayout>

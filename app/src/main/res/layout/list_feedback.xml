@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="100dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image_feedback"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_margin="10dp" />
 
     <LinearLayout
@@ -20,23 +20,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ten"
-            android:textColor="@color/colorPrimaryDark" />
-
+            android:textColor="@android:color/black" />
+        <RatingBar
+            android:id="@+id/rating_feedback_star"
+            style="?android:attr/ratingBarStyleSmall"
+            android:isIndicator="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1"/>
         <TextView
             android:id="@+id/text_feedback_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="ten"
-            android:textColor="@color/colorPrimary" />
-
-        <TextView
-            android:id="@+id/text_feedback_star"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ten"
-            android:textColor="@android:color/holo_red_light"
-            android:textSize="20sp" />
+            android:textColor="@android:color/black" />
 
         <TextView
             android:id="@+id/text_created_feedback"

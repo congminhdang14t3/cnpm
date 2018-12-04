@@ -23,6 +23,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import static com.example.tam.cnpm.ulti.Ulti.changeMoneyIntToString;
+
 @EActivity(R.layout.activity_cart)
 public class CartActivity extends BaseActivity<CartPresenterImpl> implements CartContract.CartView {
 
@@ -44,6 +46,7 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
 
     @Override
     protected void afterView() {
+        setTitle("Cart");
         mAdapter = new CartAdapter(this,mList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
@@ -75,7 +78,7 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
         for (int i=0;i<mList.size();i++){
             total+=mList.get(i).getProduct().getPrice()*mList.get(i).getQuantity();
         }
-        mTextTotalPriceCart.setText("Total: "+total+"đ");
+        mTextTotalPriceCart.setText(changeMoneyIntToString(total)+" đ");
         mTotalPrice = total;
     }
 

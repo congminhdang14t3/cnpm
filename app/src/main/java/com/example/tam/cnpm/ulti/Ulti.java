@@ -12,9 +12,23 @@ import android.provider.MediaStore;
 
 import com.example.tam.cnpm.Constant;
 
+import java.util.ArrayList;
+
 import static com.example.tam.cnpm.Constant.SHARED_PREFERENCES_NAME;
 
 public class Ulti {
+    public static String changeMoneyIntToString(int money) {
+        String m = new StringBuffer(money + "").reverse().toString();
+        String result = "";
+        for (int i = 0; i < m.length(); i++) {
+            result += m.charAt(i);
+            if ((i + 1) % 3 == 0 && i != (m.length() - 1)) {
+                result += ".";
+            }
+        }
+        return new StringBuffer(result).reverse().toString();
+    }
+
     public static String getPath(final Context context, final Uri uri) {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
@@ -58,7 +72,7 @@ public class Ulti {
                 }
 
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[] {
+                final String[] selectionArgs = new String[]{
                         split[1]
                 };
 
@@ -81,9 +95,9 @@ public class Ulti {
      * Get the value of the data column for this Uri. This is useful for
      * MediaStore Uris, and other file-based ContentProviders.
      *
-     * @param context The context.
-     * @param uri The Uri to query.
-     * @param selection (Optional) Filter used in the query.
+     * @param context       The context.
+     * @param uri           The Uri to query.
+     * @param selection     (Optional) Filter used in the query.
      * @param selectionArgs (Optional) Selection arguments used in the query.
      * @return The value of the _data column, which is typically a file path.
      */
@@ -135,7 +149,7 @@ public class Ulti {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
-    public static String getToken(Context context){
+    public static String getToken(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         String token = sharedPreferences.getString(Constant.TOKEN, "");
         return token;

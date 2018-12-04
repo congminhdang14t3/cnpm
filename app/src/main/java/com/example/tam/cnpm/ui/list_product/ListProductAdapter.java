@@ -17,6 +17,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import static com.example.tam.cnpm.ulti.Ulti.changeMoneyIntToString;
+
 public class ListProductAdapter extends BaseAdapter {
 
     Context mContext;
@@ -43,9 +45,9 @@ public class ListProductAdapter extends BaseAdapter {
 
     private void onBindItemViewHolder(ContentViewHolder holder, int position) {
         Product response = mList.get(position);
-        holder.mTextName.setText("Name Product: " + response.getName());
-        holder.mTextPrice.setText("Price: " + response.getPrice() + "");
-        holder.mTextStatus.setText("Count in stock: " + response.getCountInStock());
+        holder.mTextName.setText(response.getName());
+        holder.mTextPrice.setText(changeMoneyIntToString(response.getPrice()) + " đ");
+        holder.mTextStatus.setText(response.getCountInStock()+"");
         Picasso.get()
                 .load(response.getPicture().isEmpty() ? "null"
                         : response.getPicture().get(0).getImage())

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.tam.cnpm.R;
@@ -50,7 +51,7 @@ public class FeedBackAdapter extends BaseAdapter {
         holder.mTextCreated.setText(feedBack.getCreated());
         holder.mTextName.setText(feedBack.getCustomer());
         holder.mTextDetail.setText(feedBack.getDetail());
-        holder.mTextStar.setText("Star: " + feedBack.getStar());
+        holder.mRating.setRating(feedBack.getStar());
 
 
     }
@@ -64,15 +65,15 @@ public class FeedBackAdapter extends BaseAdapter {
         private CircleImageView mImageView;
         private TextView mTextName,
                 mTextDetail,
-                mTextCreated,
-                mTextStar;
+                mTextCreated;
+        private RatingBar mRating;
 
         public ContentViewHolder(View v) {
             super(v);
             mImageView = v.findViewById(R.id.image_feedback);
             mTextName = v.findViewById(R.id.text_feedback_email);
             mTextDetail = v.findViewById(R.id.text_feedback_detail);
-            mTextStar = v.findViewById(R.id.text_feedback_star);
+            mRating = v.findViewById(R.id.rating_feedback_star);
             mTextCreated = v.findViewById(R.id.text_created_feedback);
             v.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.scale_list));
         }

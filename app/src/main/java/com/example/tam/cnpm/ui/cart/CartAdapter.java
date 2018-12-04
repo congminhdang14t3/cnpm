@@ -2,23 +2,19 @@ package com.example.tam.cnpm.ui.cart;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tam.cnpm.Constant;
 import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BaseAdapter;
-import com.example.tam.cnpm.base.BaseView;
 import com.example.tam.cnpm.service.response.Cart;
 import com.example.tam.cnpm.service.response.MessageResponse;
 import com.example.tam.cnpm.service.response.Product;
@@ -31,9 +27,8 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.example.tam.cnpm.Constant.SHARED_PREFERENCES_NAME;
 import static com.example.tam.cnpm.Constant.TOKEN;
+import static com.example.tam.cnpm.ulti.Ulti.changeMoneyIntToString;
 
 public class CartAdapter extends BaseAdapter {
 
@@ -60,9 +55,9 @@ public class CartAdapter extends BaseAdapter {
     private void onBindItemViewHolder(final ContentViewHolder holder, final int position) {
         final Cart response = mList.get(position);
         final Product product = response.getProduct();
-        holder.mTextName.setText("Name: " + product.getName());
-        holder.mTextCountCart.setText("Quantity: " + response.getQuantity());
-        holder.mTextPrice.setText("Price: " + product.getPrice());
+        holder.mTextName.setText(product.getName());
+        holder.mTextCountCart.setText(response.getQuantity()+"");
+        holder.mTextPrice.setText(changeMoneyIntToString(product.getPrice())+" đ");
         holder.mLinearDeleteCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,6 +98,12 @@ public class CartAdapter extends BaseAdapter {
                         .create().show();
             }
         });
+        if(product.getPicture().isEmpty()){
+            Picasso.get()
+                    .load(R.drawable.errorimage)
+                    .into(holder.mImageView);
+            return;
+        }
         Picasso.get()
                 .load(product.getPicture().get(0).getImage())
                 .placeholder(R.drawable.noimage)

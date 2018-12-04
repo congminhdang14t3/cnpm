@@ -146,8 +146,9 @@ public class LoginPresenterImpl extends BasePresenter<LoginContract.LoginView> i
             @Override
             public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
                 if (response.isSuccessful()) {
-                    if (response.body().getToken() != null) {
-                        SharedPrefs.getInstance().put(TOKEN, response.body().getToken());
+                    String token = response.body().getToken();
+                    if (token != null) {
+                        SharedPrefs.getInstance().put(TOKEN, "Token "+token);
                         getView().resultSignIn(1);
                     } else {
                         getView().resultSignIn(0);

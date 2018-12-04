@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public interface DetailProductContract {
     interface DetailProductView extends BaseView {
         void listFeedBack(ArrayList<FeedBack> response);
-
         void logIn(boolean isLogIn);
     }
 

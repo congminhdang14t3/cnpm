@@ -3,6 +3,7 @@ package com.example.tam.cnpm.ui;
 import android.graphics.Color;
 import android.view.Gravity;
 
+import com.example.tam.cnpm.Constant;
 import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BaseActivity;
 import com.example.tam.cnpm.ui.list_product.ProductActivity_;
@@ -34,12 +35,13 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initPresenter() {
-
     }
 
     @Override
     protected void afterView() {
+        setTitle("Drug Store");
         SharedPrefs.init(this);
+        System.out.println(SharedPrefs.getInstance().get(Constant.TOKEN, String.class));
 
         mActionBar.setDisplayHomeAsUpEnabled(false);
         listText = getResources().getStringArray(R.array.listBoomMenu);
@@ -72,6 +74,7 @@ public class MainActivity extends BaseActivity {
             mBoomMenuButton.setNormalColor(Color.WHITE);
             mBoomMenuButton.addBuilder(builder);
         }
+        mBoomMenuButton.setNormalColor(Color.parseColor("#1BA8FF"));
     }
 
     @Click
