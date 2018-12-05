@@ -70,11 +70,18 @@
             android:id="@+id/button_cancel_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
             android:text="cancel"/>
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="match_parent" />
         <Button
             android:id="@+id/button_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
             android:text="register"/>
     </LinearLayout>
 </LinearLayout>

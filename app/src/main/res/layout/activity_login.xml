@@ -31,12 +31,16 @@
            android:inputType="textPassword"
            android:layout_margin="5dp"/>
        <Button
+           android:background="@color/colorPrimary"
+           android:textColor="@android:color/white"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:text="sign in"
            android:layout_margin="5dp"
            android:onClick="signInOnlick"/>
        <Button
+           android:background="@color/colorPrimary"
+           android:textColor="@android:color/white"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:text="skip"
@@ -50,8 +54,9 @@
        <TextView
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:textColor="@color/colorPrimaryDark"
+           android:textColor="@color/colorPrimary"
            android:text="register"
+           android:textSize="18sp"
            android:onClick="textRegisterOnlcick"/>
    </LinearLayout>
 </LinearLayout>

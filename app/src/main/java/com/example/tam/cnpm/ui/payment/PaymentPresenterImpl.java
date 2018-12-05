@@ -23,6 +23,7 @@ import com.example.tam.cnpm.ulti.Ulti;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,25 +42,30 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
                 lname.trim().equals("") ||
                 phone.trim().equals("") ||
                 address.trim().equals("")) {
-            getView().showToast("Please fill full imformation!!");
+            getView().showSweetDialog("Please fill full imformation!!", SweetAlertDialog.ERROR_TYPE);
+            return;
+        }
+        if (phone.length() != 10) {
+            getView().showSweetDialog("Phone not right format", SweetAlertDialog.ERROR_TYPE);
             return;
         }
         if (token.equals("")) {
-            new AlertDialog.Builder(getContext())
-                    .setMessage("Do you want to login to payment?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Are you sure?")
+                    .setContentText("You don't have account, you want to login")
+                    .setConfirmButton("Yes", new SweetAlertDialog.OnSweetClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
                             LoginActivity_.intent(getContext()).start();
                         }
                     })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    .setCancelButton("No", new SweetAlertDialog.OnSweetClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
                             payment(json, fname, lname, phone, address, id);
                         }
                     })
-                    .create().show();
+                    .show();
         } else {
             payment(json, fname, lname, phone, address, id);
         }
@@ -137,11 +143,11 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
             case R.id.radio_paypal:
                 getView().showLoading();
                 Call<String> stringCall;
-                if (token.equals("")){
+                if (token.equals("")) {
                     stringCall = RetroClient.getClient("http://52.14.71.211/api/")
                             .create(DataClient.class)
                             .redirectNotToken(jsonLink);
-                }else{
+                } else {
                     stringCall = RetroClient.getClient("http://52.14.71.211/api/")
                             .create(DataClient.class)
                             .redirect(token, jsonLink);

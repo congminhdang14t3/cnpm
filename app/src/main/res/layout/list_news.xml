@@ -2,19 +2,20 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="80dp"
     android:orientation="horizontal"
     android:clickable="true"
     android:gravity="center"
     android:background="?android:attr/selectableItemBackground">
     <ImageView
         android:id="@+id/ivDocbao"
-        android:layout_margin="10dp"
         android:layout_width="100dp"
-        android:layout_height="100dp"/>
+        android:layout_height="match_parent"/>
     <TextView
         android:id="@+id/tvTitleDocbao"
+        android:textColor="@android:color/black"
+        android:textSize="17dp"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"/>
 </LinearLayout>
