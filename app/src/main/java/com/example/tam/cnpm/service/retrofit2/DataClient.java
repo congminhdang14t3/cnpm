@@ -74,10 +74,8 @@ public interface DataClient {
                                      @Field("quantity") int quantity);
 
     @Multipart
-    @PUT("profile/")
-    Call<User> editProfile(@Header("Authorization") String authorization,
-                           @Part("first_name") RequestBody firstName,
-                           @Part("last_name") RequestBody lastName,
+    @PUT("profile/update-avatar")
+    Call<User> editProfile(@Part("user_id") RequestBody id,
                            @Part MultipartBody.Part avatar);
     @Multipart
     @PUT("profile/")

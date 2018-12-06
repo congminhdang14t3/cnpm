@@ -100,13 +100,14 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
                             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                             MultipartBody.Part body =
                                     MultipartBody.Part.createFormData("avatar", file.getName(), requestFile);
-                            call = APIUtils.getData().editProfile(token, first, last, body);
+                            call = APIUtils.getData().editProfile(last, body);
                         }
                         call.enqueue(new Callback<User>() {
                             @Override
                             public void onResponse(Call<User> call, Response<User> response) {
                                 if (response.isSuccessful()) {
-                                    getView().setProfile(response.body());
+                                    //getView().setProfile(response.body());
+                                    System.out.println(response.body().getUrl());
                                 } else {
                                     System.out.println(response.message());
                                     getView().showErrorConnect();
