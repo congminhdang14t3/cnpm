@@ -36,8 +36,6 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
     @ViewById(R.id.tvTotalPriceCart)
     static TextView mTextTotalPriceCart;
 
-    static int mTotalPrice;
-
     public static ArrayList<Cart> mList = new ArrayList<>();
 
     @Override
@@ -80,7 +78,6 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
             total += mList.get(i).getProduct().getPrice() * mList.get(i).getQuantity();
         }
         mTextTotalPriceCart.setText(changeMoneyIntToString(total) + " đ");
-        mTotalPrice = total;
     }
 
     @Override
@@ -102,6 +99,13 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
 
     public static void deleteAllCart() {
         mList.clear();
+        mAdapter.notifyDataSetChanged();
+        changeTotal();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
         mAdapter.notifyDataSetChanged();
         changeTotal();
     }

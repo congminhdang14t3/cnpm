@@ -117,4 +117,15 @@ public class Picture implements Parcelable{
             parcel.writeInt(product);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Picture{" +
+                "id=" + id +
+                ", created='" + created + '\'' +
+                ", modified='" + modified + '\'' +
+                ", image='" + image + '\'' +
+                ", product=" + product +
+                '}';
+    }
 }

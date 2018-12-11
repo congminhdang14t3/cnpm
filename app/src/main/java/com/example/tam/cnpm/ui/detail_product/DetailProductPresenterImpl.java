@@ -65,7 +65,7 @@ public class DetailProductPresenterImpl extends BasePresenter<DetailProductContr
                 Cart cart = CartActivity.mList.get(i);
                 if (cart.getProduct().getId() == mProduct.getId()) {
                     isHasCart = true;
-                    cart.setQuantity(cart.getQuantity() + quantity);
+                    cart.setQuantity(quantity);
                     break;
                 }
             }
@@ -73,7 +73,7 @@ public class DetailProductPresenterImpl extends BasePresenter<DetailProductContr
                 Cart cart = new Cart();
                 cart.setProduct(mProduct);
                 cart.setQuantity(quantity);
-                CartActivity.mList.add(cart);
+                CartActivity.mList.add(0,cart);
             }
             getView().showToast("Add to cart!");
         }
@@ -149,10 +149,9 @@ public class DetailProductPresenterImpl extends BasePresenter<DetailProductContr
         call.enqueue(new Callback<Store>() {
             @Override
             public void onResponse(Call<Store> call, Response<Store> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     getView().getStoreName(response.body().getName());
-                }
-                else {
+                } else {
                     getView().showToast(getContext().getString(R.string.error_store_name));
                 }
                 getView().dismissLoading();

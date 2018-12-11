@@ -73,4 +73,10 @@ public class PaymentActivity extends BaseActivity<PaymentPresenterImpl> implemen
         editPhone.setText(user.getPhone());
         editAddress.setText(user.getAddress());
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mPresenter.initPayment();
+    }
 }

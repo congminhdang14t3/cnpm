@@ -23,6 +23,8 @@ import com.example.tam.cnpm.ulti.Ulti;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -129,8 +131,17 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
                             CartActivity.deleteAllCart();
                             getView().showToast("Payment success!");
                             getView().finishActivity();
-                        } else {
-                            getView().showErrorConnect();
+                        }
+                        else {
+                            if (response.code() == 400) {
+                                getView().finishActivity();
+                                System.out.println("400");
+                                try {
+                                    System.out.println(response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
                         getView().dismissLoading();
                     }

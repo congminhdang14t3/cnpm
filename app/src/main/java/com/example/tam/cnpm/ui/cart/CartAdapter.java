@@ -19,6 +19,8 @@ import com.example.tam.cnpm.service.response.Cart;
 import com.example.tam.cnpm.service.response.MessageResponse;
 import com.example.tam.cnpm.service.response.Product;
 import com.example.tam.cnpm.service.retrofit2.APIUtils;
+import com.example.tam.cnpm.ui.detail_product.DetailProductActivity_;
+import com.example.tam.cnpm.ui.list_product.ProductActivity;
 import com.example.tam.cnpm.ulti.SharedPrefs;
 import com.squareup.picasso.Picasso;
 
@@ -98,6 +100,14 @@ public class CartAdapter extends BaseAdapter {
                         .create().show();
             }
         });
+        holder.mTextDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DetailProductActivity_.intent(mContext)
+                        .mProduct(product)
+                        .start();
+            }
+        });
         if(product.getPicture().isEmpty()){
             Picasso.get()
                     .load(R.drawable.errorimage)
@@ -120,6 +130,7 @@ public class CartAdapter extends BaseAdapter {
         private ImageView mImageView;
         private TextView mTextName,
                 mTextPrice,
+                mTextDetail,
                 mTextCountCart;
         LinearLayout mLinearDeleteCart;
 
@@ -128,6 +139,7 @@ public class CartAdapter extends BaseAdapter {
             mImageView = v.findViewById(R.id.image_cart);
             mTextName = v.findViewById(R.id.text_cart_name);
             mTextPrice = v.findViewById(R.id.text_cart_price);
+            mTextDetail = v.findViewById(R.id.text_detail_product);
             mLinearDeleteCart = v.findViewById(R.id.linear_delete_cart);
             mTextCountCart = v.findViewById(R.id.text_count_cart);
             v.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.scale_list));

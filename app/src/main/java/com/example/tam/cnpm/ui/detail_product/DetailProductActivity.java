@@ -1,8 +1,11 @@
 package com.example.tam.cnpm.ui.detail_product;
 
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -23,6 +26,7 @@ import com.example.tam.cnpm.service.response.Store;
 import com.example.tam.cnpm.ui.cart.CartActivity;
 import com.example.tam.cnpm.ui.cart.CartActivity_;
 import com.example.tam.cnpm.ui.cart.CartAdapter;
+import com.example.tam.cnpm.ui.list_product.ImagePagerAdapter;
 import com.example.tam.cnpm.ui.login.LoginActivity_;
 import com.example.tam.cnpm.ui.store.StoreActivity_;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
@@ -35,6 +39,8 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 
+import github.chenupt.springindicator.SpringIndicator;
+
 import static com.example.tam.cnpm.Constant.STORE_EXTRAS;
 import static com.example.tam.cnpm.ulti.Ulti.changeMoneyIntToString;
 
@@ -42,8 +48,6 @@ import static com.example.tam.cnpm.ulti.Ulti.changeMoneyIntToString;
 public class DetailProductActivity extends BaseActivity<DetailProductPresenterImpl> implements DetailProductContract.DetailProductView, View.OnClickListener {
     @Extra
     Product mProduct;
-    @Extra
-    String mImageProduct;
 
     @ViewById(R.id.text_drug_name)
     TextView mTextDrugName;
@@ -51,8 +55,8 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
     @ViewById(R.id.text_drug_store)
     TextView mTextDrugStore;
 
-    @ViewById(R.id.image_detail_product)
-    ImageView mImageDetailProduct;
+    @ViewById(R.id.viewpager_detail_product)
+    ViewPager mViewPagerDetailProduct;
 
     @ViewById(R.id.expand_text_view)
     ExpandableTextView mExpandableTextView;
@@ -84,6 +88,9 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
     @ViewById(R.id.linear_buy_product)
     LinearLayout mLinearBuyProduct;
 
+    @ViewById(R.id.indicator)
+    SpringIndicator indicator;
+
     FeedBackAdapter mAdapter;
 
     ArrayList<FeedBack> mList = new ArrayList<>();
@@ -95,18 +102,17 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
 
     @Override
     protected void afterView() {
+        System.out.println(mProduct.toString());
         setTitle("Detail Product");
         if (mProduct.getCountInStock() == 0) {
             mLinearBuyProduct.setVisibility(View.GONE);
         }
         mTextDrugName.setText(mProduct.getName());
-        if (!mImageProduct.equals("") && mImageProduct != null) {
-            Picasso.get()
-                    .load(mImageProduct)
-                    .placeholder(R.drawable.noimage)
-                    .error(R.drawable.errorimage)
-                    .into(mImageDetailProduct);
-        }
+
+        ImagePagerAdapter adapter = new ImagePagerAdapter(this, mProduct.getPicture());
+        mViewPagerDetailProduct.setAdapter(adapter);
+        indicator.setViewPager(mViewPagerDetailProduct);
+
         mExpandableTextView.setText(mProduct.getDetail());
         mTextPriceProduct.setText(changeMoneyIntToString(mProduct.getPrice()) + " đ");
         //set up recyclerview
@@ -147,16 +153,9 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
 
     public void handling(View view) {
         switch (view.getId()) {
-            case R.id.text_buy_now:
-
-                break;
             case R.id.text_add_to_cart:
-                int quantity = Integer.parseInt(mEditCountProduct.getText().toString());
-                Picture picture = new Picture();
-                picture.setImage(mImageProduct);
-                List<Picture> list = new ArrayList<>();
-                list.add(picture);
-                mProduct.setPicture(list);
+                String count = mEditCountProduct.getText().toString();
+                int quantity = Integer.parseInt(count);
                 mPresenter.addToCart(mProduct, quantity);
                 break;
 

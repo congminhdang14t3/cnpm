@@ -2,6 +2,7 @@ package com.example.tam.cnpm.base;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -82,6 +83,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage(getStringResource(R.string.loading));
         mProgressDialog.setCancelable(false);
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setIndeterminateDrawable(getResources()
+                .getDrawable(R.drawable.progressbar_handler));
     }
 
     private void showProgressDialog() {

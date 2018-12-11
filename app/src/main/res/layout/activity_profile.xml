@@ -97,13 +97,17 @@
         android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="editProfileOnClick"/>
+        android:onClick="editProfileOnClick"
+        android:textColor="@android:color/white"
+        android:background="@color/colorPrimary"/>
     <Button
         android:id="@+id/button_log_out_profile"
         android:text="log out"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="logOutProfileOnClick"/>
+        android:onClick="logOutProfileOnClick"
+        android:textColor="@android:color/white"
+        android:background="@color/colorPrimary"/>
 
 </LinearLayout>

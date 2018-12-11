@@ -12,27 +12,36 @@
         android:background="#ffffff"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/image_detail_product"
+        <github.chenupt.springindicator.SpringIndicator xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/indicator"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_gravity="center" />
+            android:layout_height="50dp"
+            app:siIndicatorColor="@color/colorPrimary"
+            app:siSelectedTextColor="@android:color/white"
+            app:siTextColor="@android:color/black"
+            app:siTextSize="18sp" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager_detail_product"
+            android:layout_width="match_parent"
+            android:layout_height="250dp" />
 
         <TextView
             android:id="@+id/text_drug_name"
-            android:textSize="18sp"
-            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black" />
+            android:layout_margin="5dp"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
         <TextView
             android:id="@+id/text_drug_store"
-            android:textSize="18sp"
-            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:textColor="@color/colorPrimary"
-            android:textStyle="italic"/>
+            android:textSize="18sp"
+            android:textStyle="italic" />
 
         <View
             android:layout_width="match_parent"
@@ -54,8 +63,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
                     android:layout_margin="5dp"
+                    android:layout_weight="1"
                     android:gravity="center">
 
                     <ImageButton
@@ -64,18 +73,19 @@
                         android:layout_height="50dp"
                         android:background="@drawable/ic_subtrast"
                         android:onClick="changeCountProduct" />
-                        <EditText
-                            android:id="@+id/edit_count_product"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:background="@android:color/transparent"
-                            android:inputType="number"
-                            android:maxLines="1"
-                            android:text="1"
-                            android:textColor="@android:color/black"
-                            android:textSize="25sp" />
+
+                    <EditText
+                        android:id="@+id/edit_count_product"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:text="1"
+                        android:textColor="@android:color/black"
+                        android:textSize="25sp" />
 
                     <ImageButton
                         android:id="@+id/button_add"
@@ -96,38 +106,18 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/text_add_to_cart"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_margin="15dp"
                 android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/text_buy_now"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorPrimary"
-                    android:gravity="center"
-                    android:onClick="handling"
-                    android:text="Buy now"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/text_add_to_cart"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorPrimary"
-                    android:gravity="center"
-                    android:onClick="handling"
-                    android:text="Add to cart"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp" />
-            </LinearLayout>
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:onClick="handling"
+                android:text="Add to cart"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
         </LinearLayout>
 
         <View
@@ -136,12 +126,12 @@
             android:background="@android:color/darker_gray" />
 
         <TextView
-            android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="More information"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
 
         <com.ms.square.android.expandabletextview.ExpandableTextView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
@@ -175,12 +165,12 @@
             android:background="@android:color/darker_gray" />
 
         <TextView
-            android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="Comment"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="match_parent"

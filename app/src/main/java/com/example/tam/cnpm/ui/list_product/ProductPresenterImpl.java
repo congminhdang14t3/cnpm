@@ -20,12 +20,12 @@ public class ProductPresenterImpl extends BasePresenter<ProductContract.ProductV
     @Override
     public void getListProduct(int categoryId) {
         getView().showLoading();
-        if(categoryId==0){
+        if (categoryId == 0) {
             Call<ArrayList<Product>> call = APIUtils.getData().getListProduct();
             call.enqueue(new Callback<ArrayList<Product>>() {
                 @Override
                 public void onResponse(Call<ArrayList<Product>> call, Response<ArrayList<Product>> response) {
-                    if(response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         getView().listProduct(response.body());
                         getView().dismissLoading();
                     }
@@ -37,17 +37,15 @@ public class ProductPresenterImpl extends BasePresenter<ProductContract.ProductV
                     getView().dismissLoading();
                 }
             });
-        }
-        else{
-            Call<ArrayList<Product>> call = APIUtils.getData().listProduct(categoryId,"json");
+        } else {
+            Call<ArrayList<Product>> call = APIUtils.getData().listProduct(categoryId, "json");
             call.enqueue(new Callback<ArrayList<Product>>() {
                 @Override
                 public void onResponse(Call<ArrayList<Product>> call, Response<ArrayList<Product>> response) {
-                    if(response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         getView().listProduct(response.body());
                         getView().dismissLoading();
-                    }
-                    else{
+                    } else {
                         getView().showError(response.errorBody().toString());
                         getView().dismissLoading();
                     }

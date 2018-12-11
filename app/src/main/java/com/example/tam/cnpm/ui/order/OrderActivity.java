@@ -53,5 +53,4 @@ public class OrderActivity extends BaseActivity<OrderPresenterImpl> implements O
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;
     }
-
 }
