@@ -14,6 +14,7 @@
     <TextView
         android:id="@+id/tvTitleDocbao"
         android:textColor="@android:color/black"
+        android:layout_margin="5dp"
         android:textSize="17dp"
         android:layout_width="0dp"
         android:layout_height="match_parent"

@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.tam.cnpm.Constant;
+import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BasePresenter;
 import com.example.tam.cnpm.service.response.Cart;
 import com.example.tam.cnpm.service.response.FeedBack;
 import com.example.tam.cnpm.service.response.MessageResponse;
 import com.example.tam.cnpm.service.response.Picture;
 import com.example.tam.cnpm.service.response.Product;
+import com.example.tam.cnpm.service.response.Store;
 import com.example.tam.cnpm.service.retrofit2.APIUtils;
 import com.example.tam.cnpm.ui.cart.CartActivity;
 import com.example.tam.cnpm.ulti.SharedPrefs;
@@ -135,6 +137,30 @@ public class DetailProductPresenterImpl extends BasePresenter<DetailProductContr
             @Override
             public void onFailure(Call<FeedBack> call, Throwable t) {
                 getView().showError(t.toString());
+                getView().dismissLoading();
+            }
+        });
+    }
+
+    @Override
+    public void getStoreName(int id) {
+        getView().showLoading();
+        Call<Store> call = APIUtils.getData().getStore(id);
+        call.enqueue(new Callback<Store>() {
+            @Override
+            public void onResponse(Call<Store> call, Response<Store> response) {
+                if (response.isSuccessful()){
+                    getView().getStoreName(response.body().getName());
+                }
+                else {
+                    getView().showToast(getContext().getString(R.string.error_store_name));
+                }
+                getView().dismissLoading();
+            }
+
+            @Override
+            public void onFailure(Call<Store> call, Throwable t) {
+                getView().showToast(getContext().getString(R.string.error_store_name));
                 getView().dismissLoading();
             }
         });

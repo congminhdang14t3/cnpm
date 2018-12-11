@@ -57,12 +57,14 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                             LoginActivity_.intent(getContext()).start();
+                            sweetAlertDialog.dismiss();
                         }
                     })
                     .setCancelButton("No", new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                             payment(json, fname, lname, phone, address, id);
+                            sweetAlertDialog.dismiss();
                         }
                     })
                     .show();

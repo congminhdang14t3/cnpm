@@ -19,5 +19,7 @@
     <string name="name">Name</string>
     <string name="expire_date">Expire Date</string>
     <string name="map_api_key">AIzaSyA7Ze1-tsSi1lBgGoUPMnvATyllLExXbMI</string>
+    <string name="error_store_name">Error store name</string>
+    <string name="store">Store</string>
 
 </resources>

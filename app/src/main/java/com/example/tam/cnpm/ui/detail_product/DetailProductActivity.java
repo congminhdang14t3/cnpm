@@ -19,10 +19,12 @@ import com.example.tam.cnpm.service.response.Cart;
 import com.example.tam.cnpm.service.response.FeedBack;
 import com.example.tam.cnpm.service.response.Picture;
 import com.example.tam.cnpm.service.response.Product;
+import com.example.tam.cnpm.service.response.Store;
 import com.example.tam.cnpm.ui.cart.CartActivity;
 import com.example.tam.cnpm.ui.cart.CartActivity_;
 import com.example.tam.cnpm.ui.cart.CartAdapter;
 import com.example.tam.cnpm.ui.login.LoginActivity_;
+import com.example.tam.cnpm.ui.store.StoreActivity_;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.squareup.picasso.Picasso;
 
@@ -33,22 +35,22 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.tam.cnpm.Constant.STORE_EXTRAS;
 import static com.example.tam.cnpm.ulti.Ulti.changeMoneyIntToString;
 
 @EActivity(R.layout.activity_detail_product)
-public class DetailProductActivity extends BaseActivity<DetailProductPresenterImpl> implements DetailProductContract.DetailProductView {
+public class DetailProductActivity extends BaseActivity<DetailProductPresenterImpl> implements DetailProductContract.DetailProductView, View.OnClickListener {
     @Extra
     Product mProduct;
 
     @Extra
     String mImageProduct;
 
-
     @ViewById(R.id.text_drug_name)
     TextView mTextDrugName;
 
-    @ViewById(R.id.text_expire_date)
-    TextView mTextExpireDate;
+    @ViewById(R.id.text_drug_store)
+    TextView mTextDrugStore;
 
     @ViewById(R.id.image_detail_product)
     ImageView mImageDetailProduct;
@@ -92,8 +94,7 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
     @Override
     protected void afterView() {
         setTitle("Detail Product");
-        mTextDrugName.setText(getString(R.string.name) + ": " + mProduct.getName());
-        mTextExpireDate.setText(getString(R.string.expire_date) + ": " + mProduct.getExpireDate());
+        mTextDrugName.setText(mProduct.getName());
         if (!mImageProduct.equals("") && mImageProduct != null) {
             Picasso.get()
                     .load(mImageProduct)
@@ -110,8 +111,11 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
 
+        mTextDrugStore.setOnClickListener(this);
+
         mPresenter.setLogIn();
         mPresenter.getListFeedback(mProduct.getId());
+        mPresenter.getStoreName(mProduct.getStores());
 
     }
 
@@ -180,6 +184,11 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
         }
     }
 
+    @Override
+    public void getStoreName(String store) {
+        mTextDrugStore.setText(">>> "+store);
+    }
+
     public void getLogInActivity(View view) {
         LoginActivity_.intent(this).start();
         finish();
@@ -187,5 +196,16 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
 
     public void sendFeedbackOnlick(View view) {
         mPresenter.addFeedBack(mProduct, mEditFeedback.getText().toString(), (int) mRatingBar.getRating());
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.text_drug_store:
+                StoreActivity_.intent(this)
+                        .extra(STORE_EXTRAS,mProduct.getStores())
+                        .start();
+                break;
+        }
     }
 }
