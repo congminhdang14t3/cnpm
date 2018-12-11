@@ -2,19 +2,25 @@ package com.example.tam.cnpm.ui;
 
 import android.graphics.Color;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.example.tam.cnpm.Constant;
 import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BaseActivity;
+import com.example.tam.cnpm.ui.cart.CartActivity_;
 import com.example.tam.cnpm.ui.list_product.ProductActivity_;
 import com.example.tam.cnpm.ui.login.LoginActivity_;
 import com.example.tam.cnpm.ui.news.NewsActivity_;
+import com.example.tam.cnpm.ui.order.OrderActivity_;
 import com.example.tam.cnpm.ui.product_category.CategoryActivity_;
 import com.example.tam.cnpm.ui.profile.ProfileActivity_;
 import com.example.tam.cnpm.ulti.SharedPrefs;
+import com.nightonke.boommenu.BoomButtons.BoomButton;
 import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
 import com.nightonke.boommenu.BoomButtons.TextOutsideCircleButton;
 import com.nightonke.boommenu.BoomMenuButton;
+import com.nightonke.boommenu.OnBoomListener;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -29,9 +35,14 @@ import static com.example.tam.cnpm.Constant.TOKEN;
 public class MainActivity extends BaseActivity {
     @ViewById(R.id.boom_menu)
     BoomMenuButton mBoomMenuButton;
-    int[] listImage = {R.drawable.home, R.drawable.drug, R.drawable.cart, R.drawable.ic_news, R.drawable.account
-            , R.drawable.information, R.drawable.store};
+
+    @ViewById(R.id.linear_main_activity)
+    LinearLayout mLinearMain;
+
+    int[] listImage = {R.drawable.drug, R.drawable.cart, R.drawable.ic_news, R.drawable.account
+            , R.drawable.ic_order, R.drawable.store};
     String[] listText;
+    String token;
 
     @Override
     protected void initPresenter() {
@@ -41,7 +52,7 @@ public class MainActivity extends BaseActivity {
     protected void afterView() {
         setTitle("Drug Store");
         SharedPrefs.init(this);
-        System.out.println(SharedPrefs.getInstance().get(Constant.TOKEN, String.class));
+        token = SharedPrefs.getInstance().get(Constant.TOKEN, String.class);
 
         mActionBar.setDisplayHomeAsUpEnabled(false);
         listText = getResources().getStringArray(R.array.listBoomMenu);
@@ -51,16 +62,27 @@ public class MainActivity extends BaseActivity {
                         @Override
                         public void onBoomButtonClick(int index) {
                             switch (index) {
-                                case 1:
+                                case 0:
                                     CategoryActivity_.intent(MainActivity.this)
                                             .start();
                                     break;
-                                case 3:
+                                case 1:
+                                    CartActivity_.intent(MainActivity.this).start();
+                                    break;
+                                case 2:
                                     NewsActivity_.intent(MainActivity.this)
                                             .start();
                                     break;
+                                case 3:
+                                    gotoProfile();
+                                    break;
                                 case 4:
-                                    setGotoProfile();
+                                    gotoOrder();
+                                    break;
+                                case 5:
+                                    showToast("Store");
+                                    break;
+                                default:
                                     break;
 
                             }
@@ -75,6 +97,36 @@ public class MainActivity extends BaseActivity {
             mBoomMenuButton.addBuilder(builder);
         }
         mBoomMenuButton.setNormalColor(Color.parseColor("#1BA8FF"));
+        mBoomMenuButton.setOnBoomListener(new OnBoomListener() {
+            @Override
+            public void onClicked(int index, BoomButton boomButton) {
+
+            }
+
+            @Override
+            public void onBackgroundClick() {
+
+            }
+
+            @Override
+            public void onBoomWillHide() {
+            }
+
+            @Override
+            public void onBoomDidHide() {
+                mLinearMain.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onBoomWillShow() {
+                mLinearMain.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onBoomDidShow() {
+
+            }
+        });
     }
 
     @Click
@@ -90,8 +142,7 @@ public class MainActivity extends BaseActivity {
                 .start();
     }
 
-    void setGotoProfile() {
-        String token = SharedPrefs.getInstance().get(TOKEN, String.class);
+    void gotoProfile() {
         if (token.equals("")) {
             new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("Are you sure?")
@@ -112,6 +163,15 @@ public class MainActivity extends BaseActivity {
                     .show();
         } else {
             ProfileActivity_.intent(MainActivity.this).start();
+        }
+    }
+
+    void gotoOrder() {
+        if (token.equals("")) {
+            showToast("You don't have orders");
+        } else {
+            OrderActivity_.intent(this)
+                    .start();
         }
     }
 }

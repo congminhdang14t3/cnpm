@@ -13,14 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Store: "/>
-        <TextView
             android:id="@+id/text_store_order"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cửa hàng kinh doanh Đại Lợi"
+            android:textStyle="italic"
             android:textColor="@color/colorPrimary"/>
     </LinearLayout>
     <LinearLayout

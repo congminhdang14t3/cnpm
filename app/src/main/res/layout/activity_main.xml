@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
    <LinearLayout
+       android:id="@+id/linear_main_activity"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:orientation="vertical"
@@ -38,8 +39,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         app:bmb_buttonEnum="textOutsideCircle"
-        app:bmb_piecePlaceEnum="piecePlace_dot_7_3"
-        app:bmb_buttonPlaceEnum="buttonPlace_sc_7_3"
+        app:bmb_piecePlaceEnum="piecePlace_dot_6_1"
+        app:bmb_buttonPlaceEnum="buttonPlace_sc_6_1"
         app:bmb_normalColor="@color/colorPrimary"/>
 
 </RelativeLayout>

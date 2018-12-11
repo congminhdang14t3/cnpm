@@ -63,7 +63,7 @@ public class OrderAdapter extends BaseAdapter {
         final Order order = mList.get(position);
 
         holder.textCreate.setText(order.getCreated());
-        holder.textStore.setText(order.getStore().getName());
+        holder.textStore.setText(">>> "+order.getStore().getName());
         holder.textStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

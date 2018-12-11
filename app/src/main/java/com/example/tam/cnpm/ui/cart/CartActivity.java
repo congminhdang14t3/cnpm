@@ -39,6 +39,7 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
     static int mTotalPrice;
 
     public static ArrayList<Cart> mList = new ArrayList<>();
+
     @Override
     protected void initPresenter() {
         mPresenter = new CartPresenterImpl(this);
@@ -47,10 +48,10 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
     @Override
     protected void afterView() {
         setTitle("Cart");
-        mAdapter = new CartAdapter(this,mList);
+        mAdapter = new CartAdapter(this, mList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
 
         mPresenter.getListCart();
@@ -59,13 +60,13 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_order,menu);
+        getMenuInflater().inflate(R.menu.menu_order, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_order:
                 mPresenter.goOrderActivity();
                 break;
@@ -73,12 +74,12 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
         return super.onOptionsItemSelected(item);
     }
 
-    public static void changeTotal(){
+    public static void changeTotal() {
         int total = 0;
-        for (int i=0;i<mList.size();i++){
-            total+=mList.get(i).getProduct().getPrice()*mList.get(i).getQuantity();
+        for (int i = 0; i < mList.size(); i++) {
+            total += mList.get(i).getProduct().getPrice() * mList.get(i).getQuantity();
         }
-        mTextTotalPriceCart.setText(changeMoneyIntToString(total)+" đ");
+        mTextTotalPriceCart.setText(changeMoneyIntToString(total) + " đ");
         mTotalPrice = total;
     }
 
@@ -96,10 +97,10 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
     }
 
     public void goToPaymentActivity(View view) {
-     mPresenter.createPaymentJson(mList);
+        mPresenter.createPaymentJson(mList);
     }
 
-    public static void deleteAllCart(){
+    public static void deleteAllCart() {
         mList.clear();
         mAdapter.notifyDataSetChanged();
         changeTotal();

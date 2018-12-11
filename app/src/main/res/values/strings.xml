@@ -1,11 +1,10 @@
 <resources>
     <string-array name="listBoomMenu">
-        <item>Home</item>
         <item>Drug</item>
         <item>Cart</item>
         <item>News</item>
         <item>Account</item>
-        <item>Information</item>
+        <item>Order</item>
         <item>About us</item>
     </string-array>
 
@@ -21,5 +20,6 @@
     <string name="map_api_key">AIzaSyA7Ze1-tsSi1lBgGoUPMnvATyllLExXbMI</string>
     <string name="error_store_name">Error store name</string>
     <string name="store">Store</string>
+    <string name="no_more_product">No more product in stock</string>
 
 </resources>

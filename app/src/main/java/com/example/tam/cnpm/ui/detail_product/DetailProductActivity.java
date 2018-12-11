@@ -42,7 +42,6 @@ import static com.example.tam.cnpm.ulti.Ulti.changeMoneyIntToString;
 public class DetailProductActivity extends BaseActivity<DetailProductPresenterImpl> implements DetailProductContract.DetailProductView, View.OnClickListener {
     @Extra
     Product mProduct;
-
     @Extra
     String mImageProduct;
 
@@ -82,6 +81,9 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
     @ViewById(R.id.linear_comment_empty)
     LinearLayout mLinearCommentEmpty;
 
+    @ViewById(R.id.linear_buy_product)
+    LinearLayout mLinearBuyProduct;
+
     FeedBackAdapter mAdapter;
 
     ArrayList<FeedBack> mList = new ArrayList<>();
@@ -94,6 +96,9 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
     @Override
     protected void afterView() {
         setTitle("Detail Product");
+        if (mProduct.getCountInStock() == 0) {
+            mLinearBuyProduct.setVisibility(View.GONE);
+        }
         mTextDrugName.setText(mProduct.getName());
         if (!mImageProduct.equals("") && mImageProduct != null) {
             Picasso.get()
@@ -116,7 +121,6 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
         mPresenter.setLogIn();
         mPresenter.getListFeedback(mProduct.getId());
         mPresenter.getStoreName(mProduct.getStores());
-
     }
 
     public void changeCountProduct(View view) {
@@ -129,7 +133,11 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
                 }
                 break;
             case R.id.button_add:
-                mEditCountProduct.setText((count + 1) + "");
+                if (count < mProduct.getCountInStock()) {
+                    mEditCountProduct.setText((count + 1) + "");
+                } else {
+                    showToast(getString(R.string.no_more_product));
+                }
                 break;
 
             default:
@@ -186,7 +194,7 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
 
     @Override
     public void getStoreName(String store) {
-        mTextDrugStore.setText(">>> "+store);
+        mTextDrugStore.setText(">>> " + store);
     }
 
     public void getLogInActivity(View view) {
@@ -200,10 +208,10 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.text_drug_store:
                 StoreActivity_.intent(this)
-                        .extra(STORE_EXTRAS,mProduct.getStores())
+                        .extra(STORE_EXTRAS, mProduct.getStores())
                         .start();
                 break;
         }
