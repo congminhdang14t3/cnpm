@@ -25,7 +25,7 @@ public class ListProductAdapter extends BaseAdapter {
     private OnItemClickListener listener;
     private ArrayList<Product> mList;
 
-    protected ListProductAdapter(Context mContext, ArrayList<Product> list, OnItemClickListener listener) {
+    public ListProductAdapter(Context mContext, ArrayList<Product> list, OnItemClickListener listener) {
         super(mContext);
         this.mContext = mContext;
         this.listener = listener;

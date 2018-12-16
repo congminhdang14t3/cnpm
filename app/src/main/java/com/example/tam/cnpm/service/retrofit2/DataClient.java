@@ -124,4 +124,7 @@ public interface DataClient {
                                         @Field("new_password") String newPass,
                                         @Field("new_password2") String newPass1,
                                         @Field("old_password") String oldPass);
+
+    @GET("product/")
+    Call<ArrayList<Product>> getListProduct(@Query("stores") int stores);
 }

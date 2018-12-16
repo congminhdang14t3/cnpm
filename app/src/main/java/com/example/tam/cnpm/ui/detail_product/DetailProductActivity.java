@@ -4,40 +4,25 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BaseActivity;
-import com.example.tam.cnpm.service.response.Cart;
 import com.example.tam.cnpm.service.response.FeedBack;
-import com.example.tam.cnpm.service.response.Picture;
 import com.example.tam.cnpm.service.response.Product;
-import com.example.tam.cnpm.service.response.Store;
-import com.example.tam.cnpm.ui.cart.CartActivity;
-import com.example.tam.cnpm.ui.cart.CartActivity_;
-import com.example.tam.cnpm.ui.cart.CartAdapter;
-import com.example.tam.cnpm.ui.list_product.ImagePagerAdapter;
 import com.example.tam.cnpm.ui.login.LoginActivity_;
 import com.example.tam.cnpm.ui.store.StoreActivity_;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
-import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import github.chenupt.springindicator.SpringIndicator;
 
