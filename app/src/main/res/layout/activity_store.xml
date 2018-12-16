@@ -1,35 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".ui.store.StoreActivity"
-    android:orientation="vertical">
-    <ImageView
-        android:id="@+id/image_store"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"/>
-    <TextView
-        android:id="@+id/text_name_store"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="name"/>
-    <TextView
-        android:id="@+id/text_phone_store"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="?attr/colorPrimary"
+            android:fitsSystemWindows="true"
+            app:title="/check_in_out_daily"
+            app:expandedTitleTextAppearance="@style/CollapsingToolbarLayoutExpandedTextStyle"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <LinearLayout
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/image_user_home"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"/>
+                <TextView
+                    android:id="@+id/text_full_name_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#1115ff"
+                    android:gravity="center"
+                    android:textSize="15sp"/>
+                <FrameLayout
+                    android:layout_margin="20dp"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+                    <Button
+                        android:id="@+id/button_check_out"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="/check_out"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp"/>
+                    <Button
+                        android:id="@+id/button_check_in"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="/check_in"
+                        android:gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp"/>
+                </FrameLayout>
+            </LinearLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="phone"/>
-    <TextView
-        android:id="@+id/text_address_store"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="address"/>
-    <fragment
-        android:id="@+id/myMap"
-        android:name="com.google.android.gms.maps.MapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <AutoCompleteTextView
+                    android:id="@+id/autotext_fullname"
+                    android:hint="/user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:layout_weight="1"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <Spinner
+                        android:id="@+id/spinner_month"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"/>
+                    <EditText
+                        android:id="@+id/edit_year"
+                        android:inputType="number"
+                        android:hint="/year"
+                        android:background="@android:color/transparent"
+                        android:singleLine="true"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </LinearLayout>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/button_check_submit"
+                android:layout_margin="10dp"
+                android:backgroundTint="#ff0"
+                android:src="@android:drawable/ic_search_category_default"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="20sp"
+                android:textColor="@color/colorPrimary"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="/day" />
+            <TextView
+                android:textSize="20sp"
+                android:textColor="#008c1f"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="in" />
+            <TextView
+                android:textSize="20sp"
+                android:textColor="#ff0011"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="out" />
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view_check_in"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

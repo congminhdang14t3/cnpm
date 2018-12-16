@@ -1,13 +1,21 @@
 package com.example.tam.cnpm.ui.profile;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.tam.cnpm.Constant;
+import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BasePresenter;
+import com.example.tam.cnpm.service.response.MessageResponse;
 import com.example.tam.cnpm.service.response.User;
 import com.example.tam.cnpm.service.retrofit2.APIUtils;
 import com.example.tam.cnpm.ui.cart.CartActivity;
@@ -41,7 +49,7 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         CartActivity.mList.clear();
-                        SharedPrefs.getInstance().put(TOKEN,"");
+                        SharedPrefs.getInstance().put(TOKEN, "");
                         getView().changeActivity();
                     }
                 })
@@ -125,5 +133,58 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
                 })
                 .setNegativeButton("No", null)
                 .create().show();
+    }
+
+    @Override
+    public void showDialogChangePass() {
+        final Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.dialog_change_pass);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(false);
+        dialog.show();
+
+        Button buttonClose = dialog.findViewById(R.id.button_change_close);
+        TextView textSave = dialog.findViewById(R.id.text_change_save);
+        final EditText editOld = dialog.findViewById(R.id.edit_old_pass);
+        final EditText editNew = dialog.findViewById(R.id.edit_new_pass);
+        final EditText editNew1 = dialog.findViewById(R.id.edit_new_pass1);
+
+        buttonClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        textSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!editNew.getText().toString().equals(editNew1.getText().toString())) {
+                    getView().showToast("The two password fields did not match");
+                    return;
+                }
+                getView().showLoading();
+                String token = SharedPrefs.getInstance().get(TOKEN, String.class);
+                Call<MessageResponse> call = APIUtils.getData().changPassword(token,
+                        editNew.getText().toString(), editNew1.getText().toString(), editOld.getText().toString());
+                call.enqueue(new Callback<MessageResponse>() {
+                    @Override
+                    public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
+                        if (response.isSuccessful()) {
+                            getView().showToast("Change Password Success");
+                            dialog.dismiss();
+                        } else {
+                            getView().showToast("Change Password Error");
+                        }
+                        getView().dismissLoading();
+                    }
+
+                    @Override
+                    public void onFailure(Call<MessageResponse> call, Throwable t) {
+                        getView().showToast("Change Password Error");
+                        getView().dismissLoading();
+                    }
+                });
+            }
+        });
     }
 }

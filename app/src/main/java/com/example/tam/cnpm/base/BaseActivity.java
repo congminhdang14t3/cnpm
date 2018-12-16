@@ -83,9 +83,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage(getStringResource(R.string.loading));
         mProgressDialog.setCancelable(false);
-        mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setIndeterminateDrawable(getResources()
-                .getDrawable(R.drawable.progressbar_handler));
+//        mProgressDialog.setIndeterminate(true);
+//        mProgressDialog.setIndeterminateDrawable(getResources()
+//                .getDrawable(R.drawable.progressbar_handler));
     }
 
     private void showProgressDialog() {
@@ -144,9 +144,10 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     @Override
     public void showSweetDialog(String message, int type) {
-        new SweetAlertDialog(this, type)
-                .setTitleText(message)
-                .show();
+        SweetAlertDialog dialog = new SweetAlertDialog(this, type)
+                .setTitleText(message);
+        dialog.setCancelable(false);
+        dialog.show();
     }
 
     @Override

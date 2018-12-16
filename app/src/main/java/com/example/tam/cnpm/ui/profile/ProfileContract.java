@@ -8,13 +8,19 @@ import com.example.tam.cnpm.service.response.User;
 public interface ProfileContract {
     interface ProfileView extends BaseView {
         void setProfile(User user);
+
         void changeActivity();
+
         void finishActivity();
     }
 
-    interface ProfilePresenter{
+    interface ProfilePresenter {
         void logOut();
+
         void setLogIn();
+
         void editProfile(String fname, String lname, Uri uri);
+
+        void showDialogChangePass();
     }
 }

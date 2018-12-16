@@ -9,6 +9,7 @@ import android.util.Log;
 import com.example.tam.cnpm.Constant;
 import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BasePresenter;
+import com.example.tam.cnpm.service.response.Cart;
 import com.example.tam.cnpm.service.response.MessageResponse;
 import com.example.tam.cnpm.service.response.User;
 import com.example.tam.cnpm.service.retrofit2.APIUtils;
@@ -19,11 +20,13 @@ import com.example.tam.cnpm.ui.login.LoginActivity_;
 import com.example.tam.cnpm.ui.web_view.WebViewActivity_;
 import com.example.tam.cnpm.ulti.SharedPrefs;
 import com.example.tam.cnpm.ulti.Ulti;
+import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
@@ -38,7 +41,8 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
     }
 
     @Override
-    public void handlePayment(final String json, final String fname, final String lname, final String phone, final String address, final int id) {
+    public void handlePayment(final String json, final String fname, final String lname, final String phone, final String address, final int id
+            , final ArrayList<Cart> list) {
         String token = SharedPrefs.getInstance().get(TOKEN, String.class);
         if (fname.trim().equals("") ||
                 lname.trim().equals("") ||
@@ -52,7 +56,7 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
             return;
         }
         if (token.equals("")) {
-            new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+            SweetAlertDialog dialog = new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("Are you sure?")
                     .setContentText("You don't have account, you want to login")
                     .setConfirmButton("Yes", new SweetAlertDialog.OnSweetClickListener() {
@@ -65,13 +69,14 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
                     .setCancelButton("No", new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            payment(json, fname, lname, phone, address, id);
+                            payment(json, fname, lname, phone, address, id, list);
                             sweetAlertDialog.dismiss();
                         }
-                    })
-                    .show();
+                    });
+            dialog.setCancelable(false);
+            dialog.show();
         } else {
-            payment(json, fname, lname, phone, address, id);
+            payment(json, fname, lname, phone, address, id, list);
         }
 
     }
@@ -89,7 +94,7 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
         getView().initPayment(user);
     }
 
-    private void payment(String json, String fname, String lname, String phone, String address, int id) {
+    private void payment(String json, String fname, String lname, String phone, String address, int id, final ArrayList<Cart> list) {
         SharedPreferences sharedPreferences = getContext().
                 getSharedPreferences(Constant.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -106,7 +111,6 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
             obj.put(Constant.ADDRESS, address);
             obj.put(Constant.PHONE, phone);
             jsonLink = obj.toString();
-            System.out.println("Json: " + jsonLink);
         } catch (JSONException e) {
             e.printStackTrace();
             return;
@@ -131,13 +135,10 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
                             CartActivity.deleteAllCart();
                             getView().showToast("Payment success!");
                             getView().finishActivity();
-                        }
-                        else {
+                        } else {
                             if (response.code() == 400) {
-                                getView().finishActivity();
-                                System.out.println("400");
                                 try {
-                                    System.out.println(response.errorBody().string());
+                                    showErrorPayment(response.errorBody().string(), list);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -176,7 +177,13 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
                                     .start();
                             getView().finishActivity();
                         } else {
-                            getView().showErrorConnect();
+                            if (response.code() == 400) {
+                                try {
+                                    showErrorPayment(response.errorBody().string(), list);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
                         getView().dismissLoading();
                     }
@@ -189,6 +196,39 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
                 });
                 break;
             default:
+        }
+    }
+
+    private String showCartError(String e, ArrayList<Cart> list) {
+        String[] error = e.replace("[", "").replace("]", "").split(",");
+        String er = "";
+        for (Cart cart : list) {
+            for (String i : error) {
+                if (Integer.parseInt(i) == cart.getProduct().getId()) {
+                    er += "\"" + cart.getProduct().getName() + "\" not enough " + cart.getQuantity() + " product in stock.\n";
+                    break;
+                }
+            }
+        }
+        return er;
+    }
+
+    private void showErrorPayment(String error, ArrayList<Cart> list) {
+        try {
+            JSONObject object = new JSONObject(error);
+            SweetAlertDialog dialog = new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+                    .setContentText(showCartError(object.get("fields").toString(), list))
+                    .setConfirmButton("Ok", new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            getView().finishActivity();
+                            sweetAlertDialog.dismiss();
+                        }
+                    });
+            dialog.setCancelable(false);
+            dialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

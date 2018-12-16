@@ -15,6 +15,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.GET;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
@@ -26,6 +27,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 public class NewsPresenterImpl extends BasePresenter<NewsContract.NewsView> implements NewsContract.NewsPresenter {
     public NewsPresenterImpl(Context context) {
         super(context);
@@ -41,19 +43,22 @@ public class NewsPresenterImpl extends BasePresenter<NewsContract.NewsView> impl
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        ArrayList<DocBao>list = new ArrayList<>();
+                        ArrayList<DocBao> list = new ArrayList<>();
                         Document document = Jsoup.parse(response);
                         Elements elements = document.select("item");
-                        for (Element element : elements){
+                        for (Element element : elements) {
                             Element elementTitle = element.getElementsByTag("title").first();
                             Element elementDes = element.getElementsByTag("description").first();
                             Element elementLink = element.getElementsByTag("guid").first();
                             String image = Jsoup.parse(elementDes.text()).select("img").get(0).attr("src");
-                            if(!image.endsWith(".jpg")){
+                            if (!((image.endsWith(".jpg") || image.endsWith(".png")))) {
                                 image = Jsoup.parse(elementDes.text()).select("img").get(0).attr("data-original");
                             }
-                            list.add(new DocBao(elementTitle.text(),image,elementLink.text()));
+                            list.add(new DocBao(elementTitle.text(), image, elementLink.text()));
                         }
+//                        for (DocBao d : list){
+//                            System.out.println(d.toString());
+//                        }
                         getView().getListNews(list);
                         getView().dismissLoading();
                     }

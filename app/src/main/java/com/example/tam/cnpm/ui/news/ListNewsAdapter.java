@@ -17,11 +17,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ListNewsAdapter extends BaseAdapter{
+public class ListNewsAdapter extends BaseAdapter {
 
     Context mContext;
     private OnItemClickListener listener;
     private ArrayList<DocBao> mList;
+
     protected ListNewsAdapter(Context mContext, ArrayList<DocBao> list, OnItemClickListener listener) {
         super(mContext);
         this.mContext = mContext;
@@ -31,7 +32,7 @@ public class ListNewsAdapter extends BaseAdapter{
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.list_news,parent,false);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.list_news, parent, false);
         return new ContentViewHolder(view);
     }
 
@@ -42,12 +43,15 @@ public class ListNewsAdapter extends BaseAdapter{
 
     private void onBindItemViewHolder(ContentViewHolder holder, int position) {
         DocBao response = mList.get(position);
+        holder.mTextTitle.setText(response.getTitle());
+        if (response.getmImage() == null || response.getmImage().equals("")) {
+            return;
+        }
         Picasso.get()
                 .load(response.getmImage())
                 .placeholder(R.drawable.noimage)
                 .error(R.drawable.errorimage)
                 .into(holder.mImageView);
-        holder.mTextTitle.setText(response.getTitle());
     }
 
     @Override
@@ -61,7 +65,7 @@ public class ListNewsAdapter extends BaseAdapter{
 
         public ContentViewHolder(View v) {
             super(v);
-            mImageView =  v.findViewById(R.id.ivDocbao);
+            mImageView = v.findViewById(R.id.ivDocbao);
             mTextTitle = v.findViewById(R.id.tvTitleDocbao);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -71,7 +75,7 @@ public class ListNewsAdapter extends BaseAdapter{
                     }
                 }
             });
-            v.startAnimation(AnimationUtils.loadAnimation(mContext,R.anim.scale_list));
+            v.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.scale_list));
         }
     }
 }

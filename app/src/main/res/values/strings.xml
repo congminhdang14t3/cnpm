@@ -21,5 +21,10 @@
     <string name="error_store_name">Error store name</string>
     <string name="store">Store</string>
     <string name="no_more_product">No more product in stock</string>
+    <string name="change_pass">Change Password</string>
+    <string name="save">Save</string>
+    <string name="old_pass">old pass</string>
+    <string name="new_pass">New pass</string>
+    <string name="new_pass1">New pass again</string>
 
 </resources>

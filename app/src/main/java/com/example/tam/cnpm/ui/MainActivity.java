@@ -144,7 +144,7 @@ public class MainActivity extends BaseActivity {
 
     void gotoProfile() {
         if (token.equals("")) {
-            new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+            SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("Are you sure?")
                     .setContentText("You don't have account, you need to login")
                     .setConfirmButton("Yes", new SweetAlertDialog.OnSweetClickListener() {
@@ -159,8 +159,9 @@ public class MainActivity extends BaseActivity {
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                             sweetAlertDialog.dismiss();
                         }
-                    })
-                    .show();
+                    });
+            dialog.setCancelable(false);
+            dialog.show();
         } else {
             ProfileActivity_.intent(MainActivity.this).start();
         }
@@ -173,5 +174,11 @@ public class MainActivity extends BaseActivity {
             OrderActivity_.intent(this)
                     .start();
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        token = SharedPrefs.getInstance().get(Constant.TOKEN, String.class);
     }
 }

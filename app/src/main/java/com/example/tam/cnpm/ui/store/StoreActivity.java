@@ -33,18 +33,18 @@ import static com.example.tam.cnpm.Constant.STORE_EXTRAS;
 public class StoreActivity extends BaseActivity<StorePresenterImpl> implements StoreContract.StoreView {
     @Extra(STORE_EXTRAS)
     int mStoreId;
-    GoogleMap map;
+//    GoogleMap map;
     final int REQUEST_ID_ACCESS_COURSE_FINE_LOCATION = 2805;
-    @ViewById(R.id.image_store)
-    ImageView mImageStore;
-    @ViewById(R.id.text_name_store)
-    TextView mTextName;
-    @ViewById(R.id.text_phone_store)
-    TextView mTextPhone;
-    @ViewById(R.id.text_address_store)
-    TextView mTextAddress;
-    Store mStore;
-    MapFragment mapFragment;
+//    @ViewById(R.id.image_store)
+//    ImageView mImageStore;
+//    @ViewById(R.id.text_name_store)
+//    TextView mTextName;
+//    @ViewById(R.id.text_phone_store)
+//    TextView mTextPhone;
+//    @ViewById(R.id.text_address_store)
+//    TextView mTextAddress;
+//    Store mStore;
+//    MapFragment mapFragment;
     @Override
     protected void initPresenter() {
         mPresenter = new StorePresenterImpl(this);
@@ -54,30 +54,30 @@ public class StoreActivity extends BaseActivity<StorePresenterImpl> implements S
     protected void afterView() {
         setTitle("Store");
         mPresenter.getStoreById(mStoreId);
-        mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.myMap);
+        //mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.myMap);
     }
 
     @Override
     public void init(Store store) {
-        mStore = store;
-        mTextName.setText(store.getName());
-        mTextPhone.setText(store.getPhone());
-        mTextAddress.setText(store.getAddress());
-        showLoading();
-        mapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                map = googleMap;
-                map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-
-                    @Override
-                    public void onMapLoaded() {
-                        dismissLoading();
-                        pemisstion();
-                    }
-                });
-            }
-        });
+//        mStore = store;
+//        mTextName.setText(store.getName());
+//        mTextPhone.setText(store.getPhone());
+//        mTextAddress.setText(store.getAddress());
+//        showLoading();
+//        mapFragment.getMapAsync(new OnMapReadyCallback() {
+//            @Override
+//            public void onMapReady(GoogleMap googleMap) {
+//                map = googleMap;
+//                map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+//
+//                    @Override
+//                    public void onMapLoaded() {
+//                        dismissLoading();
+//                        pemisstion();
+//                    }
+//                });
+//            }
+//        });
     }
 
     void pemisstion() {
@@ -106,13 +106,13 @@ public class StoreActivity extends BaseActivity<StorePresenterImpl> implements S
     }
 
     void show() {
-        String[] location = mStore.getLocation().split(", ");
-        LatLng store = new LatLng(Double.parseDouble(location[0]),Double.parseDouble(location[1]));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(store, 17));
-        map.addMarker(new MarkerOptions()
-                .title(mStore.getName())
-                .snippet(mStore.getAddress())
-                .position(store));
+//        String[] location = mStore.getLocation().split(", ");
+//        LatLng store = new LatLng(Double.parseDouble(location[0]),Double.parseDouble(location[1]));
+//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(store, 17));
+//        map.addMarker(new MarkerOptions()
+//                .title(mStore.getName())
+//                .snippet(mStore.getAddress())
+//                .position(store));
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
 import static com.example.tam.cnpm.Constant.REQUEST_CODE_LIBRARY;
 
 @EActivity(R.layout.activity_profile)
@@ -42,6 +45,7 @@ public class ProfileActivity extends BaseActivity<ProfilePresenterImpl> implemen
 
     Uri mUri;
     boolean isChangeAvatar;
+
     @Override
     protected void initPresenter() {
         mPresenter = new ProfilePresenterImpl(this);
@@ -54,7 +58,7 @@ public class ProfileActivity extends BaseActivity<ProfilePresenterImpl> implemen
     }
 
     public void editProfileOnClick(View view) {
-        mPresenter.editProfile(mEditFirstName.getText().toString(), mEditLastName.getText().toString(), isChangeAvatar?mUri:null);
+        mPresenter.editProfile(mEditFirstName.getText().toString(), mEditLastName.getText().toString(), isChangeAvatar ? mUri : null);
     }
 
     public void logOutProfileOnClick(View view) {
@@ -107,5 +111,21 @@ public class ProfileActivity extends BaseActivity<ProfilePresenterImpl> implemen
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_change_pass,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_change_pass:
+                mPresenter.showDialogChangePass();
+                return true;
+        }
+        return false;
     }
 }

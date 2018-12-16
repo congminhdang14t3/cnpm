@@ -17,4 +17,5 @@ public class Constant {
     public static final String JSON_PAYMENT = "json_payment";
     public static final int ONE_USD = 23255;
     public static final int REQUEST_CODE_LIBRARY = 1211;
+    public static final String LIST_CART_EXTRAS = "list_cart_extrax";
 }

@@ -115,7 +115,13 @@ public interface DataClient {
     @GET("order/list/")
     Call<ArrayList<Order>> listOrders(@Header("Authorization") String authorization);
 
-
     @GET("store/info/{id}/")
     Call<Store> getStore(@Path("id") int id);
+
+    @FormUrlEncoded
+    @PUT("change/password/")
+    Call<MessageResponse> changPassword(@Header("Authorization") String authorization,
+                                        @Field("new_password") String newPass,
+                                        @Field("new_password2") String newPass1,
+                                        @Field("old_password") String oldPass);
 }

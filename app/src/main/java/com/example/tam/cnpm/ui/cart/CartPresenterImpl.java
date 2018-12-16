@@ -92,6 +92,7 @@ public class CartPresenterImpl extends BasePresenter<CartContract.CartView> impl
             paramObject.put(Constant.PRODUCT, productObject);
             PaymentActivity_.intent(getContext())
                     .extra(Constant.JSON_PAYMENT, paramObject.toString())
+                    .extra(Constant.LIST_CART_EXTRAS,list)
                     .start();
         } catch (JSONException e) {
             e.printStackTrace();

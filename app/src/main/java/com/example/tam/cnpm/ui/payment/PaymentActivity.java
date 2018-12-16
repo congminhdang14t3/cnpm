@@ -6,13 +6,17 @@ import android.widget.RadioGroup;
 
 import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BaseActivity;
+import com.example.tam.cnpm.service.response.Cart;
 import com.example.tam.cnpm.service.response.User;
 
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
+
 import static com.example.tam.cnpm.Constant.JSON_PAYMENT;
+import static com.example.tam.cnpm.Constant.LIST_CART_EXTRAS;
 import static com.example.tam.cnpm.Constant.MONEY;
 
 @EActivity(R.layout.activity_payment)
@@ -35,6 +39,9 @@ public class PaymentActivity extends BaseActivity<PaymentPresenterImpl> implemen
     @Extra(JSON_PAYMENT)
     String jsonPayment;
 
+    @Extra(LIST_CART_EXTRAS)
+    ArrayList<Cart> mListCart;
+
     @Override
     protected void initPresenter() {
         mPresenter = new PaymentPresenterImpl(this);
@@ -54,7 +61,7 @@ public class PaymentActivity extends BaseActivity<PaymentPresenterImpl> implemen
             case R.id.button_ok_payment:
                 mPresenter.handlePayment(jsonPayment, editFirstName.getText().toString(),
                         editLastName.getText().toString(), editPhone.getText().toString(),
-                        editAddress.getText().toString(), group.getCheckedRadioButtonId());
+                        editAddress.getText().toString(), group.getCheckedRadioButtonId(), mListCart);
                 break;
             default:
                 break;
