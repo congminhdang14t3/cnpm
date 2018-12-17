@@ -131,15 +131,18 @@ public class StoreActivity extends BaseActivity<StorePresenterImpl> implements S
     }
 
     void show() {
-        String[] location = mStore.getLocation().split(", ");
-        LatLng store = new LatLng(Double.parseDouble(location[0]), Double.parseDouble(location[1]));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(store, 17));
-        map.addMarker(new MarkerOptions()
-                .title(mStore.getName())
-                .snippet(mStore.getAddress())
-                .position(store));
+        try {
+            String[] location = mStore.getLocation().split(", ");
+            LatLng store = new LatLng(Double.parseDouble(location[0]), Double.parseDouble(location[1]));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(store, 17));
+            map.addMarker(new MarkerOptions()
+                    .title(mStore.getName())
+                    .snippet(mStore.getAddress())
+                    .position(store));
+            mPresenter.getListProduct(mStoreId);
+        } catch (Exception e) {
 
-        mPresenter.getListProduct(mStoreId);
+        }
     }
 
     @Override

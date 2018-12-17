@@ -25,7 +25,14 @@ public class CategoryPresenterImpl extends BasePresenter<CategoryContract.Catego
             @Override
             public void onResponse(Call<ArrayList<CategoryResponse>> call, Response<ArrayList<CategoryResponse>> response) {
                 if(response.isSuccessful()){
-                    getView().getListCategory(response.body());
+                    ArrayList<CategoryResponse> list = new ArrayList<>();
+                    list.addAll(response.body());
+                    for(CategoryResponse c : list){
+                        if(!c.getIsActive()){
+                            list.remove(c);
+                        }
+                    }
+                    getView().getListCategory(list);
                     getView().dismissLoading();
                 }
             }
