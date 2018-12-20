@@ -139,10 +139,9 @@ public class StoreActivity extends BaseActivity<StorePresenterImpl> implements S
                     .title(mStore.getName())
                     .snippet(mStore.getAddress())
                     .position(store));
-            mPresenter.getListProduct(mStoreId);
         } catch (Exception e) {
-
         }
+        mPresenter.getListProduct(mStoreId);
     }
 
     @Override

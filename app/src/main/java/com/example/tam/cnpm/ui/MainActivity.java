@@ -1,6 +1,7 @@
 package com.example.tam.cnpm.ui;
 
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -80,7 +81,7 @@ public class MainActivity extends BaseActivity {
                                     gotoOrder();
                                     break;
                                 case 5:
-                                    showToast("Store");
+                                    showAboutUs();
                                     break;
                                 default:
                                     break;
@@ -180,5 +181,12 @@ public class MainActivity extends BaseActivity {
     protected void onRestart() {
         super.onRestart();
         token = SharedPrefs.getInstance().get(Constant.TOKEN, String.class);
+    }
+
+    private void showAboutUs() {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.title_about_us))
+                .setMessage(getString(R.string.message_about_us))
+                .create().show();
     }
 }

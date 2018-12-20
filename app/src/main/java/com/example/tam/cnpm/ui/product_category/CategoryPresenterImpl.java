@@ -12,7 +12,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CategoryPresenterImpl extends BasePresenter<CategoryContract.CategoryView> implements CategoryContract.CategoryPresenter{
+public class CategoryPresenterImpl extends BasePresenter<CategoryContract.CategoryView> implements CategoryContract.CategoryPresenter {
     public CategoryPresenterImpl(Context context) {
         super(context);
     }
@@ -24,12 +24,12 @@ public class CategoryPresenterImpl extends BasePresenter<CategoryContract.Catego
         call.enqueue(new Callback<ArrayList<CategoryResponse>>() {
             @Override
             public void onResponse(Call<ArrayList<CategoryResponse>> call, Response<ArrayList<CategoryResponse>> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     ArrayList<CategoryResponse> list = new ArrayList<>();
                     list.addAll(response.body());
-                    for(CategoryResponse c : list){
-                        if(!c.getIsActive()){
-                            list.remove(c);
+                    for (int i = 0; i < list.size(); i++) {
+                        if (!list.get(i).getIsActive()) {
+                            list.remove(i);
                         }
                     }
                     getView().getListCategory(list);

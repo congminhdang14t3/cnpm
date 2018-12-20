@@ -26,5 +26,7 @@
     <string name="old_pass">old pass</string>
     <string name="new_pass">New pass</string>
     <string name="new_pass1">New pass again</string>
+    <string name="title_about_us">We give you the lowest prices on all your needs.</string>
+    <string name="message_about_us">Our Vision\nOur vision is delivering happiness to customers, employees and vendors.\nOur Goal\nWe believe in the power of technology transformation and want to change the world better by providing the platform to connect buyers and sellers in the same community. We continuously improve our platform to bring an enjoyable shopping experience to all our users.</string>
 
 </resources>
