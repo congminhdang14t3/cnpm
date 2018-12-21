@@ -63,8 +63,6 @@ public class LoginPresenterImpl extends BasePresenter<LoginContract.LoginView> i
         Button cancel = dialog.findViewById(R.id.button_cancel_register);
         Button register = dialog.findViewById(R.id.button_register);
         image = dialog.findViewById(R.id.image_register);
-        image.setImageBitmap(BitmapFactory.decodeFile
-                (new File("/storage/6633-6433/DCIM/Camera/20181104_174113.jpg").getAbsolutePath()));
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,6 +109,7 @@ public class LoginPresenterImpl extends BasePresenter<LoginContract.LoginView> i
                             MultipartBody.Part.createFormData("avatar", file.getName(), requestFile);
                     call = APIUtils.getData().registerUser(textEmail,
                             textPass, textFirst, textLast, body, textCustomer);
+                    path="";
                 }
                 call.enqueue(new Callback<User>() {
                     @Override

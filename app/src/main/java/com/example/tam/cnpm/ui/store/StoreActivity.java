@@ -169,8 +169,8 @@ public class StoreActivity extends BaseActivity<StorePresenterImpl> implements S
 
     public void showProfileOnclick(View view) {
         String information = "Name: " + mStore.getName() +
-                "\nAddress: " + mStore.getAddress() +
-                "\nContact: " + mStore.getPhone();
+                ".\nAddress: " + mStore.getAddress() +
+                ".\nContact: " + mStore.getPhone()+".";
         showAlertDialog(information);
     }
 

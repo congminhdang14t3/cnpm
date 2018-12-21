@@ -59,6 +59,7 @@ public class ProfileActivity extends BaseActivity<ProfilePresenterImpl> implemen
 
     public void editProfileOnClick(View view) {
         mPresenter.editProfile(mEditFirstName.getText().toString(), mEditLastName.getText().toString(), isChangeAvatar ? mUri : null);
+        isChangeAvatar=false;
     }
 
     public void logOutProfileOnClick(View view) {

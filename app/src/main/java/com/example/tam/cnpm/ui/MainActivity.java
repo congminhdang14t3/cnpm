@@ -4,7 +4,13 @@ import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import android.os.Handler;
 
 import com.example.tam.cnpm.Constant;
 import com.example.tam.cnpm.R;
@@ -30,8 +36,6 @@ import org.androidannotations.annotations.ViewById;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-import static com.example.tam.cnpm.Constant.TOKEN;
-
 @EActivity(R.layout.activity_main)
 public class MainActivity extends BaseActivity {
     @ViewById(R.id.boom_menu)
@@ -39,6 +43,18 @@ public class MainActivity extends BaseActivity {
 
     @ViewById(R.id.linear_main_activity)
     LinearLayout mLinearMain;
+
+    @ViewById(R.id.linear_splash)
+    LinearLayout mLinearSplash;
+
+    @ViewById(R.id.text_version)
+    TextView mTextViewVersion;
+
+    @ViewById(R.id.text_copy_right)
+    TextView mTextViewCopyRight;
+
+    @ViewById(R.id.image_logo)
+    ImageView mImageLogoHrm;
 
     int[] listImage = {R.drawable.drug, R.drawable.cart, R.drawable.ic_news, R.drawable.account
             , R.drawable.ic_order, R.drawable.store};
@@ -51,6 +67,16 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void afterView() {
+        mActionBar.hide();
+        animationSplash();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mLinearSplash.setVisibility(View.GONE);
+                mActionBar.show();
+            }
+        }, 3500);
+
         setTitle("Drug Store");
         SharedPrefs.init(this);
         token = SharedPrefs.getInstance().get(Constant.TOKEN, String.class);
@@ -189,4 +215,13 @@ public class MainActivity extends BaseActivity {
                 .setMessage(getString(R.string.message_about_us))
                 .create().show();
     }
+
+    private void animationSplash() {
+        Animation animMove_to_right = AnimationUtils.loadAnimation(this, R.anim.anim_move_to_right);
+        Animation animUptoDown = AnimationUtils.loadAnimation(this, R.anim.anim_up_to_down);
+        mTextViewVersion.startAnimation(animMove_to_right);
+        mTextViewCopyRight.startAnimation(animMove_to_right);
+        mImageLogoHrm.startAnimation(animUptoDown);
+    }
+
 }

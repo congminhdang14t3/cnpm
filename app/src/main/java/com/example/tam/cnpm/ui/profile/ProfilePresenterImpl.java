@@ -108,7 +108,8 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
                             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                             MultipartBody.Part body =
                                     MultipartBody.Part.createFormData("avatar", file.getName(), requestFile);
-                            call = APIUtils.getData().editProfile(last, body);
+                            call = APIUtils.getData().editProfile(SharedPrefs.getInstance().get(TOKEN, String.class)
+                                    , first, last, body);
                         }
                         call.enqueue(new Callback<User>() {
                             @Override
@@ -116,6 +117,7 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
                                 if (response.isSuccessful()) {
                                     //getView().setProfile(response.body());
                                     System.out.println(response.body().getUrl());
+                                    getView().showToast("Update Success!");
                                 } else {
                                     System.out.println(response.message());
                                     getView().showErrorConnect();
