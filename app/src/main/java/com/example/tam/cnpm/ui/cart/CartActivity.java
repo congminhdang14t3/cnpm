@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.tam.cnpm.Constant;
@@ -35,6 +36,9 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
 
     @ViewById(R.id.tvTotalPriceCart)
     static TextView mTextTotalPriceCart;
+
+    @ViewById(R.id.linear_cart_empty)
+    LinearLayout mLinearEmpty;
 
     public static ArrayList<Cart> mList = new ArrayList<>();
 
@@ -86,6 +90,11 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
         mList.addAll(response);
         mAdapter.notifyDataSetChanged();
         changeTotal();
+        if (mList.isEmpty()) {
+            mLinearEmpty.setVisibility(View.VISIBLE);
+        } else {
+            mLinearEmpty.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -108,5 +117,10 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
         super.onRestart();
         mAdapter.notifyDataSetChanged();
         changeTotal();
+        if (mList.isEmpty()) {
+            mLinearEmpty.setVisibility(View.VISIBLE);
+        } else {
+            mLinearEmpty.setVisibility(View.GONE);
+        }
     }
 }

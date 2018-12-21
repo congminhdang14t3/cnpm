@@ -8,6 +8,24 @@
     android:layout_height="match_parent"
     tools:context=".ui.cart.CartActivity"
     android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/linear_cart_empty"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@drawable/ic_empty"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:text="Have no list cart"
+            android:textSize="25sp"/>
+        </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_cart"
         android:layout_width="match_parent"

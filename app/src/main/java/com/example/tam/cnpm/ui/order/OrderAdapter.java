@@ -63,28 +63,29 @@ public class OrderAdapter extends BaseAdapter {
         final Order order = mList.get(position);
 
         holder.textCreate.setText(order.getCreated());
-        holder.textStore.setText(">>> "+order.getStore().getName());
+        holder.textStore.setText(">>> " + order.getStore().getName());
         holder.textStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 StoreActivity_.intent(mContext)
-                        .extra(STORE_EXTRAS,order.getStore().getId())
+                        .extra(STORE_EXTRAS, order.getStore().getId())
                         .start();
             }
         });
         holder.textCode.setText(order.getOrderCode());
-        holder.textMoney.setText(changeMoneyIntToString(order.getMoney())+" đ");
-        holder.textStatus.setText(order.getStatusOrder());
+        holder.textMoney.setText(changeMoneyIntToString(order.getMoney()) + " đ");
+        holder.textStatusPayment.setText(order.getStatusPayment());
+        holder.textStatusOrder.setText(order.getStatusOrder());
 
         List<Product> listProduct = order.getProducts();
-        String[] name = new String[listProduct.size()+1];
+        String[] name = new String[listProduct.size() + 1];
         name[0] = "List Product";
-        for (int i=0;i<listProduct.size();i++){
+        for (int i = 0; i < listProduct.size(); i++) {
             Product product = listProduct.get(i);
-            name[i+1] = product.getName()+"\n"
-                    + changeMoneyIntToString(product.getPrice())+" đ";
+            name[i + 1] = product.getName() + "\n"
+                    + changeMoneyIntToString(product.getPrice()) + " đ";
         }
-        holder.spinner.setAdapter(new ArrayAdapter<>(mContext,android.R.layout.simple_list_item_1,name));
+        holder.spinner.setAdapter(new ArrayAdapter<>(mContext, android.R.layout.simple_list_item_1, name));
 
     }
 
@@ -99,7 +100,8 @@ public class OrderAdapter extends BaseAdapter {
                 textStore,
                 textCode,
                 textMoney,
-                textStatus;
+                textStatusPayment,
+                textStatusOrder;
 
         public ContentViewHolder(View v) {
             super(v);
@@ -108,7 +110,8 @@ public class OrderAdapter extends BaseAdapter {
             textStore = v.findViewById(R.id.text_store_order);
             textCode = v.findViewById(R.id.text_code_order);
             textMoney = v.findViewById(R.id.text_money_order);
-            textStatus = v.findViewById(R.id.text_status_order);
+            textStatusPayment = v.findViewById(R.id.text_status_payment);
+            textStatusOrder = v.findViewById(R.id.text_status_order);
             v.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.scale_list));
         }
     }

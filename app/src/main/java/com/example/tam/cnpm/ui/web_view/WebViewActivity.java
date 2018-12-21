@@ -10,6 +10,7 @@ import android.webkit.WebViewClient;
 
 import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BaseActivity;
+import com.example.tam.cnpm.ui.cart.CartActivity;
 
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
@@ -22,6 +23,7 @@ public class WebViewActivity extends BaseActivity<WebPresenterImpl> implements W
 
     @Extra
     String link;
+
     @Override
     protected void initPresenter() {
         mPresenter = new WebPresenterImpl(this);
@@ -29,24 +31,28 @@ public class WebViewActivity extends BaseActivity<WebPresenterImpl> implements W
 
     @Override
     protected void afterView() {
+        CartActivity.deleteAllCart();
         webView.loadUrl(link);
-        webView.setWebViewClient(new WebViewClient(){
+        webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                System.out.println("onPageStarted: "+url);
                 super.onPageStarted(view, url, favicon);
-                if(url.startsWith("http://localhost:3000")){
-                    webView.setVisibility(View.GONE);
-                    mPresenter.handleUrl(url);
+                if (url.startsWith("http://52.14.71.211")) {
+                    showToast("payment success");
+                    finish();
+                    //webView.setVisibility(View.GONE);
+                    //mPresenter.handleUrl(url);
                 }
             }
         });
-
         WebSettings webSettings = webView.getSettings();
         webSettings.setBuiltInZoomControls(true);
         webSettings.setDisplayZoomControls(false);
         webSettings.setDomStorageEnabled(true);
         webSettings.setJavaScriptEnabled(true);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;
