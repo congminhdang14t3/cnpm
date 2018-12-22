@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 
 import com.example.tam.cnpm.Constant;
+import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BasePresenter;
 import com.example.tam.cnpm.service.response.Cart;
 import com.example.tam.cnpm.service.response.Product;
@@ -68,7 +69,7 @@ public class CartPresenterImpl extends BasePresenter<CartContract.CartView> impl
     @Override
     public void createPaymentJson(ArrayList<Cart> list) {
         if (list.isEmpty()) {
-            getView().showToast("List Cart empty!");
+            getView().showToast(getContext().getString(R.string.get_cart_empty));
             return;
         }
         ArrayList<Integer> storeId = getListStoreId(list);
@@ -103,7 +104,7 @@ public class CartPresenterImpl extends BasePresenter<CartContract.CartView> impl
     public void goOrderActivity() {
         String token = SharedPrefs.getInstance().get(TOKEN,String.class);
         if(token.equals("")){
-            getView().showToast("You don't have orders");
+            getView().showToast(getContext().getString(R.string.have_no_order));
         }
         else{
             OrderActivity_.intent(getContext())

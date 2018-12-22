@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity {
             }
         }, 3500);
 
-        setTitle("Drug Store");
+        setTitle(getString(R.string.drug_store));
         SharedPrefs.init(this);
         token = SharedPrefs.getInstance().get(Constant.TOKEN, String.class);
 
@@ -172,16 +172,16 @@ public class MainActivity extends BaseActivity {
     void gotoProfile() {
         if (token.equals("")) {
             SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                    .setTitleText("Are you sure?")
-                    .setContentText("You don't have account, you need to login")
-                    .setConfirmButton("Yes", new SweetAlertDialog.OnSweetClickListener() {
+                    .setTitleText(getString(R.string.are_you_sure))
+                    .setContentText(getString(R.string.want_to_login))
+                    .setConfirmButton(getString(R.string.yes), new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                             LoginActivity_.intent(MainActivity.this).start();
                             sweetAlertDialog.dismiss();
                         }
                     })
-                    .setCancelButton("No", new SweetAlertDialog.OnSweetClickListener() {
+                    .setCancelButton(getString(R.string.no), new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                             sweetAlertDialog.dismiss();
@@ -196,7 +196,7 @@ public class MainActivity extends BaseActivity {
 
     void gotoOrder() {
         if (token.equals("")) {
-            showToast("You don't have orders");
+            showToast(getString(R.string.have_no_order));
         } else {
             OrderActivity_.intent(this)
                     .start();

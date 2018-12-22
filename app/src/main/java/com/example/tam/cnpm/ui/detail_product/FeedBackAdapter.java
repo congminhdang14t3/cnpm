@@ -43,17 +43,18 @@ public class FeedBackAdapter extends BaseAdapter {
 
     private void onBindItemViewHolder(final ContentViewHolder holder, final int position) {
         final FeedBack feedBack = mList.get(position);
-        Picasso.get()
-                .load(R.drawable.ic_avatar_default)
-                .placeholder(R.drawable.noimage)
-                .error(R.drawable.errorimage)
-                .into(holder.mImageView);
         holder.mTextCreated.setText(feedBack.getCreated());
         holder.mTextName.setText(feedBack.getCustomer());
         holder.mTextDetail.setText(feedBack.getDetail());
         holder.mRating.setRating(feedBack.getStar());
 
-
+        if(feedBack.getAvatar() != null && !feedBack.getAvatar().equals("")){
+            Picasso.get()
+                    .load(feedBack.getAvatar())
+                    .placeholder(R.drawable.noimage)
+                    .error(R.drawable.errorimage)
+                    .into(holder.mImageView);
+        }
     }
 
     @Override

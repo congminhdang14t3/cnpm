@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@android:color/black"
-            android:text="Have no list cart"
+            android:text="@string/have_no_list_cart"
             android:textSize="25sp"/>
         </LinearLayout>
     <android.support.v7.widget.RecyclerView
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="18sp"
-            android:text="Total"/>
+            android:text="@string/total"/>
         <TextView
             android:id="@+id/tvTotalPriceCart"
             android:layout_width="wrap_content"

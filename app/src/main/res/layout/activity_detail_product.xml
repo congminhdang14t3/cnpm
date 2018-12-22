@@ -116,7 +116,7 @@
                 android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:onClick="handling"
-                android:text="Add to cart"
+                android:text="@string/add_to_cart"
                 android:textColor="@android:color/white"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -130,7 +130,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="More information"
+            android:text="@string/more_information"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
@@ -169,7 +169,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="Comment"
+            android:text="@string/commemt"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
@@ -257,7 +257,7 @@
             android:layout_margin="5dp"
             android:gravity="center"
             android:onClick="getLogInActivity"
-            android:text="You have to log in to comment!"
+            android:text="@string/login_to_comment"
             android:textColor="@color/colorPrimary"
             android:textSize="18sp"
             android:visibility="gone" />

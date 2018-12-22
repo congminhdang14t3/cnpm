@@ -2,6 +2,7 @@ package com.example.tam.cnpm.ui.store;
 
 import android.content.Context;
 
+import com.example.tam.cnpm.R;
 import com.example.tam.cnpm.base.BasePresenter;
 import com.example.tam.cnpm.service.response.Product;
 import com.example.tam.cnpm.service.response.Store;
@@ -54,14 +55,14 @@ public class StorePresenterImpl extends BasePresenter<StoreContract.StoreView> i
                         if(response.isSuccessful()){
                             getView().getListProduct(response.body());
                         }else{
-                            getView().showToast("Get list product Error");
+                            getView().showToast(getContext().getString(R.string.get_list_product_error));
                         }
                         getView().dismissLoading();
                     }
 
                     @Override
                     public void onFailure(Call<ArrayList<Product>> call, Throwable t) {
-                        getView().showToast("Get list product Error");
+                        getView().showToast(getContext().getString(R.string.get_list_product_error));
                         getView().dismissLoading();
                     }
                 });

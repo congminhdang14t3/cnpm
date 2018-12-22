@@ -48,25 +48,25 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
                 lname.trim().equals("") ||
                 phone.trim().equals("") ||
                 address.trim().equals("")) {
-            getView().showSweetDialog("Please fill full imformation!!", SweetAlertDialog.ERROR_TYPE);
+            getView().showSweetDialog(getContext().getString(R.string.fill_full_infor), SweetAlertDialog.ERROR_TYPE);
             return;
         }
         if (phone.length() != 10) {
-            getView().showSweetDialog("Phone not right format", SweetAlertDialog.ERROR_TYPE);
+            getView().showSweetDialog(getContext().getString(R.string.phone_not_right), SweetAlertDialog.ERROR_TYPE);
             return;
         }
         if (token.equals("")) {
             SweetAlertDialog dialog = new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
-                    .setTitleText("Are you sure?")
-                    .setContentText("You don't have account, you want to login")
-                    .setConfirmButton("Yes", new SweetAlertDialog.OnSweetClickListener() {
+                    .setTitleText(getContext().getString(R.string.are_you_sure))
+                    .setContentText(getContext().getString(R.string.want_to_login))
+                    .setConfirmButton(getContext().getString(R.string.yes), new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                             LoginActivity_.intent(getContext()).start();
                             sweetAlertDialog.dismiss();
                         }
                     })
-                    .setCancelButton("No", new SweetAlertDialog.OnSweetClickListener() {
+                    .setCancelButton(getContext().getString(R.string.no), new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                             payment(json, fname, lname, phone, address, id, list);
@@ -133,7 +133,7 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
                     public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                         if (response.isSuccessful()) {
                             CartActivity.deleteAllCart();
-                            getView().showToast("Payment success!");
+                            getView().showToast(getContext().getString(R.string.payment_success));
                             getView().finishActivity();
                         } else {
                             if (response.code() == 400) {
@@ -205,7 +205,8 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
         for (Cart cart : list) {
             for (String i : error) {
                 if (Integer.parseInt(i) == cart.getProduct().getId()) {
-                    er += "\"" + cart.getProduct().getName() + "\" not enough " + cart.getQuantity() + " product in stock.\n";
+                    er += "\"" + cart.getProduct().getName() + "\" " + getContext().getString(R.string.not_enough)
+                            + " " + cart.getQuantity() + " "+getContext().getString(R.string.product_in_stock)+"\n";
                     break;
                 }
             }
@@ -218,7 +219,7 @@ public class PaymentPresenterImpl extends BasePresenter<PaymentContract.PaymentV
             JSONObject object = new JSONObject(error);
             SweetAlertDialog dialog = new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
                     .setContentText(showCartError(object.get("fields").toString(), list))
-                    .setConfirmButton("Ok", new SweetAlertDialog.OnSweetClickListener() {
+                    .setConfirmButton(getContext().getString(R.string.ok), new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                             getView().finishActivity();

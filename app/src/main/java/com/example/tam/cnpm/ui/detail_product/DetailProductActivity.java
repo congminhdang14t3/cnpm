@@ -88,7 +88,7 @@ public class DetailProductActivity extends BaseActivity<DetailProductPresenterIm
     @Override
     protected void afterView() {
         System.out.println(mProduct.toString());
-        setTitle("Detail Product");
+        setTitle(getString(R.string.detail_product));
         if (mProduct.getCountInStock() == 0) {
             mLinearBuyProduct.setVisibility(View.GONE);
         }

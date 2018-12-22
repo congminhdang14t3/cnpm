@@ -66,7 +66,7 @@ public class StoreActivity extends BaseActivity<StorePresenterImpl> implements S
 
     @Override
     protected void afterView() {
-        setTitle("Store");
+        setTitle(getString(R.string.store));
         mList = new ArrayList<>();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
@@ -168,9 +168,9 @@ public class StoreActivity extends BaseActivity<StorePresenterImpl> implements S
     }
 
     public void showProfileOnclick(View view) {
-        String information = "Name: " + mStore.getName() +
-                ".\nAddress: " + mStore.getAddress() +
-                ".\nContact: " + mStore.getPhone()+".";
+        String information = getString(R.string.name)+": " + mStore.getName() +
+                ".\n"+getString(R.string.address)+": " + mStore.getAddress() +
+                ".\n"+getString(R.string.contact)+": " + mStore.getPhone()+".";
         showAlertDialog(information);
     }
 

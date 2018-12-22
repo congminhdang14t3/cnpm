@@ -80,15 +80,15 @@ public class LoginPresenterImpl extends BasePresenter<LoginContract.LoginView> i
             public void onClick(View view) {
                 if (email.getText().toString().equals("") || pass.getText().toString().equals("")
                         || firstName.getText().toString().equals("") || lastName.getText().toString().equals("")) {
-                    getView().showSweetDialog("You need fill full information", SweetAlertDialog.ERROR_TYPE);
+                    getView().showSweetDialog(getContext().getString(R.string.fill_full_infor), SweetAlertDialog.ERROR_TYPE);
                     return;
                 }
                 if (!pass.getText().toString().equals(pass2.getText().toString())) {
-                    getView().showSweetDialog("password not match", SweetAlertDialog.ERROR_TYPE);
+                    getView().showSweetDialog(getContext().getString(R.string.password_not_match), SweetAlertDialog.ERROR_TYPE);
                     return;
                 }
                 if (!email.getText().toString().endsWith("@gmail.com")) {
-                    getView().showSweetDialog("email not right format", SweetAlertDialog.ERROR_TYPE);
+                    getView().showSweetDialog(getContext().getString(R.string.email_not_right), SweetAlertDialog.ERROR_TYPE);
                     return;
                 }
                 getView().showLoading();
@@ -115,17 +115,17 @@ public class LoginPresenterImpl extends BasePresenter<LoginContract.LoginView> i
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         if (response.isSuccessful()) {
-                            getView().showSweetDialog("Register Success!", SweetAlertDialog.SUCCESS_TYPE);
+                            getView().showSweetDialog(getContext().getString(R.string.register_success), SweetAlertDialog.SUCCESS_TYPE);
                             dialog.dismiss();
                         } else {
-                            getView().showSweetDialog("Register Fail!", SweetAlertDialog.ERROR_TYPE);
+                            getView().showSweetDialog(getContext().getString(R.string.register_fail), SweetAlertDialog.ERROR_TYPE);
                         }
                         getView().dismissLoading();
                     }
 
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
-                        getView().showSweetDialog("Register Fail!", SweetAlertDialog.ERROR_TYPE);
+                        getView().showSweetDialog(getContext().getString(R.string.register_fail), SweetAlertDialog.ERROR_TYPE);
                         getView().dismissLoading();
                     }
                 });
@@ -136,7 +136,7 @@ public class LoginPresenterImpl extends BasePresenter<LoginContract.LoginView> i
     @Override
     public void signIn(String username, String password) {
         if (username.equals("") || password.equals("")) {
-            getView().showSweetDialog("You need fill full information", SweetAlertDialog.ERROR_TYPE);
+            getView().showSweetDialog(getContext().getString(R.string.fill_full_infor), SweetAlertDialog.ERROR_TYPE);
             return;
         }
         getView().showLoading();

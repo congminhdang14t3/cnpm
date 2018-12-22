@@ -27,7 +27,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Code: "/>
+            android:text="@string/code"/>
         <TextView
             android:id="@+id/text_code_order"
             android:layout_width="match_parent"
@@ -42,7 +42,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Price: "/>
+            android:text="@string/price"/>
         <TextView
             android:id="@+id/text_money_order"
             android:layout_width="match_parent"
@@ -57,7 +57,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Status payment: "/>
+            android:text="@string/status_payment"/>
         <TextView
             android:id="@+id/text_status_payment"
             android:layout_width="match_parent"
@@ -72,7 +72,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Status order: "/>
+            android:text="@string/status_order"/>
         <TextView
             android:id="@+id/text_status_order"
             android:layout_width="match_parent"

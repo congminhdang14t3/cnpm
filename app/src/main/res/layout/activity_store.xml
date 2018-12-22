@@ -34,7 +34,7 @@
         android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="List store's product"/>
+        android:text="@string/store_product"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_view_store"
         android:layout_width="match_parent"

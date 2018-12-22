@@ -59,10 +59,10 @@ public class LoginActivity extends BaseActivity<LoginPresenterImpl> implements L
     public void resultSignIn(int status) {
         switch (status) {
             case 0:
-                showToast("Login Fail!");
+                showToast(getString(R.string.login_fail));
                 break;
             case 1:
-                showToast("Login Success!");
+                showToast(getString(R.string.login_success));
                 finish();
                 break;
 

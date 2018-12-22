@@ -64,8 +64,8 @@ public class CartAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 new AlertDialog.Builder(mContext)
-                        .setMessage("delete this cart?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setMessage(getContext().getString(R.string.delete_cart))
+                        .setPositiveButton(mContext.getString(R.string.yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 String token = SharedPrefs.getInstance().get(TOKEN, String.class);
@@ -79,7 +79,7 @@ public class CartAdapter extends BaseAdapter {
                                                 mList.remove(response);
                                                 notifyDataSetChanged();
                                                 CartActivity.changeTotal();
-                                                Toast.makeText(mContext, "Delete Success!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(mContext, mContext.getString(R.string.delete_success), Toast.LENGTH_SHORT).show();
                                             }
                                         }
 
@@ -92,11 +92,11 @@ public class CartAdapter extends BaseAdapter {
                                     mList.remove(response);
                                     notifyDataSetChanged();
                                     CartActivity.changeTotal();
-                                    Toast.makeText(mContext, "Delete Success!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(mContext, mContext.getString(R.string.delete_success), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         })
-                        .setNegativeButton("No", null)
+                        .setNegativeButton(getContext().getString(R.string.no), null)
                         .create().show();
             }
         });

@@ -46,7 +46,7 @@ public class DetailProductPresenterImpl extends BasePresenter<DetailProductContr
                 @Override
                 public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                     if (response.isSuccessful()) {
-                        getView().showToast("Add to cart!");
+                        getView().showToast(getContext().getString(R.string.add_to_cart));
                     } else {
                         getView().showError(response.toString());
                     }
@@ -75,7 +75,7 @@ public class DetailProductPresenterImpl extends BasePresenter<DetailProductContr
                 cart.setQuantity(quantity);
                 CartActivity.mList.add(0,cart);
             }
-            getView().showToast("Add to cart!");
+            getView().showToast(getContext().getString(R.string.add_to_cart));
         }
 
     }
@@ -116,7 +116,7 @@ public class DetailProductPresenterImpl extends BasePresenter<DetailProductContr
     @Override
     public void addFeedBack(Product product, String detail, int star) {
         if (detail.equals("") || star == 0) {
-            getView().showSweetDialog("You need fill full imformation", SweetAlertDialog.ERROR_TYPE);
+            getView().showSweetDialog(getContext().getString(R.string.fill_full_infor), SweetAlertDialog.ERROR_TYPE);
             return;
         }
         getView().showLoading();

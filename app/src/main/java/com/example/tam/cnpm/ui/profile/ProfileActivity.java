@@ -53,7 +53,7 @@ public class ProfileActivity extends BaseActivity<ProfilePresenterImpl> implemen
 
     @Override
     protected void afterView() {
-        setTitle("Profile");
+        setTitle(getString(R.string.profile));
         mPresenter.setLogIn();
     }
 

@@ -49,7 +49,7 @@ public class CartActivity extends BaseActivity<CartPresenterImpl> implements Car
 
     @Override
     protected void afterView() {
-        setTitle("Cart");
+        setTitle(getString(R.string.cart));
         mAdapter = new CartAdapter(this, mList);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);

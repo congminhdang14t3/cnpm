@@ -44,8 +44,8 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
     @Override
     public void logOut() {
         new AlertDialog.Builder(getContext())
-                .setMessage("Do you want to log out?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setMessage(getContext().getString(R.string.want_to_logout))
+                .setPositiveButton(getContext().getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         CartActivity.mList.clear();
@@ -53,7 +53,7 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
                         getView().changeActivity();
                     }
                 })
-                .setNegativeButton("No", null)
+                .setNegativeButton(getContext().getString(R.string.no), null)
                 .create().show();
     }
 
@@ -91,8 +91,8 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
     @Override
     public void editProfile(final String fname, final String lname, final Uri uri) {
         new AlertDialog.Builder(getContext())
-                .setMessage("Would you like to edit?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setMessage(getContext().getString(R.string.want_to_edit))
+                .setPositiveButton(getContext().getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         getView().showLoading();
@@ -117,7 +117,7 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
                                 if (response.isSuccessful()) {
                                     //getView().setProfile(response.body());
                                     System.out.println(response.body().getUrl());
-                                    getView().showToast("Update Success!");
+                                    getView().showToast(getContext().getString(R.string.edit_success));
                                 } else {
                                     System.out.println(response.message());
                                     getView().showErrorConnect();
@@ -133,7 +133,7 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
                         });
                     }
                 })
-                .setNegativeButton("No", null)
+                .setNegativeButton(getContext().getString(R.string.no), null)
                 .create().show();
     }
 
@@ -161,7 +161,7 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
             @Override
             public void onClick(View view) {
                 if (!editNew.getText().toString().equals(editNew1.getText().toString())) {
-                    getView().showToast("The two password fields did not match");
+                    getView().showToast(getContext().getString(R.string.two_password_not_match));
                     return;
                 }
                 getView().showLoading();
@@ -172,17 +172,17 @@ public class ProfilePresenterImpl extends BasePresenter<ProfileContract.ProfileV
                     @Override
                     public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
                         if (response.isSuccessful()) {
-                            getView().showToast("Change Password Success");
+                            getView().showToast(getContext().getString(R.string.change_pass_success));
                             dialog.dismiss();
                         } else {
-                            getView().showToast("Change Password Error");
+                            getView().showToast(getContext().getString(R.string.change_pass_error));
                         }
                         getView().dismissLoading();
                     }
 
                     @Override
                     public void onFailure(Call<MessageResponse> call, Throwable t) {
-                        getView().showToast("Change Password Error");
+                        getView().showToast(getContext().getString(R.string.change_pass_error));
                         getView().dismissLoading();
                     }
                 });

@@ -79,7 +79,7 @@ public class OrderAdapter extends BaseAdapter {
 
         List<Product> listProduct = order.getProducts();
         String[] name = new String[listProduct.size() + 1];
-        name[0] = "List Product";
+        name[0] = mContext.getString(R.string.list_product);
         for (int i = 0; i < listProduct.size(); i++) {
             Product product = listProduct.get(i);
             name[i + 1] = product.getName() + "\n"

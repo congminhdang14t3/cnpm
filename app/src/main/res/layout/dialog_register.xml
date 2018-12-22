@@ -13,7 +13,7 @@
         android:textSize="30sp"
         android:textColor="@color/colorPrimary"
         android:layout_margin="10dp"
-        android:text="REGISTER FORM"/>
+        android:text="@string/register"/>
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image_register"
         android:layout_width="100dp"
@@ -27,7 +27,7 @@
         android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="email"/>
+        android:hint="@string/email"/>
     <EditText
         android:id="@+id/edit_pass_register"
         android:inputType="textPassword"
@@ -36,7 +36,7 @@
         android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="password"/>
+        android:hint="@string/password"/>
     <EditText
         android:id="@+id/edit_pass2_register"
         android:inputType="textPassword"
@@ -45,7 +45,7 @@
         android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="password again"/>
+        android:hint="@string/password"/>
     <EditText
         android:id="@+id/edit_first_name_register"
         android:maxLines="1"
@@ -53,7 +53,7 @@
         android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="first name"/>
+        android:hint="@string/first_name"/>
     <EditText
         android:id="@+id/edit_last_name_register"
         android:maxLines="1"
@@ -61,7 +61,7 @@
         android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="last name"/>
+        android:hint="@string/last_name"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:textColor="@android:color/white"
-            android:text="cancel"/>
+            android:text="@string/cancel"/>
         <Space
             android:layout_width="20dp"
             android:layout_height="match_parent" />
@@ -82,6 +82,6 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:textColor="@android:color/white"
-            android:text="register"/>
+            android:text="@string/register"/>
     </LinearLayout>
 </LinearLayout>

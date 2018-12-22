@@ -17,7 +17,7 @@
            android:background="@drawable/background_login_edit"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:hint="email"
+           android:hint="@string/email"
            android:maxLines="1"
            android:inputType="textEmailAddress"
            android:layout_margin="5dp"/>
@@ -26,7 +26,7 @@
            android:background="@drawable/background_login_edit"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:hint="password"
+           android:hint="@string/password"
            android:maxLines="1"
            android:inputType="textPassword"
            android:layout_margin="5dp"/>
@@ -35,7 +35,7 @@
            android:textColor="@android:color/white"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:text="sign in"
+           android:text="@string/sign_in"
            android:layout_margin="5dp"
            android:onClick="signInOnlick"/>
        <Button
@@ -43,19 +43,19 @@
            android:textColor="@android:color/white"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:text="skip"
+           android:text="@string/skip"
            android:layout_margin="5dp"
            android:onClick="skipOnclick"/>
        <TextView
            android:layout_marginTop="20dp"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text="Don't have an account?"/>
+           android:text="@string/dont_have_account"/>
        <TextView
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:textColor="@color/colorPrimary"
-           android:text="register"
+           android:text="@string/register"
            android:textSize="18sp"
            android:onClick="textRegisterOnlcick"/>
    </LinearLayout>

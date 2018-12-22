@@ -49,7 +49,7 @@ public class PaymentActivity extends BaseActivity<PaymentPresenterImpl> implemen
 
     @Override
     protected void afterView() {
-        setTitle("payment");
+        setTitle(getString(R.string.payment));
         mPresenter.initPayment();
     }
 

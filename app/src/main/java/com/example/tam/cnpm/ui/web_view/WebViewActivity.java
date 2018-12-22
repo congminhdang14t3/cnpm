@@ -36,10 +36,9 @@ public class WebViewActivity extends BaseActivity<WebPresenterImpl> implements W
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                System.out.println("onPageStarted: "+url);
                 super.onPageStarted(view, url, favicon);
                 if (url.startsWith("http://52.14.71.211")) {
-                    showToast("payment success");
+                    showToast(getString(R.string.payment_success));
                     finish();
                     //webView.setVisibility(View.GONE);
                     //mPresenter.handleUrl(url);

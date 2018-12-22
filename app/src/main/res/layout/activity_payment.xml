@@ -23,7 +23,7 @@
 
         <EditText
             android:id="@+id/edit_fname_payment"
-            android:hint="First name"
+            android:hint="@string/first_name"
             android:maxLines="1"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:background="@drawable/background_login_edit"/>
         <EditText
             android:id="@+id/edit_lname_payment"
-            android:hint="Last name"
+            android:hint="@string/last_name"
             android:maxLines="1"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
@@ -39,7 +39,7 @@
             android:background="@drawable/background_login_edit"/>
         <EditText
             android:id="@+id/edit_phone_payment"
-            android:hint="Phone number"
+            android:hint="@string/phone"
             android:maxLines="1"
             android:inputType="number"
             android:layout_margin="10dp"
@@ -48,7 +48,7 @@
             android:background="@drawable/background_login_edit"/>
         <EditText
             android:id="@+id/edit_address_payment"
-            android:hint="Address"
+            android:hint="@string/address"
             android:maxLines="1"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
@@ -66,14 +66,14 @@
                 android:layout_margin="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ship code" />
+                android:text="@string/ship_code" />
             <RadioButton
                 android:id="@+id/radio_paypal"
                 android:buttonTint="@color/colorPrimary"
                 android:layout_margin="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Paypal"/>
+                android:text="@string/paypal"/>
         </RadioGroup>
     </LinearLayout>
     <LinearLayout
@@ -87,7 +87,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="cancel"
+            android:text="@string/cancel"
             android:background="@color/colorPrimary"
             android:textColor="@android:color/white"
             android:onClick="paymentOnClick"/>
@@ -102,7 +102,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="ok"
+            android:text="@string/ok"
             android:onClick="paymentOnClick"/>
     </LinearLayout>
 </LinearLayout>

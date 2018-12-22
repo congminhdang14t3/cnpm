@@ -36,7 +36,7 @@
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="First Name"
+            android:text="@string/first_name"
             android:textColor="@color/colorPrimaryDark" />
 
         <EditText
@@ -57,7 +57,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:text="Last Name"/>
+            android:text="@string/last_name"/>
         <EditText
             android:id="@+id/edit_lname_profile"
             android:textColor="@color/colorPrimaryDark"
@@ -77,7 +77,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:text="Email"/>
+            android:text="@string/email"/>
         <TextView
             android:id="@+id/text_email_profile"
             android:textColor="@color/colorPrimaryDark"
@@ -92,7 +92,7 @@
         android:layout_weight="1"/>
     <Button
         android:id="@+id/button_edit_profile"
-        android:text="edit"
+        android:text="@string/edit"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
@@ -102,7 +102,7 @@
         android:background="@color/colorPrimary"/>
     <Button
         android:id="@+id/button_log_out_profile"
-        android:text="log out"
+        android:text="@string/logout"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
